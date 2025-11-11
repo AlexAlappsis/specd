@@ -1,0 +1,65 @@
+---
+id: TASK-INDEX
+title: Tasks Index (Repo-Level)
+last_updated: 2025-11-10
+repo: your-repo-name-or-path
+description: Entry point for task lists and work items (TASK-####) for this repository.
+---
+
+# Tasks Index (Repo-Level)
+
+This directory defines **work items** for this repository.
+
+It answers:
+
+- What task lists exist for this repo (backlog, current sprint, etc.).
+- Where individual tasks (`TASK-####`) live.
+- How tasks relate to features (`FEAT-####`), components (`COMP-####`), and implementation areas (`IMPL-####`).
+
+## Task Lists
+
+Each task list is a Markdown file that groups tasks by status, priority, or theme.
+
+Common lists:
+
+- **Backlog** – main list of tasks for this repo.  
+  - File: `backlog.md`
+- **Current Sprint / Active Work** – tasks currently in progress.  
+  - File: `current-sprint.md` (optional; create by copying `backlog-template.md`)
+- **Icebox / Ideas** – tasks or ideas not yet prioritized.  
+  - File: `icebox.md` (optional)
+
+> **Convention:**  
+> - Each list file should include a table of tasks and link to the individual task docs under `items/`.  
+> - You can create additional list files as needed by copying `backlog-template.md`.
+
+## Individual Tasks (TASK-####)
+
+Each task has its own file under `items/` with a unique ID (`TASK-####`).
+
+Example layout:
+
+- `items/TASK-0001-implement-export-endpoint.md`
+- `items/TASK-0002-add-validation.md`
+
+## ID Conventions
+
+- **Tasks index (this file):** `TASK-INDEX`.  
+- **Task IDs:** `TASK-####` (e.g., `TASK-0001`).
+
+## Relationships to Other Tiers
+
+- **Charter – `FEAT-####`:** tasks should reference which features they contribute to.  
+- **Architecture – `COMP-####`:** tasks should reference which components they touch.  
+- **Implementation – `IMPL-####`:** tasks should reference which implementation areas they modify or create.
+
+## Usage Notes (for Agents)
+
+When planning or doing work in this repo:
+
+1. Open the relevant task list (e.g., `backlog.md` or `current-sprint.md`) to find candidate tasks.  
+2. For a specific `TASK-####`, open its file in `items/` to get full context (description, dependencies, links to specs).  
+3. After completing a task:
+   - Update its status and completion fields in the task file.  
+   - Update any affected specs in Charter, Architecture, or Implementation tiers.  
+   - Adjust task lists (move between backlog, sprint, etc.) as needed.
