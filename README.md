@@ -2,19 +2,22 @@
 
 A **specification documentation framework** for organizing system documentation across four hierarchical tiers with strict cross-tier traceability.
 
-SpecDocs helps you maintain living documentation that evolves with your codebase, enabling both humans and LLMs to understand and build your system.
+SpecDocs provides templates, slash commands, and workflows to maintain living documentation that evolves with your codebase.
 
 ---
 
-## 🎯 Overview
+## 🎯 What is SpecDocs?
 
-SpecDocs provides a structured approach to specification management with:
+SpecDocs is a **template repository** that provides:
 
-- **Four-tier architecture**: Charter → Architecture → Implementation → Tasks
-- **Cross-tier traceability**: Bidirectional links between all specification layers
-- **LLM-friendly**: Structured YAML front matter and consistent ID conventions
-- **Living documents**: Specs evolve with code; history lives in git
-- **Mandatory tasks**: Execution planning layer before code generation
+- **Markdown templates** for four-tier specifications (Charter, Architecture, Implementation, Tasks)
+- **Slash commands** for creating and managing specs with auto-ID assignment and cross-tier linking
+- **Validation tools** to ensure bidirectional consistency across all tiers
+- **LLM-friendly structure** with YAML front matter and semantic IDs
+
+This repository contains the templates and tooling. Once added to your project, you'll create working specifications in `./spec/`.
+
+For detailed documentation on the specification system itself, see [spec/readme.md](spec/readme.md).
 
 ---
 
@@ -98,57 +101,45 @@ Ensure all bidirectional links are consistent across tiers.
 
 ---
 
-## 📚 Four-Tier Architecture
+## 📚 What You Get
 
-| Tier | Path | Scope | Purpose |
-|------|------|-------|---------|
-| **Charter** | `/spec/charter/` | System-level | Business goals, vision, and features (FEAT-####) |
-| **Architecture** | `/spec/architecture/` | System-level | Tech stack, components, and system design (COMP-####) |
-| **Implementation** | `/spec/implementation/` | Repo-level | Interfaces, contracts, and data models (IMPL-####) |
-| **Tasks** | `/spec/tasks/` | Repo-level | Work items and execution planning (TASK-####) |
+### Templates (in `spec/`)
 
-### Cross-Tier Traceability
+13 Markdown templates across four tiers:
+- **Charter tier**: System charter, feature templates
+- **Architecture tier**: Stack overview, component templates
+- **Implementation tier**: Overview, contract templates, test templates
+- **Tasks tier**: Backlog, task templates
+- **Supporting**: Glossary, manifest, prompts
 
-SpecDocs maintains bidirectional links across all tiers:
+All templates use YAML front matter with validation rules and usage instructions.
 
-```
-FEAT-0002 ↔ COMP-0004 ↔ IMPL-0012 → TASK-0045 → Code
-```
+### Slash Commands (in `.claude/commands/`)
 
-**Features** track which **Components** and **Implementations** realize them.
-**Components** track which **Features** they implement and which **Implementations** define them.
-**Implementations** track which **Features** and **Components** they belong to.
-**Tasks** reference all tiers but are not referenced back (one-way).
+6 commands for spec management:
+- `/spec-init` - Initialize specification system
+- `/spec-feature`, `/spec-component`, `/spec-impl`, `/spec-task` - Create specs with auto-linking
+- `/spec-sync` - Validate cross-tier consistency
 
----
+### Documentation
 
-## 🔧 Slash Commands
-
-All commands are available in `/.claude/commands/`:
-
-| Command | Description |
-|---------|-------------|
-| `/spec-init` | Initialize spec system in a new project |
-| `/spec-feature` | Create new feature (FEAT-####) with auto-ID assignment |
-| `/spec-component` | Create new component (COMP-####) with cross-tier linking |
-| `/spec-impl` | Create new implementation (IMPL-####) with backlink updates |
-| `/spec-task` | Create new task (TASK-####) for execution planning |
-| `/spec-sync` | Validate cross-tier consistency and fix broken links |
+- [spec/readme.md](spec/readme.md) - Complete specification system guide
+- [spec/spec-manifest.md](spec/spec-manifest.md) - Template reference
+- [spec/prompts/readme.md](spec/prompts/readme.md) - LLM prompt guide
+- [CLAUDE.md](CLAUDE.md) - Guide for LLM agents
 
 ---
 
-## 📖 ID Conventions
+## 🔧 How Slash Commands Work
 
-All specifications use unique machine-readable IDs:
+Commands read from `./spec/*-template.md` files (copied during `/spec-init`):
 
-- `SYS-CHARTER` - System charter document
-- `FEAT-####` - Individual features (e.g., FEAT-0001)
-- `COMP-####` - Architecture components (e.g., COMP-0003)
-- `IMPL-####` - Implementation specifications (e.g., IMPL-0012)
-- `TASK-####` - Work items (e.g., TASK-0045)
-- `GLOSSARY` - System glossary (optional)
+- **Auto-ID assignment**: Commands read `next_*_id` from index files and auto-increment
+- **Cross-tier linking**: Commands automatically update backlinks (FEAT ↔ COMP ↔ IMPL)
+- **Template customization**: After init, you can customize templates in `./spec/` per-project
+- **Validation**: `/spec-sync` ensures all bidirectional links stay consistent
 
-IDs use four-digit format (NNNN) with leading zeros. IDs do not need to be consecutive.
+All commands are in `.claude/commands/` and available throughout your project.
 
 ---
 
@@ -190,21 +181,10 @@ specdocs-generator TASK-0001
 
 ## 🔮 Planned Features
 
-### Skills (Claude Skills - Not Yet Implemented)
-
-- `specdocs-analyst` - Analyze existing codebase and generate draft specs
-- `specdocs-generator` - Generate code from TASK-#### (reads referenced IMPL-#### for contracts)
-- `specdocs-validator` - Deep validation of spec consistency
-
----
-
-## 📝 Philosophy
-
-- **Living documents**: Specs evolve with the system; history lives in git
-- **Atomic updates**: Code changes paired with spec changes
-- **Minimal enforcement**: Lightweight conventions, flexible workflows
-- **LLM-friendly**: Designed with agents in mind (structured IDs, YAML front matter)
-- **Redundant traceability**: Optimizes for reads over writes
+Claude Skills for code generation (not yet implemented):
+- `specdocs-analyst` - Analyze codebase → generate draft specs
+- `specdocs-generator` - Read TASK-#### → generate code
+- `specdocs-validator` - Deep validation beyond /spec-sync
 
 ---
 
@@ -240,21 +220,30 @@ your-project/
 
 ---
 
-## 🤝 Contributing
+## 🤝 Using This Repository
 
-This is a template repository. Fork it, customize it, make it your own!
+SpecDocs is a template repository designed to be added to your projects as a git submodule.
+
+**Customization:**
+- Fork this repo and customize templates for your organization
+- Modify slash commands to fit your workflow
+- Add custom validation rules or additional tiers
+
+**Updates:**
+- Pull latest templates: `git submodule update --remote .specdocs`
+- Template changes only affect new specs (existing specs are independent)
 
 ---
 
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE) for details
+MIT License
 
 ---
 
-## 🔗 Resources
+## 🔗 Learn More
 
-- [Full Documentation](spec/readme.md)
-- [Template Manifest](spec/spec-manifest.md)
-- [Prompts Guide](spec/prompts/readme.md)
-- [CLAUDE.md](CLAUDE.md) - Complete guide for LLM agents
+- **[spec/readme.md](spec/readme.md)** - Complete 4-tier specification system guide
+- **[CLAUDE.md](CLAUDE.md)** - Complete guide for LLM agents
+- **[spec/spec-manifest.md](spec/spec-manifest.md)** - All templates and their purposes
+- **[spec/prompts/readme.md](spec/prompts/readme.md)** - LLM prompt templates
