@@ -21,6 +21,12 @@ VALIDATION RULES:
   - features: FEAT-#### IDs this implementation supports
   - source_paths: Actual code paths in the repo (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
   - Example: components: ["COMP-0001"], features: ["FEAT-0002", "FEAT-0005"]
+
+CROSS-TIER CONSISTENCY:
+- Bidirectional links must be symmetric
+- If this IMPL lists a FEAT-#### in features[], that FEAT must list this IMPL-#### in its implementations[]
+- If this IMPL lists a COMP-#### in components[], that COMP must list this IMPL-#### in its implementations[]
+- If links are asymmetric, fix them or determine which side is correct
 -->
 
 # Implementation: {{title}}

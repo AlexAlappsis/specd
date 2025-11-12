@@ -29,6 +29,11 @@ VALIDATION RULES:
   - Example: features: ["FEAT-0001"], implementations: ["IMPL-0003"]
 - Dates: Use YYYY-MM-DD format
 - completed_at: null until task is done, then set to completion date
+
+CROSS-TIER CONSISTENCY:
+- Tasks reference other tiers but are not referenced back (one-way links)
+- All FEAT-####, COMP-####, and IMPL-#### IDs referenced must exist
+- All TASK-#### IDs in depends_on must exist
 -->
 
 # Task: {{title}}

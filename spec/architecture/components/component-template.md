@@ -22,6 +22,12 @@ VALIDATION RULES:
   - Populate `features` with FEAT-#### IDs this component implements
   - Populate `implementations` with IMPL-#### IDs as they are created
   - Example: features: ["FEAT-0001", "FEAT-0003"]
+
+CROSS-TIER CONSISTENCY:
+- Bidirectional links must be symmetric
+- If this COMP lists a FEAT-#### in features[], that FEAT must list this COMP-#### in its components[]
+- If this COMP lists an IMPL-#### in implementations[], that IMPL must list this COMP-#### in its components[]
+- If links are asymmetric, fix them or determine which side is correct
 -->
 
 # Component: {{title}}

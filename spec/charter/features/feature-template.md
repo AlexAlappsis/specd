@@ -19,6 +19,12 @@ VALIDATION RULES:
   - Empty means "not yet planned/created"
   - Populate these as you create architecture and implementation specs
   - Example: components: ["COMP-0001", "COMP-0003"]
+
+CROSS-TIER CONSISTENCY:
+- Bidirectional links must be symmetric
+- If this FEAT lists a COMP-#### in components[], that COMP must list this FEAT-#### in its features[]
+- If this FEAT lists an IMPL-#### in implementations[], that IMPL must list this FEAT-#### in its features[]
+- If links are asymmetric, fix them or determine which side is correct
 -->
 
 # Feature: {{title}}
