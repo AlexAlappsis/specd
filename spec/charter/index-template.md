@@ -39,8 +39,9 @@ Each feature has its own document with a unique ID (`FEAT-####`).
 
 | ID        | Name                        | Status     | File path                                       |
 |-----------|-----------------------------|------------|-------------------------------------------------|
-| FEAT-0001 | _example feature name_      | proposed   | `features/FEAT-0001-example-feature-name.md`    |
+| FEAT-0001 | _example feature name_      | active     | `features/FEAT-0001-example-feature-name.md`    |
 | FEAT-0002 | _another example feature_   | approved   | `features/FEAT-0002-another-example-feature.md` |
+| FEAT-0005 | _third feature example_     | proposed   | `features/FEAT-0005-third-feature-example.md`   |
 
 > **Convention:**
 > - Add a row to this table for each feature document.

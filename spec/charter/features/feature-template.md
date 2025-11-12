@@ -7,7 +7,7 @@ summary: Brief one-line description of what this feature does.
 related_features: []
 components: []
 implementations: []
-notes: ""
+notes: "Use this field to capture decision rationale, key assumptions, or design trade-offs"
 ---
 
 <!--
@@ -25,6 +25,13 @@ CROSS-TIER CONSISTENCY:
 - If this FEAT lists a COMP-#### in components[], that COMP must list this FEAT-#### in its features[]
 - If this FEAT lists an IMPL-#### in implementations[], that IMPL must list this FEAT-#### in its features[]
 - If links are asymmetric, fix them or determine which side is correct
+
+TEMPLATE USAGE:
+- Replace {{id}} with the actual feature ID (e.g., FEAT-0001)
+- Replace {{title}} with the actual feature name
+- Replace {{status}} with the actual status
+- Replace {{components}}, {{implementations}}, {{related_features}} with actual arrays
+- Replace all {{variable}} placeholders before saving
 -->
 
 # Feature: {{title}}

@@ -12,7 +12,7 @@ implementations: []
 depends_on: []
 created_at: 2025-11-10
 completed_at: null
-notes: ""
+notes: "Use this field to capture context, constraints, or important decisions about this task"
 ---
 
 <!--
@@ -34,6 +34,14 @@ CROSS-TIER CONSISTENCY:
 - Tasks reference other tiers but are not referenced back (one-way links)
 - All FEAT-####, COMP-####, and IMPL-#### IDs referenced must exist
 - All TASK-#### IDs in depends_on must exist
+
+TEMPLATE USAGE:
+- Replace {{id}} with the actual task ID (e.g., TASK-0001)
+- Replace {{title}} with the actual task name
+- Replace {{status}}, {{priority}}, {{repo}} with actual values
+- Replace {{created_at}} with actual date in YYYY-MM-DD format
+- Replace {{features}}, {{components}}, {{implementations}}, {{depends_on}} with actual arrays
+- Replace all {{variable}} placeholders before saving
 -->
 
 # Task: {{title}}

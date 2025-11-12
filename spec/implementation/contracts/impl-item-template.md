@@ -8,7 +8,7 @@ repo: your-repo-name-or-path
 components: []
 features: []
 source_paths: []
-notes: ""
+notes: "Use this field to capture decision rationale, key assumptions, or design trade-offs"
 ---
 
 <!--
@@ -27,6 +27,14 @@ CROSS-TIER CONSISTENCY:
 - If this IMPL lists a FEAT-#### in features[], that FEAT must list this IMPL-#### in its implementations[]
 - If this IMPL lists a COMP-#### in components[], that COMP must list this IMPL-#### in its implementations[]
 - If links are asymmetric, fix them or determine which side is correct
+
+TEMPLATE USAGE:
+- Replace {{id}} with the actual implementation ID (e.g., IMPL-0001)
+- Replace {{title}} with the actual implementation name
+- Replace {{status}} with the actual status
+- Replace {{repo}} with the actual repository name or path
+- Replace {{components}}, {{features}}, {{source_paths}} with actual arrays
+- Replace all {{variable}} placeholders before saving
 -->
 
 # Implementation: {{title}}

@@ -44,7 +44,8 @@ Each component has its own document with a unique ID (`COMP-####`). Components t
 | ID        | Name                        | Type        | Status | Repo / Location            | File path                                               |
 |-----------|-----------------------------|-------------|--------|----------------------------|---------------------------------------------------------|
 | COMP-0001 | _example service_           | service     | active | `repo-name`                | `components/COMP-0001-example-service.md`              |
-| COMP-0002 | _example web app_           | web-app     | draft  | `repo-or-subfolder-name`   | `components/COMP-0002-example-web-app.md`              |
+| COMP-0002 | _example web app_           | web-app     | active | `repo-or-subfolder-name`   | `components/COMP-0002-example-web-app.md`              |
+| COMP-0007 | _background worker_         | worker      | draft  | `repo-name`                | `components/COMP-0007-background-worker.md`            |
 
 > **Convention:**
 > - Add a row to this table for each component document.

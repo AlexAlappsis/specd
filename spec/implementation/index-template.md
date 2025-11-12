@@ -45,7 +45,8 @@ Each implementation item has its own document with a unique ID (`IMPL-####`). Im
 | ID        | Name                              | Status | Main Component | Primary Features        | File path                                                   |
 |-----------|-----------------------------------|--------|----------------|-------------------------|-------------------------------------------------------------|
 | IMPL-0001 | _example implementation area_     | active | `COMP-0001`    | `FEAT-0001`, `FEAT-0002`| `contracts/IMPL-0001-example-impl.md`                       |
-| IMPL-0002 | _another implementation area_     | draft  | `COMP-0002`    | `FEAT-0003`             | `contracts/IMPL-0002-another-impl.md`                       |
+| IMPL-0002 | _another implementation area_     | active | `COMP-0002`    | `FEAT-0005`             | `contracts/IMPL-0002-another-impl.md`                       |
+| IMPL-0008 | _third implementation area_       | draft  | `COMP-0007`    | `FEAT-0001`             | `contracts/IMPL-0008-third-impl.md`                         |
 
 > **Convention:**
 > - Add a row for each `IMPL-####` document.

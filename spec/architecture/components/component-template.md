@@ -8,7 +8,8 @@ component_type: service
 repo: your-repo-name-or-path
 features: []
 implementations: []
-notes: ""
+depends_on_components: []
+notes: "Use this field to capture decision rationale, key assumptions, or design trade-offs"
 ---
 
 <!--
@@ -17,17 +18,27 @@ VALIDATION RULES:
 - id format: COMP-NNNN (e.g., COMP-0001)
 - Status values: draft | active
 - component_type values: web-app | service | worker | library | database | external-system
-- Traceability arrays (features, implementations):
-  - Empty means "not yet planned/created"
+- Traceability arrays (features, implementations, depends_on_components):
+  - Empty means "not yet planned/created" or "no dependencies"
   - Populate `features` with FEAT-#### IDs this component implements
   - Populate `implementations` with IMPL-#### IDs as they are created
-  - Example: features: ["FEAT-0001", "FEAT-0003"]
+  - Populate `depends_on_components` with COMP-#### IDs this component depends on
+  - Example: features: ["FEAT-0001", "FEAT-0003"], depends_on_components: ["COMP-0002"]
 
 CROSS-TIER CONSISTENCY:
 - Bidirectional links must be symmetric
 - If this COMP lists a FEAT-#### in features[], that FEAT must list this COMP-#### in its components[]
 - If this COMP lists an IMPL-#### in implementations[], that IMPL must list this COMP-#### in its components[]
 - If links are asymmetric, fix them or determine which side is correct
+
+TEMPLATE USAGE:
+- Replace {{id}} with the actual component ID (e.g., COMP-0001)
+- Replace {{title}} with the actual component name
+- Replace {{component_type}} with the actual type
+- Replace {{status}} with the actual status
+- Replace {{repo}} with the actual repository name or path
+- Replace {{features}}, {{implementations}}, {{depends_on_components}} with actual arrays
+- Replace all {{variable}} placeholders before saving
 -->
 
 # Component: {{title}}
@@ -70,10 +81,15 @@ CROSS-TIER CONSISTENCY:
 
 > _What this component depends on to do its job._
 
-### 3.1 Internal Dependencies
+### 3.1 Internal Component Dependencies
 
-- Other components (`COMP-####`) this component calls or uses.
-- Nature of dependency: synchronous call, async messaging, shared library, etc.
+**Dependencies:** `{{depends_on_components}}`
+
+- List other components (`COMP-####`) this component depends on
+- For each dependency, describe:
+  - Nature of dependency: synchronous call, async messaging, shared library, data dependency, etc.
+  - Why the dependency exists
+  - Any failure modes if the dependency is unavailable
 
 ### 3.2 External Systems
 

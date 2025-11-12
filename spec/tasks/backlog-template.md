@@ -27,8 +27,9 @@ This file lists tasks (`TASK-####`) for this repository.
 
 | ID        | Title                            | Status       | Priority | Features           | Implementation     | File path                                           |
 |-----------|-----------------------------------|--------------|----------|--------------------|--------------------|----------------------------------------------------|
-| TASK-0001 | _example task name_              | todo         | P1       | `FEAT-0001`        | `IMPL-0001`        | `items/TASK-0001-example-task-name.md`             |
+| TASK-0001 | _example task name_              | done         | P1       | `FEAT-0001`        | `IMPL-0001`        | `items/TASK-0001-example-task-name.md`             |
 | TASK-0002 | _another example task_           | in-progress  | P0       | `FEAT-0002`        | `IMPL-0002`        | `items/TASK-0002-another-example-task.md`          |
+| TASK-0012 | _third task example_             | todo         | P2       | `FEAT-0005`        | `IMPL-0008`        | `items/TASK-0012-third-task-example.md`            |
 
 > **Convention:**
 > - Status values: `todo | in-progress | blocked | done`
