@@ -29,6 +29,7 @@
 >
 > **Output format:** Markdown file matching the selected Charter template.
 >
+> **System Charter reference:** `spec/charter/features/system-charter-template.md`
 > **Template reference:** `spec/charter/features/feature-template.md`
 >
 > **Agent Notes**
