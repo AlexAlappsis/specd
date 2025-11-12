@@ -15,7 +15,7 @@ The specification system is organized into four tiers with strict cross-tier tra
 | **Charter** | `/spec/charter/` | System-level | Business goals, vision, and features (FEAT-####) |
 | **Architecture** | `/spec/architecture/` | System-level | Tech stack, components, and system design (COMP-####) |
 | **Implementation** | `/spec/implementation/` | Repo-level | Interfaces, contracts, and data models (IMPL-####) |
-| **Tasks** | `/spec/tasks/` | Repo-level | Work items and task tracking (TASK-####) |
+| **Tasks** | `/spec/tasks/` | Repo-level | **Optional** work items and task tracking (TASK-####) |
 
 ## ID Conventions
 
@@ -26,6 +26,9 @@ All specification entities use unique machine-readable IDs:
 - `COMP-####` - Architecture components (Architecture tier)
 - `IMPL-####` - Implementation specifications (Implementation tier)
 - `TASK-####` - Work items (Tasks tier)
+- `GLOSSARY` - System glossary (optional)
+
+IDs use format NNNN (e.g., FEAT-0001, not FEAT-####). IDs do not need to be consecutive.
 
 Cross-tier linking example: `FEAT-0002 ↔ COMP-0004 ↔ IMPL-0012 ↔ TASK-0045`
 
@@ -35,6 +38,7 @@ Cross-tier linking example: `FEAT-0002 ↔ COMP-0004 ↔ IMPL-0012 ↔ TASK-0045
 - [spec/spec-manifest.md](spec/spec-manifest.md) - Complete manifest of all templates
 - [spec/index.md](spec/index.md) - Quick-reference navigational index
 - [spec/prompts/readme.md](spec/prompts/readme.md) - Guide to LLM prompt templates
+- [spec/glossary-template.md](spec/glossary-template.md) - Template for shared terminology
 
 ## Template Structure
 
@@ -42,16 +46,40 @@ All templates use YAML front matter followed by structured Markdown sections:
 
 ```yaml
 ---
-id: FEAT-0000
+id: FEAT-0001
 title: Example Feature Name
 status: proposed
 last_updated: 2025-11-10
-owners: [your-name-or-team]
+summary: Brief one-line description
 related_features: []
+components: []
+implementations: []
+notes: "Use this field to capture decision rationale, key assumptions, or design trade-offs"
 ---
 ```
 
+### Key Template Features
+
+1. **Validation Rules**: Every template has HTML comment blocks with required fields, status values, ID formats, and traceability rules
+2. **Cross-Tier Consistency**: Bidirectional links must be symmetric (e.g., if FEAT lists COMP, COMP must list FEAT)
+3. **Template Usage Notes**: Clear instructions on replacing {{placeholder}} values
+4. **Component Dependencies**: Components can depend on other components via `depends_on_components: []`
+5. **Living Documents**: No deprecated/cancelled states - delete specs when no longer needed
+
 Templates always end in `-template.md` and should be copied (not modified) when instantiating new specs.
+
+## Status Vocabularies
+
+- **Charter/Architecture/Implementation**: `draft | active`
+- **Tasks**: `todo | in-progress | blocked | done`
+
+## ID Tracking
+
+Index templates include `next_*_id` fields for auto-assigning IDs:
+- `next_feature_id` in charter/index-template.md
+- `next_component_id` in architecture/index-template.md
+- `next_impl_id` in implementation/index-template.md
+- `next_task_id` in tasks/index-template.md
 
 ## Workflow Guidance
 
@@ -62,12 +90,59 @@ When working with this repository:
 3. **Creating new specs**:
    - Copy relevant template from the appropriate tier
    - Remove `-template` suffix
-   - Fill in YAML front matter with unique ID
+   - Fill in YAML front matter with unique ID from `next_*_id`
+   - Replace all {{placeholder}} values with actual data
    - Follow the structured sections in the template
+   - Update corresponding index table
+   - Increment `next_*_id` in the index
+   - Update cross-tier backlinks in related specs
+
 4. **Using prompts**: Reference [spec/prompts/](spec/prompts/) for creation and maintenance workflows
    - Creation prompts guide new spec generation
    - Maintenance prompts guide updates after code/design changes
    - Cross-tier sync prompt ensures consistency
+
+### Task Tier: When to Use
+
+The Task tier (TASK-####) is **optional** and should be used based on complexity:
+
+**Skip tasks** (generate code directly from IMPL specs) when:
+- Implementation is small/medium in scope
+- No complex dependencies between work items
+- Single developer/agent workflow
+- IMPL spec has all necessary contracts and behavior
+
+**Create tasks** (break down IMPL into tasks) when:
+- Implementation is large or has distinct phases
+- Multiple developers/agents working in parallel
+- Explicit dependency tracking needed between work items
+- Progress tracking and prioritization are important
+- Implementation crosses multiple repos or components
+
+**Code generation workflows:**
+- **Fast path**: `FEAT → COMP → IMPL → Code` (most common)
+- **Managed path**: `FEAT → COMP → IMPL → TASK → Code` (complex work)
+
+## Cross-Tier Traceability
+
+The system uses redundant bidirectional links for efficient navigation:
+
+**Features** track:
+- `components: []` - Components implementing this feature
+- `implementations: []` - Implementation specs for this feature
+
+**Components** track:
+- `features: []` - Features this component implements
+- `implementations: []` - Implementation specs for this component
+- `depends_on_components: []` - Other components this depends on
+
+**Implementations** track:
+- `features: []` - Features this implementation supports
+- `components: []` - Components this implementation belongs to
+
+**Tasks** track (one-way):
+- `features: []`, `components: []`, `implementations: []` - Related specs
+- `depends_on: []` - Task or implementation dependencies
 
 ## LLM/Agent Prompts
 
@@ -85,6 +160,49 @@ These prompts include clarifying questions and confirmation steps to prevent acc
 - **Atomic updates**: Code changes paired with spec changes
 - **Minimal enforcement**: Lightweight conventions, flexible workflows
 - **LLM-friendly**: Designed with agents in mind (structured IDs, YAML front matter, consistent templates)
+- **Redundant traceability**: Optimizes for reads over writes - same links stored in multiple places
+
+## Planned Tooling (Not Yet Implemented)
+
+### Slash Commands (Project-Level)
+These will be implemented as `/.claude/commands/` files:
+
+- `/spec-init` - Initialize spec system in a new project
+- `/spec-feature` - Create new feature with auto-ID assignment and index updates
+- `/spec-component` - Create new component with automatic cross-tier linking
+- `/spec-impl` - Create new implementation with backlink updates
+- `/spec-task` - Create new task with traceability links
+- `/spec-sync` - Validate cross-tier consistency and fix broken links
+
+### Skills (Cross-Project Reusable)
+These will be implemented as Claude skills:
+
+- `specdocs-analyst` - Analyze existing codebase and generate draft specs
+- `specdocs-generator` - Generate code from IMPL-#### or TASK-#### (accepts both)
+- `specdocs-validator` - Comprehensive validation of spec consistency
+
+### Example Workflows
+
+**Simple implementation (no tasks):**
+```
+1. /spec-feature → Creates FEAT-0010.md
+2. /spec-component → Creates COMP-0015.md, links to FEAT-0010, updates both specs
+3. /spec-impl → Creates IMPL-0042.md, links to FEAT-0010 and COMP-0015, updates all
+4. specdocs-generator IMPL-0042 → Generates complete code from implementation spec
+5. /spec-sync → Validates all links are bidirectional and consistent
+```
+
+**Complex implementation (with task breakdown):**
+```
+1. /spec-feature → Creates FEAT-0010.md
+2. /spec-component → Creates COMP-0015.md, links to FEAT-0010
+3. /spec-impl → Creates IMPL-0042.md (large/complex implementation)
+4. /spec-task → Creates TASK-0100.md (first phase, references IMPL-0042)
+5. /spec-task → Creates TASK-0101.md (second phase, depends on TASK-0100)
+6. specdocs-generator TASK-0100 → Generates code for first task (reads IMPL-0042 for contracts)
+7. specdocs-generator TASK-0101 → Generates code for second task
+8. /spec-sync → Validates consistency
+```
 
 ## Version Control
 
