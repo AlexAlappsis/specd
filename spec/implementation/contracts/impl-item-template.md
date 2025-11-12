@@ -1,18 +1,34 @@
 ---
-id: IMPL-0000                    # e.g., IMPL-0001
+id: IMPL-0001
 title: Example Implementation Area
+status: active
 last_updated: 2025-11-10
-status: active                   # active | draft | deprecated
-owners: [your-name-or-team]
+summary: Brief one-line description of what this implementation area does.
 repo: your-repo-name-or-path
-components: []                   # e.g., ["COMP-0001", "COMP-0003"]
-features: []                     # e.g., ["FEAT-0001", "FEAT-0005"]
-source_paths: []                 # e.g., ["src/Api/Schedules", "src/Domain/Scheduling"]
-notes: >
-  Optional short note about this implementation area or its history.
+components: []
+features: []
+source_paths: []
+notes: ""
 ---
 
-# {{title}} ({{id}})
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, repo
+- id format: IMPL-NNNN (e.g., IMPL-0001)
+- Status values: draft | active
+- Traceability arrays:
+  - components: COMP-#### IDs this implementation is part of
+  - features: FEAT-#### IDs this implementation supports
+  - source_paths: Actual code paths in the repo (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
+  - Example: components: ["COMP-0001"], features: ["FEAT-0002", "FEAT-0005"]
+-->
+
+# Implementation: {{title}}
+
+**ID:** `{{id}}`
+**Status:** `{{status}}`
+**Repo:** `{{repo}}`
+**Source paths:** `{{source_paths}}`
 
 ## 1. Purpose & Scope
 
@@ -102,15 +118,22 @@ notes: >
 
 ## 9. Traceability
 
-- **Features:** `FEAT-####` implemented or affected by this implementation area.  
-- **Components:** `COMP-####` that this implementation belongs to.  
-- **Tasks:** `TASK-####` that created or modified this implementation.
+**Cross-tier links:**
+
+- **Features:** `{{features}}` (FEAT-#### IDs this implementation supports)
+- **Components:** `{{components}}` (COMP-#### IDs this implementation belongs to)
+
+> **Workflow:**
+> 1. When creating this implementation spec, populate `features` and `components` from existing specs.
+> 2. Go back and update the corresponding feature and component specs to reference this IMPL-#### ID.
+> 3. This creates full traceability: feature → component → implementation → code.
 
 ---
 
-> _Agent note:_  
-> Use this document as the source of truth for contracts and data models in this implementation area.  
+> **Agent note:**
+> This document is the source of truth for contracts and data models in this implementation area.
 > When you change behavior, add new APIs, or adjust data models:
-> - Update this document to match the actual implementation.  
-> - Adjust or create tests (and the tests doc, if used).  
+> - Update this document to match the actual implementation.
+> - Adjust or create tests (and the tests doc, if used).
 > - Ensure references to `FEAT-####` and `COMP-####` remain accurate.
+> If this implementation is no longer needed, delete this file and update the implementation index.

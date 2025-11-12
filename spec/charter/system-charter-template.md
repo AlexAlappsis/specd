@@ -1,12 +1,18 @@
 ---
 id: SYS-CHARTER
 title: System Charter
+status: active
 last_updated: 2025-11-10
-owners: [your-name-or-team]
-status: active  # active | draft
-summary: >
-  High-level description of the system, its purpose, and the major features it provides.
+summary: High-level description of the system, its purpose, and the major features it provides.
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated
+- Status values: draft | active
+- Empty summary/notes are allowed but summary is recommended
+-->
 
 # System Charter
 
@@ -79,7 +85,10 @@ summary: >
 - **Feature docs:** `features/FEAT-####-*.md`
 - **Architecture:** `../architecture/index.md` (once created)
 
-> _Agent note:_  
-> Use this document to understand the system’s overall goals and constraints.  
-> Reference the feature docs (`FEAT-####`) for specific behaviors.  
+---
+
+> **Agent note:**
+> This document defines the system's overall goals and constraints.
+> Reference the feature docs (`FEAT-####`) for specific behaviors.
 > Update this file when system-wide goals or scope change.
+> If the system is no longer needed, delete this and all related specs.

@@ -1,12 +1,17 @@
 ---
 id: ARCH-STACK
 title: Stack & Architecture Overview
+status: active
 last_updated: 2025-11-10
-owners: [your-name-or-team]
-status: active  # active | draft
-summary: >
-  High-level description of the system architecture, including major components, technologies, and deployment model.
+summary: High-level description of the system architecture, including major components, technologies, and deployment model.
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated
+- Status values: draft | active
+-->
 
 # Stack & Architecture Overview
 
@@ -97,6 +102,8 @@ summary: >
 
 ---
 
-> _Agent note:_  
-> Use this document to understand system-wide architecture and tech choices before working on specific components (`COMP-####`).  
-> When significant architectural decisions change (e.g., new database, new architecture style), update this document and, if needed, adjust the component docs.
+> **Agent note:**
+> This document defines system-wide architecture and tech choices.
+> Read this before working on specific components (`COMP-####`).
+> When significant architectural decisions change (e.g., new database, new architecture style), update this document and adjust component docs as needed.
+> If the architecture is fundamentally replaced, delete this and create a new version.

@@ -1,10 +1,20 @@
 ---
 id: TASK-INDEX
 title: Tasks Index (Repo-Level)
+status: active
 last_updated: 2025-11-10
+summary: Entry point for task lists and work items (TASK-####) for this repository.
 repo: your-repo-name-or-path
-description: Entry point for task lists and work items (TASK-####) for this repository.
+next_task_id: TASK-0001
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, repo, next_task_id
+- Status values: draft | active
+- next_task_id: The next available TASK-#### ID to assign
+-->
 
 # Tasks Index (Repo-Level)
 
@@ -57,9 +67,17 @@ Example layout:
 
 When planning or doing work in this repo:
 
-1. Open the relevant task list (e.g., `backlog.md` or `current-sprint.md`) to find candidate tasks.  
-2. For a specific `TASK-####`, open its file in `items/` to get full context (description, dependencies, links to specs).  
+1. Open the relevant task list (e.g., `backlog.md` or `current-sprint.md`) to find candidate tasks.
+2. For a specific `TASK-####`, open its file in `items/` to get full context (description, dependencies, links to specs).
 3. After completing a task:
-   - Update its status and completion fields in the task file.  
-   - Update any affected specs in Charter, Architecture, or Implementation tiers.  
+   - Update its status and completion fields in the task file.
+   - Update any affected specs in Charter, Architecture, or Implementation tiers.
    - Adjust task lists (move between backlog, sprint, etc.) as needed.
+4. When creating a new task, use `next_task_id` from the front matter, then increment it.
+
+---
+
+> **Agent note:**
+> This index is the entry point for all task-level documentation in this repo.
+> Always update task lists when adding or removing tasks.
+> When a task is complete, update its status to `done` but keep the file for historical reference.

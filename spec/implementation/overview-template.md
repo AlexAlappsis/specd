@@ -1,13 +1,23 @@
 ---
 id: IMPL-OVERVIEW
 title: Implementation Overview (Repo-Level)
+status: active
 last_updated: 2025-11-10
-owners: [your-name-or-team]
-status: active  # active | draft
+summary: High-level description of this repository's role, structure, and main implementation areas.
 repo: your-repo-name-or-path
-summary: >
-  High-level description of this repository's role, structure, and main implementation areas.
+components: []
+features: []
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, repo
+- Status values: draft | active
+- Traceability arrays (components, features):
+  - Populate with the main COMP-#### and FEAT-#### IDs this repo implements
+  - Example: components: ["COMP-0001"], features: ["FEAT-0001", "FEAT-0003"]
+-->
 
 # Implementation Overview (Repo-Level)
 
@@ -73,6 +83,7 @@ summary: >
 
 ---
 
-> _Agent note:_  
-> Use this document to understand the role of this repo, its structure, and how implementation areas relate to features and architecture components.  
+> **Agent note:**
+> This document defines the role of this repo, its structure, and how implementation areas relate to features and architecture components.
 > Before working on a specific domain area or API surface, open the corresponding `IMPL-####` document under `contracts/`.
+> If this repo is no longer needed, delete this and all related implementation specs.

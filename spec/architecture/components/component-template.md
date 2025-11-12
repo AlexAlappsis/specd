@@ -1,18 +1,35 @@
 ---
-id: COMP-0000                    # e.g., COMP-0001
-title: Example Component Name    # Short, human-readable name
+id: COMP-0001
+title: Example Component Name
+status: active
 last_updated: 2025-11-10
-status: active                   # active | draft | deprecated
-owners: [your-name-or-team]
-component_type: service          # e.g., web-app | service | worker | library | database | external-system
-repo: your-repo-name-or-path     # e.g., repo name or subfolder path; 'external' if outside your control
-related_features: []             # e.g., ["FEAT-0001", "FEAT-0003"]
-related_capabilities: []         # Optional high-level capability labels
-notes: >
-  Optional short note about this component or its history.
+summary: Brief one-line description of what this component does.
+component_type: service
+repo: your-repo-name-or-path
+features: []
+implementations: []
+notes: ""
 ---
 
-# {{title}} ({{id}})
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, component_type, repo
+- id format: COMP-NNNN (e.g., COMP-0001)
+- Status values: draft | active
+- component_type values: web-app | service | worker | library | database | external-system
+- Traceability arrays (features, implementations):
+  - Empty means "not yet planned/created"
+  - Populate `features` with FEAT-#### IDs this component implements
+  - Populate `implementations` with IMPL-#### IDs as they are created
+  - Example: features: ["FEAT-0001", "FEAT-0003"]
+-->
+
+# Component: {{title}}
+
+**ID:** `{{id}}`
+**Type:** `{{component_type}}`
+**Status:** `{{status}}`
+**Repo:** `{{repo}}`
 
 ## 1. Purpose & Responsibility
 
@@ -87,15 +104,18 @@ notes: >
 - Data sensitivity handled by this component.
 - Any special audit/logging requirements.
 
-## 7. Mapping to Features & Implementation
+## 7. Traceability
 
-> _Connect this component to Charter and Implementation tiers._
+**Cross-tier links (populated as specs are created):**
 
-- **Implements features:** `FEAT-0001`, `FEAT-0005`, …
-- **Key implementation specs:** `IMPL-####` (to be defined in Implementation tier).
-- **Typical change flow:** When implementing a feature that touches this component, update:
-  - This component doc (if responsibilities or boundaries change).
-  - Relevant Implementation docs (`IMPL-####`).
+- **Implements features:** `{{features}}` (list FEAT-#### IDs this component supports)
+- **Implementation specs:** `{{implementations}}` (empty until implementation is planned)
+
+> **Workflow:**
+> 1. Create this component spec with the `features` array populated (from charter tier).
+> 2. Update the corresponding feature specs to reference this component ID.
+> 3. When you create implementation specs, come back and add them to the `implementations` array.
+> 4. This creates full traceability from feature → component → implementation → code.
 
 ## 8. Open Questions & Future Work
 
@@ -106,9 +126,10 @@ notes: >
 
 ---
 
-> _Agent note:_  
-> Use this document to understand the role, boundaries, and dependencies of `{{id}}` before changing code.  
+> **Agent note:**
+> This document defines the role, boundaries, and dependencies of `{{id}}`.
 > When adding or changing functionality:
 > - Check which features (`FEAT-####`) are impacted.
 > - Update this doc if responsibilities, dependencies, or major behavior change.
-> - Ensure Implementation docs (`IMPL-####`) and Tasks (`TASK-####`) stay in sync with this component description.
+> - Ensure Implementation docs (`IMPL-####`) stay in sync with this component description.
+> If this component is no longer needed, delete this file and update the architecture index.

@@ -1,10 +1,18 @@
 ---
 id: TASK-BACKLOG
 title: Backlog (Repo-Level)
+status: active
 last_updated: 2025-11-10
+summary: Primary backlog of tasks for this repository.
 repo: your-repo-name-or-path
-description: Primary backlog of tasks for this repository.
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, repo
+- Status values: draft | active
+-->
 
 # Backlog (Repo-Level)
 
@@ -17,13 +25,16 @@ This file lists tasks (`TASK-####`) for this repository.
 
 ## Task Table
 
-| ID        | Title                            | Status       | Priority | Depends On                      | Features (`FEAT-####`)     | Implementation (`IMPL-####`)     | File path                                           |
-|-----------|-----------------------------------|--------------|----------|----------------------------------|----------------------------|----------------------------------|-----------------------------------------------------|
-| TASK-0001 | _example task name_              | todo         | P1       | `TASK-0000`, `IMPL-0001`        | `FEAT-0001`                | `IMPL-0001`                      | `items/TASK-0001-example-task-name.md`             |
-| TASK-0002 | _another example task_           | in-progress  | P0       | `TASK-0001`                     | `FEAT-0002`                | `IMPL-0002`                      | `items/TASK-0002-another-example-task.md`          |
+| ID        | Title                            | Status       | Priority | Features           | Implementation     | File path                                           |
+|-----------|-----------------------------------|--------------|----------|--------------------|--------------------|----------------------------------------------------|
+| TASK-0001 | _example task name_              | todo         | P1       | `FEAT-0001`        | `IMPL-0001`        | `items/TASK-0001-example-task-name.md`             |
+| TASK-0002 | _another example task_           | in-progress  | P0       | `FEAT-0002`        | `IMPL-0002`        | `items/TASK-0002-another-example-task.md`          |
 
-> **Status values:** `todo`, `in-progress`, `blocked`, `done`.  
-> **Priority values:** `P0` (urgent), `P1` (high), `P2` (normal), `P3` (low).
+> **Convention:**
+> - Status values: `todo | in-progress | blocked | done`
+> - Priority values: `P0` (urgent) | `P1` (high) | `P2` (normal) | `P3` (low)
+> - When a task is done, keep it in this list for historical reference (or archive it to a separate file)
+> - See individual task files under `items/` for dependencies and detailed context
 
 ## Notes
 
@@ -32,6 +43,7 @@ This file lists tasks (`TASK-####`) for this repository.
 
 ---
 
-> _Agent note:_  
-> Use this file to discover available tasks and their relationships to features and implementation areas.  
+> **Agent note:**
+> Use this file to discover available tasks and their relationships to features and implementation areas.
 > Always open the individual task file under `items/` before making code changes.
+> Update this table when task statuses change or new tasks are added.

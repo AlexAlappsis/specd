@@ -1,9 +1,19 @@
 ---
 id: ARCH-INDEX
 title: System Architecture Index
+status: active
 last_updated: 2025-11-10
-description: Entry point for the system architecture, tech stack, and components.
+summary: Entry point for the system architecture, tech stack, and components.
+next_component_id: COMP-0001
+notes: ""
 ---
+
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, next_component_id
+- Status values: draft | active
+- next_component_id: The next available COMP-#### ID to assign
+-->
 
 # System Architecture Index
 
@@ -31,15 +41,18 @@ Each component has its own document with a unique ID (`COMP-####`). Components t
 - Shared libraries or packages
 - Data stores treated as architectural elements
 
-| ID        | Name                        | Type        | Repo / Location            | File path                                               |
-|-----------|-----------------------------|-------------|----------------------------|---------------------------------------------------------|
-| COMP-0001 | _example service_           | service     | `repo-name`                | `components/COMP-0001-example-service.md`              |
-| COMP-0002 | _example web app_           | web-app     | `repo-or-subfolder-name`   | `components/COMP-0002-example-web-app.md`              |
+| ID        | Name                        | Type        | Status | Repo / Location            | File path                                               |
+|-----------|-----------------------------|-------------|--------|----------------------------|---------------------------------------------------------|
+| COMP-0001 | _example service_           | service     | active | `repo-name`                | `components/COMP-0001-example-service.md`              |
+| COMP-0002 | _example web app_           | web-app     | draft  | `repo-or-subfolder-name`   | `components/COMP-0002-example-web-app.md`              |
 
-> **Convention:**  
-> - Add a row to this table for each component document.  
-> - Keep the table sorted by component ID.  
-> - "Type" examples: `web-app`, `service`, `worker`, `library`, `database`, `external-system`.
+> **Convention:**
+> - Add a row to this table for each component document.
+> - Keep the table sorted by component ID.
+> - Type examples: `web-app`, `service`, `worker`, `library`, `database`, `external-system`
+> - Status values: `draft | active`
+> - When a component is no longer needed, delete its file and remove this row.
+> - Update `next_component_id` in the front matter when adding new components.
 
 ## ID Conventions
 
@@ -60,4 +73,11 @@ When planning or modifying implementation:
 1. Read `stack-overview.md` to understand the overall architecture and tech choices.
 2. Use the table above to find the `COMP-####` component(s) relevant to given features (`FEAT-####`) or repos.
 3. Open the corresponding component document(s) before changing code or creating new components.
-4. When adding a new component, create a new `COMP-####` file under `components/` and add it to the table above.
+4. When creating a new component, use `next_component_id` from the front matter, then increment it.
+
+---
+
+> **Agent note:**
+> This index is the entry point for all architecture-level documentation.
+> Always update this table when adding or removing components.
+> Keep the table sorted by ID for easy scanning.

@@ -1,17 +1,33 @@
 ---
-id: IMPL-0000-TESTS              # e.g., IMPL-0001-TESTS
-title: Tests for IMPL-0000
+id: IMPL-0001-TESTS
+title: Tests for IMPL-0001
+status: active
 last_updated: 2025-11-10
-status: active                   # active | draft
-owners: [your-name-or-team]
-impl_id: IMPL-0000
+summary: Test strategy and coverage for this implementation area.
+impl_id: IMPL-0001
 repo: your-repo-name-or-path
-features: []                     # e.g., ["FEAT-0001", "FEAT-0005"]
-notes: >
-  Optional notes about the test strategy or coverage.
+features: []
+components: []
+notes: ""
 ---
 
-# Tests for {{impl_id}} ({{title}})
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, impl_id, repo
+- id format: IMPL-NNNN-TESTS (matches the implementation ID)
+- Status values: draft | active
+- Traceability arrays:
+  - impl_id: The IMPL-#### this tests document covers
+  - features: FEAT-#### IDs being validated
+  - components: COMP-#### IDs being tested
+-->
+
+# Tests: {{title}}
+
+**ID:** `{{id}}`
+**Implementation:** `{{impl_id}}`
+**Status:** `{{status}}`
+**Repo:** `{{repo}}`
 
 ## 1. Test Strategy
 
@@ -50,6 +66,7 @@ notes: >
 
 ---
 
-> _Agent note:_  
-> When adding or modifying tests for `{{impl_id}}`, update this document to reflect the current test strategy and critical scenarios.  
+> **Agent note:**
+> When adding or modifying tests for `{{impl_id}}`, update this document to reflect the current test strategy and critical scenarios.
 > Use this as a guide for generating additional tests or verifying coverage when behavior changes.
+> If the implementation is removed, delete this tests document as well.

@@ -1,16 +1,30 @@
 ---
-id: FEAT-0000
+id: FEAT-0001
 title: Example Feature Name
 status: proposed
 last_updated: 2025-11-10
-owners: [your-name-or-team]
-related_capabilities: []
+summary: Brief one-line description of what this feature does.
 related_features: []
-notes: >
-  Optional short note about this feature or its history.
+components: []
+implementations: []
+notes: ""
 ---
 
-# {{title}} ({{id}})
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated
+- id format: FEAT-NNNN (e.g., FEAT-0001)
+- Status values: proposed | approved | active
+- Traceability arrays (components, implementations):
+  - Empty means "not yet planned/created"
+  - Populate these as you create architecture and implementation specs
+  - Example: components: ["COMP-0001", "COMP-0003"]
+-->
+
+# Feature: {{title}}
+
+**ID:** `{{id}}`
+**Status:** `{{status}}`
 
 ## 1. Summary
 
@@ -54,11 +68,22 @@ notes: >
 
 ## 8. Traceability
 
-- **Architecture components:** to be linked in Architecture tier.
-- **Implementation items:** `IMPL-####`
-- **Tasks:** `TASK-####`
+**Cross-tier links (populated as specs are created):**
 
-> _Agent note:_  
-> Use this document to understand intended behavior from the user’s perspective.  
-> Look up related Architecture and Implementation specs for technical guidance.  
-> Update this document if behavior changes.
+- **Architecture components:** `{{components}}` (empty until architecture is designed)
+- **Implementation items:** `{{implementations}}` (empty until implementation is planned)
+- **Related features:** `{{related_features}}`
+
+> **Workflow:**
+> 1. Create this feature spec with empty `components` and `implementations` arrays.
+> 2. When you create architecture components, come back and add them to the `components` array.
+> 3. When you create implementation specs, come back and add them to the `implementations` array.
+> 4. This creates full traceability from feature → component → implementation → code.
+
+---
+
+> **Agent note:**
+> This document defines intended behavior from the user's perspective.
+> Look up related Architecture and Implementation specs for technical details.
+> Update this document if user-facing behavior changes.
+> If this feature is removed, delete this file and update the charter index.

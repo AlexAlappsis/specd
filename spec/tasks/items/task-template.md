@@ -1,23 +1,44 @@
 ---
-id: TASK-0000                    # e.g., TASK-0001
+id: TASK-0001
 title: Example Task Title
+status: todo
 last_updated: 2025-11-10
-status: todo                     # todo | in-progress | blocked | done
-priority: P2                     # P0 | P1 | P2 | P3
+summary: Brief one-line description of what this task accomplishes.
+priority: P2
 repo: your-repo-name-or-path
-features: []                     # e.g., ["FEAT-0001"]
-components: []                   # e.g., ["COMP-0001"]
-implementation_items: []         # e.g., ["IMPL-0001"]
-depends_on: []                   # e.g., ["TASK-0003", "IMPL-0002"]
-blocked_by: []                   # optional extra clarity; often overlaps with depends_on
-created_by: your-name-or-team
+features: []
+components: []
+implementations: []
+depends_on: []
 created_at: 2025-11-10
 completed_at: null
-notes: >
-  Optional short notes about this task or its context.
+notes: ""
 ---
 
-# {{title}} ({{id}})
+<!--
+VALIDATION RULES:
+- Required fields: id, title, status, last_updated, priority, repo, created_at
+- id format: TASK-NNNN (e.g., TASK-0001)
+- Status values: todo | in-progress | blocked | done
+- Priority values: P0 (urgent) | P1 (high) | P2 (normal) | P3 (low)
+- Traceability arrays:
+  - features: FEAT-#### IDs this task contributes to
+  - components: COMP-#### IDs this task touches
+  - implementations: IMPL-#### IDs this task modifies
+  - depends_on: Can include other TASK-#### or IMPL-#### IDs that must exist first
+  - Example: features: ["FEAT-0001"], implementations: ["IMPL-0003"]
+- Dates: Use YYYY-MM-DD format
+- completed_at: null until task is done, then set to completion date
+-->
+
+# Task: {{title}}
+
+**ID:** `{{id}}`
+**Status:** `{{status}}`
+**Priority:** `{{priority}}`
+**Repo:** `{{repo}}`
+**Created:** `{{created_at}}`
+**Completed:** `{{completed_at}}`
 
 ## 1. Summary
 
@@ -26,18 +47,16 @@ notes: >
 - What needs to be done?  
 - Why is it needed (in one or two sentences)?
 
-## 2. Context & Links
+## 2. Traceability
 
-> _Connect this task back to specs and related work._
+**Cross-tier links:**
 
-- **Features (`FEAT-####`):**
-  - `FEAT-0001` – brief note on how this task relates.  
-- **Components (`COMP-####`):**
-  - `COMP-0001` – component this task touches.  
-- **Implementation items (`IMPL-####`):**
-  - `IMPL-0001` – implementation area this task modifies or extends.  
-- **Related tasks (`TASK-####`):**
-  - `TASK-0003` – must be done first.  
+- **Features:** `{{features}}` (FEAT-#### IDs this task contributes to)
+- **Components:** `{{components}}` (COMP-#### IDs this task touches)
+- **Implementations:** `{{implementations}}` (IMPL-#### IDs this task modifies or creates)
+- **Dependencies:** `{{depends_on}}` (TASK-#### or IMPL-#### IDs that must be complete first)
+
+> **Note:** These arrays should be populated when creating the task based on existing specs.  
 
 ## 3. Requirements & Constraints
 
@@ -76,10 +95,12 @@ notes: >
 
 ---
 
-> _Agent note:_  
-> Use this task file as the source of truth for what needs to be done and why.  
-> Before making changes, read the linked Charter/Architecture/Implementation docs.  
+> **Agent note:**
+> This task file is the source of truth for what needs to be done and why.
+> Before making changes, read the linked Charter/Architecture/Implementation docs.
 > After completing the work:
-> - Update `status` and `completed_at`.  
-> - Ensure all relevant specs are updated to reflect the new reality.  
+> - Update `status` to `done` and set `completed_at` to the completion date.
+> - Ensure all relevant specs are updated to reflect the new reality.
 > - Add any important decisions to the Notes & History section.
+> - Update the backlog table to reflect the new status.
+> Keep completed tasks for historical reference rather than deleting them.
