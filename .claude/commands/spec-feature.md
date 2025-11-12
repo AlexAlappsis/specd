@@ -38,7 +38,7 @@ When this command is invoked:
    - Create filename: `FEAT-####-{slug}.md`
 
 5. **Create feature file:**
-   - Copy `.specdocs/spec/charter/features/feature-template.md`
+   - Copy `spec/charter/features/feature-template.md`
    - Save to `spec/charter/features/FEAT-####-{slug}.md`
    - Replace all {{placeholder}} values:
      - `{{id}}` → assigned FEAT-#### ID
@@ -92,7 +92,7 @@ Next steps:
 ```
 
 **Important notes:**
-- Always read from `.specdocs/spec/` templates
+- Always read from `./spec/` templates (copied during /spec-init)
 - Write to `./spec/` working directory
 - Validate ID format matches FEAT-NNNN (4 digits with leading zeros)
 - Ensure all arrays are valid YAML/JSON format

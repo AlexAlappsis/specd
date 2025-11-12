@@ -44,7 +44,7 @@ When this command is invoked:
    - Create filename: `COMP-####-{slug}.md`
 
 6. **Create component file:**
-   - Copy `.specdocs/spec/architecture/components/component-template.md`
+   - Copy `spec/architecture/components/component-template.md`
    - Save to `spec/architecture/components/COMP-####-{slug}.md`
    - Replace all {{placeholder}} values:
      - `{{id}}` → assigned COMP-#### ID

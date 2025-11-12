@@ -48,7 +48,7 @@ When this command is invoked:
    - Create filename: `TASK-####-{slug}.md`
 
 6. **Create task file:**
-   - Copy `.specdocs/spec/tasks/items/task-template.md`
+   - Copy `spec/tasks/items/task-template.md`
    - Save to `spec/tasks/items/TASK-####-{slug}.md`
    - Replace all {{placeholder}} values:
      - `{{id}}` → assigned TASK-#### ID

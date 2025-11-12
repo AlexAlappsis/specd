@@ -44,7 +44,7 @@ When this command is invoked:
    - Create filename: `IMPL-####-{slug}.md`
 
 6. **Create implementation file:**
-   - Copy `.specdocs/spec/implementation/contracts/impl-item-template.md`
+   - Copy `spec/implementation/contracts/impl-item-template.md`
    - Save to `spec/implementation/contracts/IMPL-####-{slug}.md`
    - Replace all {{placeholder}} values:
      - `{{id}}` → assigned IMPL-#### ID
