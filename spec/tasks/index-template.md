@@ -18,10 +18,9 @@ VALIDATION RULES:
 
 # Tasks Index (Repo-Level)
 
-This directory defines **optional work items** for this repository.
+This directory defines **work items** for this repository.
 
-> **Note:** Tasks are optional. For simple/medium implementations, generate code directly from IMPL-#### specs.
-> Use tasks for complex implementations that need work breakdown, dependency tracking, or progress management.
+> **Purpose:** Tasks translate implementation specs (IMPL-####) into actionable work items with priorities, dependencies, and execution order. Every implementation should have at least one task before code generation begins.
 
 It answers:
 
@@ -68,20 +67,20 @@ Example layout:
 
 ## Usage Notes (for Agents)
 
-### When to Use Tasks
+### Task Creation is Mandatory
 
-Tasks are **optional**. Choose based on implementation complexity:
+Tasks are the **execution planning layer** between specs and code:
 
-**Skip tasks** (work directly from IMPL specs):
-- Small/medium implementations with complete contracts in IMPL-####
-- Single developer/agent workflow
-- No complex inter-task dependencies
+**For simple implementations:**
+- Create one task that references the IMPL-####
+- Set appropriate priority (P0-P3)
+- No dependencies needed if standalone
 
-**Create tasks** (break down IMPL into tasks):
-- Large implementations with distinct phases
-- Multiple parallel work streams
-- Explicit dependency tracking needed
-- Progress/priority management important
+**For complex implementations:**
+- Break into multiple phased tasks
+- Define dependencies between tasks (depends_on)
+- Assign priorities to control execution order
+- Each task still references the same IMPL-#### for contracts
 
 ### Working with Tasks
 
@@ -99,8 +98,9 @@ When using tasks in this repo:
 ---
 
 > **Agent note:**
-> Tasks are OPTIONAL. For most implementations, generate code directly from IMPL-#### specs.
-> Only create tasks when complexity demands work breakdown or dependency tracking.
+> Tasks are MANDATORY for code generation. Always create at least one task per implementation.
+> Code generation tools read TASK-#### files, which reference IMPL-#### for detailed contracts.
+> This separation keeps specs (what to build) separate from execution planning (when/how to build).
 > This index is the entry point for all task-level documentation in this repo.
 > Always update task lists when adding or removing tasks.
 > When a task is complete, update its status to `done` but keep the file for historical reference.

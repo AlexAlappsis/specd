@@ -15,7 +15,7 @@ Each tier has Markdown templates (ending in `-template.md`) and instantiated wor
 | **1. Charter** | `/spec/charter/` | System-level | Defines the system’s goals, vision, and features in human terms.  The “why” and “what.” |
 | **2. Architecture** | `/spec/architecture/` | System-level | Defines the technology stack, system structure, components, and how they interact.  The “how it’s organized.” |
 | **3. Implementation** | `/spec/implementation/` | Repo-level | Defines actual interfaces, contracts, data models, and implementation details for each repository.  The “how it’s built.” |
-| **4. Tasks** | `/spec/tasks/` | Repo-level | Tracks ongoing and completed work items tied to features and implementation areas.  The “what’s next.” |
+| **4. Tasks** | `/spec/tasks/` | Repo-level | Execution planning: translates implementation specs into prioritized, ordered work items.  The "when and how to build it." |
 
 ---
 
@@ -74,30 +74,40 @@ IDs appear in file names, front matter, and tables across tiers, allowing easy t
 
 - **Charter → Architecture:**  Each feature (`FEAT-####`) maps to one or more architecture components (`COMP-####`).
 - **Architecture → Implementation:**  Each component is implemented through one or more implementation specs (`IMPL-####`).
-- **Implementation → Tasks:**  Each implementation area spawns work items (`TASK-####`) representing actual coding or testing tasks.
+- **Implementation → Tasks:**  Each implementation area requires at least one task (`TASK-####`) before code generation.
 
 This chain allows both humans and LLMs to trace any work item all the way back to its original product intent.
 
-Example:
+**Mandatory workflow for code generation:**
+```
+FEAT-0002  →  COMP-0004  →  IMPL-0012  →  TASK-0045  →  Code
+```
 
-```
-FEAT-0002  ←→  COMP-0004  ←→  IMPL-0012  ←→  TASK-0045
-```
+Tasks separate specification (what to build) from execution planning (when/how to build it).
 
 ---
 
 ## 🧠 Agent Workflow
 
-Agents and developers use these tiers together:
+### Planning & Specification
 
 1. **Understand the system:**  Read `/spec/charter/system-charter.md`.
 2. **Find related architecture:**  Check `/spec/architecture/index.md` and open relevant `COMP-####` files.
 3. **Locate implementation details:**  Go to `/spec/implementation/contracts/IMPL-####.md` for data models and interfaces.
-4. **See active work:**  Review `/spec/tasks/backlog.md` and open relevant `TASK-####` files.
-5. **After code changes:**
-   - Update affected Implementation and Task docs.  
-   - If architecture or features have changed, update those too.  
-   - Keep IDs consistent across all tiers.
+4. **Create tasks:**  For each IMPL-####, create at least one TASK-#### in `/spec/tasks/items/`.
+
+### Code Generation
+
+5. **Read task:**  Open the relevant `TASK-####` file to understand what to build and priority.
+6. **Read implementation:**  Follow the task's `implementations: []` link to get detailed contracts from `IMPL-####`.
+7. **Generate code:**  Use contracts, data models, and invariants from IMPL spec to generate code.
+8. **Update status:**  Mark task as `in-progress`, then `done` when complete.
+
+### After Code Changes
+
+9. **Update specs:**  Update affected Implementation and Task docs to match reality.
+10. **Update cross-tier links:**  If architecture or features changed, update those too.
+11. **Maintain consistency:**  Keep IDs and bidirectional links consistent across all tiers.
 
 ---
 

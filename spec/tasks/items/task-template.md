@@ -83,11 +83,12 @@ TEMPLATE USAGE:
 
 > _Optional breakdown of how to approach this task._
 
-- Step 1: …  
-- Step 2: …  
+- Step 1: …
+- Step 2: …
 - Step 3: …
 
-(Useful for complex tasks or for guiding agents.)
+> **For simple implementations:** Leave this section minimal or empty if the task is straightforward.
+> **For complex tasks:** Break down phases, identify risks, or provide additional context for agents.
 
 ## 5. Completion Criteria
 
@@ -109,9 +110,10 @@ TEMPLATE USAGE:
 ---
 
 > **Agent note:**
-> Tasks are OPTIONAL. For simple/medium implementations, work directly from IMPL-#### specs.
-> This task file is used when breaking down complex implementations into smaller work items.
-> Before making changes, read the linked Implementation docs for detailed contracts and data models.
+> Tasks are MANDATORY for code generation. This task file defines execution planning.
+> Code generation reads this task, then references the linked IMPL-#### for detailed contracts.
+> This separates "what to build" (IMPL spec) from "when/how to build it" (this task).
+> Before generating code, read the linked Implementation docs for detailed contracts and data models.
 > After completing the work:
 > - Update `status` to `done` and set `completed_at` to the completion date.
 > - Ensure all relevant specs are updated to reflect the new reality.

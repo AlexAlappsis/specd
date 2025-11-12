@@ -15,7 +15,7 @@ The specification system is organized into four tiers with strict cross-tier tra
 | **Charter** | `/spec/charter/` | System-level | Business goals, vision, and features (FEAT-####) |
 | **Architecture** | `/spec/architecture/` | System-level | Tech stack, components, and system design (COMP-####) |
 | **Implementation** | `/spec/implementation/` | Repo-level | Interfaces, contracts, and data models (IMPL-####) |
-| **Tasks** | `/spec/tasks/` | Repo-level | **Optional** work items and task tracking (TASK-####) |
+| **Tasks** | `/spec/tasks/` | Repo-level | Work items and execution planning (TASK-####) |
 
 ## ID Conventions
 
@@ -102,26 +102,24 @@ When working with this repository:
    - Maintenance prompts guide updates after code/design changes
    - Cross-tier sync prompt ensures consistency
 
-### Task Tier: When to Use
+### Task Tier: Execution Planning Layer
 
-The Task tier (TASK-####) is **optional** and should be used based on complexity:
+The Task tier (TASK-####) is **mandatory** and serves as the execution planning layer:
 
-**Skip tasks** (generate code directly from IMPL specs) when:
-- Implementation is small/medium in scope
-- No complex dependencies between work items
-- Single developer/agent workflow
-- IMPL spec has all necessary contracts and behavior
+**Purpose:**
+- Translate implementation specs into actionable work items
+- Define execution order through priorities and dependencies
+- Track progress and completion status
+- Separate "what to build" (IMPL) from "when/how to build it" (TASK)
 
-**Create tasks** (break down IMPL into tasks) when:
-- Implementation is large or has distinct phases
-- Multiple developers/agents working in parallel
-- Explicit dependency tracking needed between work items
-- Progress tracking and prioritization are important
-- Implementation crosses multiple repos or components
+**Task Scope:**
+- **Simple implementations**: Create one task that references the IMPL
+- **Complex implementations**: Break into multiple phased tasks with dependencies
 
-**Code generation workflows:**
-- **Fast path**: `FEAT → COMP → IMPL → Code` (most common)
-- **Managed path**: `FEAT → COMP → IMPL → TASK → Code` (complex work)
+**Workflow:**
+- `FEAT → COMP → IMPL → TASK → Code generation`
+- Tasks always reference IMPL specs for detailed contracts
+- Code generation always reads from TASK-#### (which points to IMPL-#### for details)
 
 ## Cross-Tier Traceability
 
@@ -178,30 +176,33 @@ These will be implemented as `/.claude/commands/` files:
 These will be implemented as Claude skills:
 
 - `specdocs-analyst` - Analyze existing codebase and generate draft specs
-- `specdocs-generator` - Generate code from IMPL-#### or TASK-#### (accepts both)
+- `specdocs-generator` - Generate code from TASK-#### (reads referenced IMPL-#### for contracts)
 - `specdocs-validator` - Comprehensive validation of spec consistency
 
 ### Example Workflows
 
-**Simple implementation (no tasks):**
+**Simple implementation (single task):**
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010, updates both specs
 3. /spec-impl → Creates IMPL-0042.md, links to FEAT-0010 and COMP-0015, updates all
-4. specdocs-generator IMPL-0042 → Generates complete code from implementation spec
-5. /spec-sync → Validates all links are bidirectional and consistent
+4. /spec-task → Creates TASK-0100.md, references IMPL-0042, priority P2
+5. specdocs-generator TASK-0100 → Generates code (reads IMPL-0042 for contracts)
+6. /spec-sync → Validates all links are bidirectional and consistent
 ```
 
-**Complex implementation (with task breakdown):**
+**Complex implementation (multi-phase tasks):**
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010
 3. /spec-impl → Creates IMPL-0042.md (large/complex implementation)
-4. /spec-task → Creates TASK-0100.md (first phase, references IMPL-0042)
-5. /spec-task → Creates TASK-0101.md (second phase, depends on TASK-0100)
-6. specdocs-generator TASK-0100 → Generates code for first task (reads IMPL-0042 for contracts)
-7. specdocs-generator TASK-0101 → Generates code for second task
-8. /spec-sync → Validates consistency
+4. /spec-task → Creates TASK-0100.md (Phase 1: Data models, priority P0, references IMPL-0042)
+5. /spec-task → Creates TASK-0101.md (Phase 2: Business logic, priority P1, depends on TASK-0100)
+6. /spec-task → Creates TASK-0102.md (Phase 3: API endpoints, priority P1, depends on TASK-0101)
+7. specdocs-generator TASK-0100 → Generates data models (reads IMPL-0042 for schemas)
+8. specdocs-generator TASK-0101 → Generates business logic (reads IMPL-0042 for invariants)
+9. specdocs-generator TASK-0102 → Generates API layer (reads IMPL-0042 for endpoints)
+10. /spec-sync → Validates consistency
 ```
 
 ## Version Control
