@@ -109,8 +109,9 @@ TEMPLATE USAGE:
 ---
 
 > **Agent note:**
-> This task file is the source of truth for what needs to be done and why.
-> Before making changes, read the linked Charter/Architecture/Implementation docs.
+> Tasks are OPTIONAL. For simple/medium implementations, work directly from IMPL-#### specs.
+> This task file is used when breaking down complex implementations into smaller work items.
+> Before making changes, read the linked Implementation docs for detailed contracts and data models.
 > After completing the work:
 > - Update `status` to `done` and set `completed_at` to the completion date.
 > - Ensure all relevant specs are updated to reflect the new reality.

@@ -18,7 +18,10 @@ VALIDATION RULES:
 
 # Tasks Index (Repo-Level)
 
-This directory defines **work items** for this repository.
+This directory defines **optional work items** for this repository.
+
+> **Note:** Tasks are optional. For simple/medium implementations, generate code directly from IMPL-#### specs.
+> Use tasks for complex implementations that need work breakdown, dependency tracking, or progress management.
 
 It answers:
 
@@ -65,19 +68,39 @@ Example layout:
 
 ## Usage Notes (for Agents)
 
-When planning or doing work in this repo:
+### When to Use Tasks
+
+Tasks are **optional**. Choose based on implementation complexity:
+
+**Skip tasks** (work directly from IMPL specs):
+- Small/medium implementations with complete contracts in IMPL-####
+- Single developer/agent workflow
+- No complex inter-task dependencies
+
+**Create tasks** (break down IMPL into tasks):
+- Large implementations with distinct phases
+- Multiple parallel work streams
+- Explicit dependency tracking needed
+- Progress/priority management important
+
+### Working with Tasks
+
+When using tasks in this repo:
 
 1. Open the relevant task list (e.g., `backlog.md` or `current-sprint.md`) to find candidate tasks.
 2. For a specific `TASK-####`, open its file in `items/` to get full context (description, dependencies, links to specs).
-3. After completing a task:
+3. Read the referenced `IMPL-####` spec(s) for detailed contracts, data models, and invariants.
+4. After completing a task:
    - Update its status and completion fields in the task file.
    - Update any affected specs in Charter, Architecture, or Implementation tiers.
    - Adjust task lists (move between backlog, sprint, etc.) as needed.
-4. When creating a new task, use `next_task_id` from the front matter, then increment it.
+5. When creating a new task, use `next_task_id` from the front matter, then increment it.
 
 ---
 
 > **Agent note:**
+> Tasks are OPTIONAL. For most implementations, generate code directly from IMPL-#### specs.
+> Only create tasks when complexity demands work breakdown or dependency tracking.
 > This index is the entry point for all task-level documentation in this repo.
 > Always update task lists when adding or removing tasks.
 > When a task is complete, update its status to `done` but keep the file for historical reference.
