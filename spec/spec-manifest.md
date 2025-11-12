@@ -64,6 +64,7 @@ It serves as a quick reference for both humans and agents when locating template
 | `README.md` | Describes the full 4-tier spec system, workflows, and ID conventions. |
 | `index.md` | Lightweight navigational index for all specification tiers and key files. |
 | `spec-manifest.md` | This file. Summarizes all templates for automation and discovery. |
+| `glossary-template.md` | Template for defining shared vocabulary, domain terms, and technical terminology. |
 
 ---
 
