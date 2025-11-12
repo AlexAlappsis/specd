@@ -142,13 +142,6 @@ Keep these templates version-controlled in your project for agent reference or a
 
 ---
 
-## 📄 License & Attribution
-
-This spec framework is inspired by the [GitHub spec-kit project](https://github.com/github/spec-kit) but simplified and restructured for flexibility and LLM-assisted workflows.
-
----
-
 > _Agent note:_  
 > Use this README as your navigation map for the project’s specification system.  
 > Before performing or automating any work, identify which tier and IDs your task touches, and load those documents into context.
-

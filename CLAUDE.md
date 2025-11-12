@@ -160,17 +160,36 @@ These prompts include clarifying questions and confirmation steps to prevent acc
 - **LLM-friendly**: Designed with agents in mind (structured IDs, YAML front matter, consistent templates)
 - **Redundant traceability**: Optimizes for reads over writes - same links stored in multiple places
 
-## Planned Tooling (Not Yet Implemented)
+## Slash Commands (Implemented)
 
-### Slash Commands (Project-Level)
-These will be implemented as `/.claude/commands/` files:
+### Available Commands
+These are implemented in `/.claude/commands/`:
 
-- `/spec-init` - Initialize spec system in a new project
-- `/spec-feature` - Create new feature with auto-ID assignment and index updates
-- `/spec-component` - Create new component with automatic cross-tier linking
-- `/spec-impl` - Create new implementation with backlink updates
-- `/spec-task` - Create new task with traceability links
+- `/spec-init` - Initialize spec system (copies templates from `.specdocs/spec/` to `./spec/`)
+- `/spec-feature` - Create new FEAT-#### with auto-ID assignment
+- `/spec-component` - Create new COMP-#### with cross-tier linking
+- `/spec-impl` - Create new IMPL-#### with bidirectional backlink updates
+- `/spec-task` - Create new TASK-#### with traceability links
 - `/spec-sync` - Validate cross-tier consistency and fix broken links
+
+### How Commands Work
+
+**Template Source:**
+- After `/spec-init`, all commands read from `./spec/*-template.md` (working copies)
+- Users can customize templates per-project in `./spec/`
+- Original templates in `.specdocs/spec/` remain pristine
+
+**Auto-ID Assignment:**
+- Commands read `next_*_id` from index files (e.g., `next_feature_id: FEAT-0005`)
+- Auto-assign next ID and increment counter
+- IDs use NNNN format with leading zeros
+
+**Cross-Tier Linking:**
+- Commands automatically update bidirectional links
+- Example: Creating COMP-0003 for FEAT-0002:
+  1. Creates `COMP-0003-*.md` with `features: ["FEAT-0002"]`
+  2. Opens `FEAT-0002-*.md` and adds `"COMP-0003"` to `components: []`
+  3. Both files now have bidirectional links
 
 ### Skills (Cross-Project Reusable)
 These will be implemented as Claude skills:

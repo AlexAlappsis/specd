@@ -235,7 +235,9 @@ SpecDocs is a template repository designed to be added to your projects as a git
 
 ---
 
-## 📄 License
+## 📄 License & Attribution
+
+This spec framework is inspired by the [GitHub spec-kit project](https://github.com/github/spec-kit) but simplified and restructured for flexibility and LLM-assisted workflows.
 
 MIT License
 
