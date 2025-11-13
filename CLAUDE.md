@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SpecDocs is a **specification documentation framework** for organizing system documentation across four hierarchical tiers. This is a **template repository**, not a runtime application. It provides reusable Markdown templates and LLM prompts for structured specification management.
+specd is a **specification documentation framework** for organizing system documentation across four hierarchical tiers. This is a **template repository**, not a runtime application. It provides reusable Markdown templates and LLM prompts for structured specification management.
 
 ## Four-Tier Architecture
 

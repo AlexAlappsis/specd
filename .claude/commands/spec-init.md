@@ -1,4 +1,4 @@
-Initialize the specdocs specification system in this project by copying templates from the .specdocs submodule.
+Initialize the specd specification system in this project by copying templates from the .specdocs submodule.
 
 **What this command does:**
 1. Checks if .specdocs submodule exists at project root

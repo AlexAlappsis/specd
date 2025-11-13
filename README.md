@@ -1,14 +1,14 @@
-# SpecDocs
+# specd
 
 A **specification documentation framework** for organizing system documentation across four hierarchical tiers with strict cross-tier traceability.
 
-SpecDocs provides templates, slash commands, and workflows to maintain living documentation that evolves with your codebase.
+specd provides templates, slash commands, and workflows to maintain living documentation that evolves with your codebase.
 
 ---
 
-## 🎯 What is SpecDocs?
+## 🎯 What is specd?
 
-SpecDocs is a **template repository** that provides:
+specd is a **template repository** that provides:
 
 - **Markdown templates** for four-tier specifications (Charter, Architecture, Implementation, Tasks)
 - **Slash commands** for creating and managing specs with auto-ID assignment and cross-tier linking
@@ -25,11 +25,11 @@ For detailed documentation on the specification system itself, see [spec/readme.
 
 ### Option 1: Add as Git Submodule (Recommended)
 
-Add SpecDocs to your project as a git submodule:
+Add specd to your project as a git submodule:
 
 ```bash
 cd your-project
-git submodule add https://github.com/your-username/specdocs .specdocs
+git submodule add https://github.com/AlexAlappsis/specd .specdocs
 git submodule update --init --recursive
 ```
 
@@ -37,10 +37,10 @@ This makes the slash commands available throughout your project and locks the te
 
 ### Option 2: Global Clone
 
-Clone SpecDocs to your home directory for use across multiple projects:
+Clone specd to your home directory for use across multiple projects:
 
 ```bash
-git clone https://github.com/your-username/specdocs ~/.specdocs
+git clone https://github.com/your-username/specd ~/.specdocs
 ```
 
 Then reference it from your projects (commands will need to be copied per-project).
@@ -222,7 +222,7 @@ your-project/
 
 ## 🤝 Using This Repository
 
-SpecDocs is a template repository designed to be added to your projects as a git submodule.
+specd is a template repository designed to be added to your projects as a git submodule.
 
 **Customization:**
 - Fork this repo and customize templates for your organization
