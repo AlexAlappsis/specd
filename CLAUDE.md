@@ -162,10 +162,19 @@ These prompts include clarifying questions and confirmation steps to prevent acc
 
 ## Slash Commands (Implemented)
 
-### Available Commands
-These are implemented in `/.claude/commands/`:
+### Installation Process
 
-- `/spec-init` - Initialize spec system (copies templates from `.specdocs/spec/` to `./spec/`)
+**First-time setup:**
+1. Add as submodule: `git submodule add <url> .specdocs`
+2. Run install script: `bash .specdocs/install.sh`
+   - Copies templates from `.specdocs/spec/` → `./spec/`
+   - Copies commands from `.specdocs/.claude/commands/` → `./.claude/commands/`
+3. Initialize: `/spec-init` creates working files from templates
+
+### Available Commands
+These are copied to `/.claude/commands/` by install.sh:
+
+- `/spec-init` - Initialize spec system (creates working files from templates)
 - `/spec-feature` - Create new FEAT-#### with auto-ID assignment
 - `/spec-component` - Create new COMP-#### with cross-tier linking
 - `/spec-impl` - Create new IMPL-#### with bidirectional backlink updates

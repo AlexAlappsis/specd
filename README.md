@@ -23,7 +23,7 @@ For detailed documentation on the specification system itself, see [spec/readme.
 
 ## 📦 Installation & Setup
 
-### Option 1: Add as Git Submodule (Recommended)
+### Step 1: Add as Git Submodule
 
 Add specd to your project as a git submodule:
 
@@ -33,71 +33,63 @@ git submodule add https://github.com/AlexAlappsis/specd .specdocs
 git submodule update --init --recursive
 ```
 
-This makes the slash commands available throughout your project and locks the template version.
+### Step 2: Run Installation Script
 
-### Option 2: Global Clone
-
-Clone specd to your home directory for use across multiple projects:
+Copy templates and slash commands to your project root:
 
 ```bash
-git clone https://github.com/your-username/specd ~/.specdocs
+bash .specdocs/install.sh
 ```
 
-Then reference it from your projects (commands will need to be copied per-project).
+This copies:
+- Templates from `.specdocs/spec/` → `./spec/`
+- Slash commands from `.specdocs/.claude/commands/` → `./.claude/commands/`
 
----
+### Step 3: Initialize Your Specs
 
-## 🚀 Quick Start
-
-### 1. Initialize Specification System
-
-Run the init command to copy templates into your project:
+Run the init command to set up your specification system:
 
 ```bash
 /spec-init
 ```
 
-This creates the `spec/` directory with all four tiers and initial index files.
+This creates working files (index.md, system-charter.md, etc.) from templates.
 
-### 2. Create Your First Feature
+---
 
+## 🚀 Quick Start
+
+After installation, you're ready to create specs:
+
+### 1. Create Features
 ```bash
 /spec-feature
 ```
+Define business capabilities (FEAT-####)
 
-Define a business capability in the Charter tier (FEAT-####).
-
-### 3. Create Architecture Components
-
+### 2. Create Components
 ```bash
 /spec-component
 ```
+Define architecture components (COMP-####)
 
-Define components that implement your features (COMP-####).
-
-### 4. Create Implementation Specs
-
+### 3. Create Implementations
 ```bash
 /spec-impl
 ```
+Define contracts and data models (IMPL-####)
 
-Define contracts, APIs, and data models (IMPL-####).
-
-### 5. Create Execution Tasks
-
+### 4. Create Tasks
 ```bash
 /spec-task
 ```
+Create execution tasks (TASK-####)
 
-Break implementations into prioritized, executable tasks (TASK-####).
-
-### 6. Validate Cross-Tier Links
-
+### 5. Validate
 ```bash
 /spec-sync
 ```
-
-Ensure all bidirectional links are consistent across tiers.
+Check cross-tier consistency
 
 ---
 
@@ -146,33 +138,38 @@ All commands are in `.claude/commands/` and available throughout your project.
 ## 🎨 Workflow Example
 
 ```bash
-# 1. Initialize system
+# 1. Add specd to your project
+git submodule add https://github.com/AlexAlappsis/specd .specdocs
+git submodule update --init --recursive
+bash .specdocs/install.sh
+
+# 2. Initialize
 /spec-init
 
-# 2. Create a feature
+# 3. Create a feature
 /spec-feature
 # → Creates FEAT-0001-user-authentication.md
 
-# 3. Create a component
+# 4. Create a component
 /spec-component
 # → Creates COMP-0001-auth-service.md
 # → Updates FEAT-0001 with bidirectional link
 
-# 4. Create implementation spec
+# 5. Create implementation spec
 /spec-impl
 # → Creates IMPL-0001-auth-api.md
 # → Updates FEAT-0001 and COMP-0001 with backlinks
 
-# 5. Create execution task
+# 6. Create execution task
 /spec-task
 # → Creates TASK-0001-implement-login-endpoint.md
 # → References IMPL-0001 for contracts
 
-# 6. Validate everything
+# 7. Validate everything
 /spec-sync
 # → Checks all cross-tier links are consistent
 
-# 7. Generate code (future skill)
+# 8. Generate code (future skill)
 specdocs-generator TASK-0001
 # → Reads TASK-0001 → IMPL-0001 → generates code
 ```

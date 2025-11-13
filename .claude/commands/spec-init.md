@@ -1,11 +1,11 @@
-Initialize the specd specification system in this project by copying templates from the .specdocs submodule.
+Initialize the specd specification system by setting up working spec files from templates.
 
 **What this command does:**
-1. Checks if .specdocs submodule exists at project root
-2. Copies template structure from .specdocs/spec/ to ./spec/
-3. Creates initial directory structure for all four tiers
-4. Prompts for system name and basic details
-5. Creates initial charter and architecture index files
+1. Verifies spec/ directory and templates exist
+2. Prompts for system name and basic details
+3. Creates working index files from templates
+4. Sets up initial charter and architecture documents
+5. Initializes all `next_*_id` fields
 
 **Usage:**
 ```
@@ -13,11 +13,11 @@ Initialize the specd specification system in this project by copying templates f
 ```
 
 **Prerequisites:**
-- The .specdocs submodule must be present at the project root
-- If not present, add it with: `git submodule add <repo-url> .specdocs`
+- Run `install.sh` script first to copy templates and commands to project root
+- The `spec/` directory with templates must exist
 
-**Template source:** `.specdocs/spec/`
-**Destination:** `./spec/`
+**Template source:** `./spec/` (copied by install.sh)
+**Working files:** `./spec/` (created from templates)
 
 ---
 
@@ -25,25 +25,28 @@ Initialize the specd specification system in this project by copying templates f
 
 When this command is invoked:
 
-1. **Verify .specdocs submodule exists:**
-   - Check if `.specdocs/spec/` directory exists
-   - If not, inform user they need to add the submodule first and exit
+1. **Verify spec/ directory exists:**
+   - Check if `./spec/` directory exists
+   - If not, inform user to run `install.sh` first and exit
 
-2. **Check if spec/ already exists:**
-   - If `./spec/` exists, ask user if they want to overwrite or merge
-   - Default to aborting to prevent data loss
+2. **Verify templates exist:**
+   - Check for `spec/charter/index-template.md`
+   - Check for `spec/architecture/index-template.md`
+   - Check for `spec/implementation/index-template.md`
+   - Check for `spec/tasks/index-template.md`
+   - If any missing, inform user to run `install.sh` first
+
+3. **Check if already initialized:**
+   - Check if `spec/charter/index.md` exists (working file, not template)
+   - If exists, ask user if they want to re-initialize
+   - Warn that re-initializing will overwrite existing index files
 
 3. **Prompt for system details:**
    - System name (for charter)
    - Brief system description
    - Repository name (for repo-level specs)
 
-4. **Copy template structure:**
-   - Copy entire `.specdocs/spec/` directory to `./spec/`
-   - Preserve all templates (files ending in `-template.md`)
-   - Create working copies of index files
-
-5. **Initialize charter tier:**
+4. **Initialize charter tier:**
    - Copy `spec/charter/index-template.md` → `spec/charter/index.md`
    - Copy `spec/charter/system-charter-template.md` → `spec/charter/system-charter.md`
    - Replace {{system_name}} and {{description}} placeholders with user-provided values
@@ -75,14 +78,16 @@ When this command is invoked:
 
 10. **Report completion:**
     - List created files
+    - Display system name and repo name configured
     - Provide next steps:
       - "Review and edit spec/charter/system-charter.md with your system details"
       - "Use /spec-feature to create your first feature"
       - "Use /spec-component to define your first component"
 
 **Important notes:**
-- Preserve all `-template.md` files for future reference
-- Do not modify templates, only create working copies
+- Templates (`*-template.md`) remain unchanged for future use
+- Only create working copies (index.md, system-charter.md, etc.)
 - Ensure all {{placeholder}} values are replaced in working copies
 - Set all dates to current date in YYYY-MM-DD format
 - Initialize all `next_*_id` fields to 0001
+- Templates and working files coexist in same directories
