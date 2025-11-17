@@ -17,22 +17,36 @@ Create a new task (TASK-####) for execution planning. Tasks are mandatory before
 
 When this command is invoked:
 
-1. **Verify spec system exists:**
-   - Check if `spec/tasks/index.md` exists
-   - If not, prompt user to run `/spec-init` first
+1. **Check if tasks tier is initialized:**
+   - Check if `spec/tasks/index.md` exists (working file, not template)
+   - If exists, proceed to step 3 (tier already initialized)
+   - If not exists, proceed to step 2 (initialize tier)
 
-2. **Read task index:**
+2. **Initialize tasks tier (if needed):**
+   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
+   - Check for `spec/tasks/index-template.md`; if missing, inform user to run `install.sh` first and exit
+   - Check for `spec/tasks/backlog-template.md`; if missing, inform user to run `install.sh` first and exit
+   - Prompt user for repository name (needed for tier initialization)
+   - Copy `spec/tasks/index-template.md` → `spec/tasks/index.md`
+   - Copy `spec/tasks/backlog-template.md` → `spec/tasks/backlog.md`
+   - Replace {{repo}} placeholder with user-provided repository name in both files
+   - Set initial `next_task_id: TASK-0001`
+   - Set `last_updated` to today's date (YYYY-MM-DD)
+   - Remove any example rows from task table
+   - Inform user: "Tasks tier initialized for repo: {repo}. Creating first task..."
+
+3. **Read task index:**
    - Open `spec/tasks/index.md`
    - Extract `next_task_id` and `repo` from front matter
    - Parse existing task table from `spec/tasks/backlog.md`
 
-3. **Read available specs for linking:**
+4. **Read available specs for linking:**
    - Open `spec/charter/index.md` for FEAT-#### list
    - Open `spec/architecture/index.md` for COMP-#### list
    - Open `spec/implementation/index.md` for IMPL-#### list
    - List existing TASK-#### IDs for depends_on
 
-4. **Prompt user for task details:**
+5. **Prompt user for task details:**
    - Task title (concise, action-oriented, e.g., "Implement user login endpoint")
    - Brief summary (one-line description of what gets done)
    - Priority (P0=urgent | P1=high | P2=normal | P3=low)
@@ -43,11 +57,11 @@ When this command is invoked:
    - Detailed requirements (what needs to be built?)
    - Completion criteria (how do we know it's done?)
 
-5. **Generate task slug:**
+6. **Generate task slug:**
    - Convert title to kebab-case
    - Create filename: `TASK-####-{slug}.md`
 
-6. **Create task file:**
+7. **Create task file:**
    - Copy `spec/tasks/items/task-template.md`
    - Save to `spec/tasks/items/TASK-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -67,7 +81,7 @@ When this command is invoked:
      - `{{notes}}` → ""
    - Fill in requirements and completion criteria from user prompts
 
-7. **Update task backlog:**
+8. **Update task backlog:**
    - Open `spec/tasks/backlog.md`
    - Add new row to task table:
      ```
@@ -76,11 +90,11 @@ When this command is invoked:
    - Keep sorted by priority (P0 first) then ID
    - Update `last_updated` in front matter
 
-8. **Update task index:**
+9. **Update task index:**
    - Increment `next_task_id`
    - Update `last_updated`
 
-9. **Report completion:**
+10. **Report completion:**
    - Display created file path
    - Show assigned TASK-#### ID
    - Display priority and dependencies

@@ -17,27 +17,37 @@ Create a new feature specification (FEAT-####) in the Charter tier.
 
 When this command is invoked:
 
-1. **Verify spec system exists:**
-   - Check if `spec/charter/index.md` exists
-   - If not, prompt user to run `/spec-init` first
+1. **Check if charter tier is initialized:**
+   - Check if `spec/charter/index.md` exists (working file, not template)
+   - If exists, proceed to step 3 (tier already initialized)
+   - If not exists, proceed to step 2 (initialize tier)
 
-2. **Read charter index:**
+2. **Initialize charter tier (if needed):**
+   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
+   - Check for `spec/charter/index-template.md`; if missing, inform user to run `install.sh` first and exit
+   - Copy `spec/charter/index-template.md` → `spec/charter/index.md`
+   - Set initial `next_feature_id: FEAT-0001`
+   - Set `last_updated` to today's date (YYYY-MM-DD)
+   - Remove any example rows from feature table
+   - Inform user: "Charter tier initialized. Creating first feature..."
+
+3. **Read charter index:**
    - Open `spec/charter/index.md`
    - Extract `next_feature_id` from front matter (e.g., `FEAT-0005`)
    - Parse existing feature table to understand current features
 
-3. **Prompt user for feature details:**
+4. **Prompt user for feature details:**
    - Feature title (short, descriptive name)
    - Brief summary (one-line description)
    - Detailed description (what does this feature do?)
    - User stories or use cases (optional)
    - Success metrics (optional)
 
-4. **Generate feature slug:**
+5. **Generate feature slug:**
    - Convert title to kebab-case (e.g., "User Authentication" → "user-authentication")
    - Create filename: `FEAT-####-{slug}.md`
 
-5. **Create feature file:**
+6. **Create feature file:**
    - Copy `spec/charter/features/feature-template.md`
    - Save to `spec/charter/features/FEAT-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -52,7 +62,7 @@ When this command is invoked:
      - `{{implementations}}` → [] (empty array, will be filled when implementations are created)
    - Fill in description, user stories, and success metrics from user prompts
 
-6. **Update charter index:**
+7. **Update charter index:**
    - Open `spec/charter/index.md`
    - Add new row to feature table:
      ```
@@ -62,7 +72,7 @@ When this command is invoked:
    - Increment `next_feature_id` in front matter (e.g., FEAT-0005 → FEAT-0006)
    - Update `last_updated` field to today
 
-7. **Report completion:**
+8. **Report completion:**
    - Display created file path
    - Show assigned FEAT-#### ID
    - Suggest next steps:

@@ -18,20 +18,32 @@ Create a new architecture component specification (COMP-####) and update cross-t
 
 When this command is invoked:
 
-1. **Verify spec system exists:**
-   - Check if `spec/architecture/index.md` exists
-   - If not, prompt user to run `/spec-init` first
+1. **Check if architecture tier is initialized:**
+   - Check if `spec/architecture/index.md` exists (working file, not template)
+   - If exists, proceed to step 3 (tier already initialized)
+   - If not exists, proceed to step 2 (initialize tier)
 
-2. **Read architecture index:**
+2. **Initialize architecture tier (if needed):**
+   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
+   - Check for `spec/architecture/index-template.md`; if missing, inform user to run `install.sh` first and exit
+   - Check for `spec/architecture/stack-overview-template.md`; if missing, inform user to run `install.sh` first and exit
+   - Copy `spec/architecture/index-template.md` → `spec/architecture/index.md`
+   - Copy `spec/architecture/stack-overview-template.md` → `spec/architecture/stack-overview.md`
+   - Set initial `next_component_id: COMP-0001`
+   - Set `last_updated` to today's date (YYYY-MM-DD)
+   - Remove any example rows from component table
+   - Inform user: "Architecture tier initialized. Creating first component..."
+
+3. **Read architecture index:**
    - Open `spec/architecture/index.md`
    - Extract `next_component_id` from front matter
    - Parse existing component table
 
-3. **Read available features:**
+4. **Read available features:**
    - Open `spec/charter/index.md`
    - List available FEAT-#### IDs for user to select from
 
-4. **Prompt user for component details:**
+5. **Prompt user for component details:**
    - Component name (e.g., "User Service", "Web App")
    - Component type (service | web-app | worker | library | database | external-system)
    - Brief summary (one-line description)
@@ -39,11 +51,11 @@ When this command is invoked:
    - Features this component implements (select from available FEAT-#### list, can be multiple)
    - Dependencies on other components (optional, select from existing COMP-####)
 
-5. **Generate component slug:**
+6. **Generate component slug:**
    - Convert name to kebab-case
    - Create filename: `COMP-####-{slug}.md`
 
-6. **Create component file:**
+7. **Create component file:**
    - Copy `spec/architecture/components/component-template.md`
    - Save to `spec/architecture/components/COMP-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -59,13 +71,13 @@ When this command is invoked:
      - `{{implementations}}` → [] (will be filled when IMPL specs are created)
      - `{{notes}}` → ""
 
-7. **Update architecture index:**
+8. **Update architecture index:**
    - Add new row to component table
    - Keep sorted by ID
    - Increment `next_component_id`
    - Update `last_updated`
 
-8. **Update feature backlinks (CRITICAL):**
+9. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in the component's features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Find the `components:` array in front matter
@@ -74,7 +86,7 @@ When this command is invoked:
      - Update `last_updated` field
    - This creates bidirectional links: FEAT ↔ COMP
 
-9. **Report completion:**
+10. **Report completion:**
    - Display created file path
    - Show assigned COMP-#### ID
    - List updated feature files (backlinks)
