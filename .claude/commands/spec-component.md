@@ -18,32 +18,26 @@ Create a new architecture component specification (COMP-####) and update cross-t
 
 When this command is invoked:
 
-1. **Check if architecture tier is initialized:**
-   - Check if `spec/architecture/index.md` exists (working file, not template)
-   - If exists, proceed to step 3 (tier already initialized)
-   - If not exists, proceed to step 2 (initialize tier)
-
-2. **Initialize architecture tier (if needed):**
-   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
-   - Check for `spec/architecture/index-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Check for `spec/architecture/stack-overview-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Copy `spec/architecture/index-template.md` → `spec/architecture/index.md`
-   - Copy `spec/architecture/stack-overview-template.md` → `spec/architecture/stack-overview.md`
-   - Set initial `next_component_id: COMP-0001`
-   - Set `last_updated` to today's date (YYYY-MM-DD)
-   - Remove any example rows from component table
-   - Inform user: "Architecture tier initialized. Creating first component..."
-
-3. **Read architecture index:**
-   - Open `spec/architecture/index.md`
+1. **Load architecture index (initialize if needed):**
+   - Try to open `spec/architecture/index.md`
+   - If file not found:
+     - Try to open `spec/architecture/index-template.md`
+     - If template not found, inform user to run `install.sh` first and exit
+     - Copy `spec/architecture/index-template.md` → `spec/architecture/index.md`
+     - Copy `spec/architecture/stack-overview-template.md` → `spec/architecture/stack-overview.md` (if template exists)
+     - Set initial `next_component_id: COMP-0001`
+     - Set `last_updated` to today's date (YYYY-MM-DD)
+     - Remove any example rows from component table
+     - Inform user: "Architecture tier initialized. Creating first component..."
    - Extract `next_component_id` from front matter
    - Parse existing component table
 
-4. **Read available features:**
-   - Open `spec/charter/index.md`
-   - List available FEAT-#### IDs for user to select from
+2. **Read available features:**
+   - Try to open `spec/charter/index.md`
+   - If found, list available FEAT-#### IDs for user to select from
+   - If not found, inform user that no features exist yet (they can create one with /spec-feature later)
 
-5. **Prompt user for component details:**
+3. **Prompt user for component details:**
    - Component name (e.g., "User Service", "Web App")
    - Component type (service | web-app | worker | library | database | external-system)
    - Brief summary (one-line description)
@@ -51,11 +45,11 @@ When this command is invoked:
    - Features this component implements (select from available FEAT-#### list, can be multiple)
    - Dependencies on other components (optional, select from existing COMP-####)
 
-6. **Generate component slug:**
+4. **Generate component slug:**
    - Convert name to kebab-case
    - Create filename: `COMP-####-{slug}.md`
 
-7. **Create component file:**
+5. **Create component file:**
    - Copy `spec/architecture/components/component-template.md`
    - Save to `spec/architecture/components/COMP-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -71,13 +65,13 @@ When this command is invoked:
      - `{{implementations}}` → [] (will be filled when IMPL specs are created)
      - `{{notes}}` → ""
 
-8. **Update architecture index:**
+6. **Update architecture index:**
    - Add new row to component table
    - Keep sorted by ID
    - Increment `next_component_id`
    - Update `last_updated`
 
-9. **Update feature backlinks (CRITICAL):**
+7. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in the component's features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Find the `components:` array in front matter
@@ -86,7 +80,7 @@ When this command is invoked:
      - Update `last_updated` field
    - This creates bidirectional links: FEAT ↔ COMP
 
-10. **Report completion:**
+8. **Report completion:**
    - Display created file path
    - Show assigned COMP-#### ID
    - List updated feature files (backlinks)

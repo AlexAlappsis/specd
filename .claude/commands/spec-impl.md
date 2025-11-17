@@ -18,34 +18,28 @@ Create a new implementation specification (IMPL-####) and update cross-tier link
 
 When this command is invoked:
 
-1. **Check if implementation tier is initialized:**
-   - Check if `spec/implementation/index.md` exists (working file, not template)
-   - If exists, proceed to step 3 (tier already initialized)
-   - If not exists, proceed to step 2 (initialize tier)
-
-2. **Initialize implementation tier (if needed):**
-   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
-   - Check for `spec/implementation/index-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Check for `spec/implementation/overview-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Prompt user for repository name (needed for tier initialization)
-   - Copy `spec/implementation/index-template.md` → `spec/implementation/index.md`
-   - Copy `spec/implementation/overview-template.md` → `spec/implementation/overview.md`
-   - Replace {{repo}} placeholder with user-provided repository name in both files
-   - Set initial `next_impl_id: IMPL-0001`
-   - Set `last_updated` to today's date (YYYY-MM-DD)
-   - Remove any example rows from implementation table
-   - Inform user: "Implementation tier initialized for repo: {repo}. Creating first implementation..."
-
-3. **Read implementation index:**
-   - Open `spec/implementation/index.md`
+1. **Load implementation index (initialize if needed):**
+   - Try to open `spec/implementation/index.md`
+   - If file not found:
+     - Try to open `spec/implementation/index-template.md`
+     - If template not found, inform user to run `install.sh` first and exit
+     - Prompt user for repository name (needed for tier initialization)
+     - Copy `spec/implementation/index-template.md` → `spec/implementation/index.md`
+     - Copy `spec/implementation/overview-template.md` → `spec/implementation/overview.md` (if template exists)
+     - Replace {{repo}} placeholder with user-provided repository name in both files
+     - Set initial `next_impl_id: IMPL-0001`
+     - Set `last_updated` to today's date (YYYY-MM-DD)
+     - Remove any example rows from implementation table
+     - Inform user: "Implementation tier initialized for repo: {repo}. Creating first implementation..."
    - Extract `next_impl_id` and `repo` from front matter
    - Parse existing implementation table
 
-4. **Read available features and components:**
-   - Open `spec/charter/index.md` for FEAT-#### list
-   - Open `spec/architecture/index.md` for COMP-#### list
+2. **Read available features and components:**
+   - Try to open `spec/charter/index.md` for FEAT-#### list (optional)
+   - Try to open `spec/architecture/index.md` for COMP-#### list (optional)
+   - If neither found, inform user they can create features/components later with /spec-feature and /spec-component
 
-5. **Prompt user for implementation details:**
+3. **Prompt user for implementation details:**
    - Implementation name (e.g., "User API Endpoints", "Authentication Module")
    - Brief summary (one-line description)
    - Features this implements (select from FEAT-#### list, can be multiple)
@@ -53,11 +47,11 @@ When this command is invoked:
    - Primary component (if multiple selected)
    - Source code paths (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
 
-6. **Generate implementation slug:**
+4. **Generate implementation slug:**
    - Convert name to kebab-case
    - Create filename: `IMPL-####-{slug}.md`
 
-7. **Create implementation file:**
+5. **Create implementation file:**
    - Copy `spec/implementation/contracts/impl-item-template.md`
    - Save to `spec/implementation/contracts/IMPL-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -72,7 +66,7 @@ When this command is invoked:
      - `{{source_paths}}` → user-provided source paths array
      - `{{notes}}` → ""
 
-8. **Update implementation index:**
+6. **Update implementation index:**
    - Add new row to implementation table
    - Use primary component in "Main Component" column
    - List features in "Primary Features" column
@@ -80,19 +74,19 @@ When this command is invoked:
    - Increment `next_impl_id`
    - Update `last_updated`
 
-9. **Update feature backlinks (CRITICAL):**
+7. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in implementations features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-10. **Update component backlinks (CRITICAL):**
+8. **Update component backlinks (CRITICAL):**
    - For each COMP-#### in implementations components[] array:
      - Open `spec/architecture/components/COMP-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-11. **Report completion:**
+9. **Report completion:**
     - Display created file path
     - Show assigned IMPL-#### ID
     - List updated feature and component files (backlinks)

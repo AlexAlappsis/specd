@@ -17,36 +17,30 @@ Create a new task (TASK-####) for execution planning. Tasks are mandatory before
 
 When this command is invoked:
 
-1. **Check if tasks tier is initialized:**
-   - Check if `spec/tasks/index.md` exists (working file, not template)
-   - If exists, proceed to step 3 (tier already initialized)
-   - If not exists, proceed to step 2 (initialize tier)
-
-2. **Initialize tasks tier (if needed):**
-   - Check if `spec/` directory exists; if not, inform user to run `install.sh` first and exit
-   - Check for `spec/tasks/index-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Check for `spec/tasks/backlog-template.md`; if missing, inform user to run `install.sh` first and exit
-   - Prompt user for repository name (needed for tier initialization)
-   - Copy `spec/tasks/index-template.md` → `spec/tasks/index.md`
-   - Copy `spec/tasks/backlog-template.md` → `spec/tasks/backlog.md`
-   - Replace {{repo}} placeholder with user-provided repository name in both files
-   - Set initial `next_task_id: TASK-0001`
-   - Set `last_updated` to today's date (YYYY-MM-DD)
-   - Remove any example rows from task table
-   - Inform user: "Tasks tier initialized for repo: {repo}. Creating first task..."
-
-3. **Read task index:**
-   - Open `spec/tasks/index.md`
+1. **Load tasks index (initialize if needed):**
+   - Try to open `spec/tasks/index.md`
+   - If file not found:
+     - Try to open `spec/tasks/index-template.md`
+     - If template not found, inform user to run `install.sh` first and exit
+     - Prompt user for repository name (needed for tier initialization)
+     - Copy `spec/tasks/index-template.md` → `spec/tasks/index.md`
+     - Copy `spec/tasks/backlog-template.md` → `spec/tasks/backlog.md` (if template exists)
+     - Replace {{repo}} placeholder with user-provided repository name in both files
+     - Set initial `next_task_id: TASK-0001`
+     - Set `last_updated` to today's date (YYYY-MM-DD)
+     - Remove any example rows from task table
+     - Inform user: "Tasks tier initialized for repo: {repo}. Creating first task..."
    - Extract `next_task_id` and `repo` from front matter
    - Parse existing task table from `spec/tasks/backlog.md`
 
-4. **Read available specs for linking:**
-   - Open `spec/charter/index.md` for FEAT-#### list
-   - Open `spec/architecture/index.md` for COMP-#### list
-   - Open `spec/implementation/index.md` for IMPL-#### list
+2. **Read available specs for linking:**
+   - Try to open `spec/charter/index.md` for FEAT-#### list (optional)
+   - Try to open `spec/architecture/index.md` for COMP-#### list (optional)
+   - Try to open `spec/implementation/index.md` for IMPL-#### list (optional)
    - List existing TASK-#### IDs for depends_on
+   - If no other specs found, inform user they can create them later with tier-specific commands
 
-5. **Prompt user for task details:**
+3. **Prompt user for task details:**
    - Task title (concise, action-oriented, e.g., "Implement user login endpoint")
    - Brief summary (one-line description of what gets done)
    - Priority (P0=urgent | P1=high | P2=normal | P3=low)
@@ -57,11 +51,11 @@ When this command is invoked:
    - Detailed requirements (what needs to be built?)
    - Completion criteria (how do we know it's done?)
 
-6. **Generate task slug:**
+4. **Generate task slug:**
    - Convert title to kebab-case
    - Create filename: `TASK-####-{slug}.md`
 
-7. **Create task file:**
+5. **Create task file:**
    - Copy `spec/tasks/items/task-template.md`
    - Save to `spec/tasks/items/TASK-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -81,7 +75,7 @@ When this command is invoked:
      - `{{notes}}` → ""
    - Fill in requirements and completion criteria from user prompts
 
-8. **Update task backlog:**
+6. **Update task backlog:**
    - Open `spec/tasks/backlog.md`
    - Add new row to task table:
      ```
@@ -90,11 +84,11 @@ When this command is invoked:
    - Keep sorted by priority (P0 first) then ID
    - Update `last_updated` in front matter
 
-9. **Update task index:**
+7. **Update task index:**
    - Increment `next_task_id`
    - Update `last_updated`
 
-10. **Report completion:**
+8. **Report completion:**
    - Display created file path
    - Show assigned TASK-#### ID
    - Display priority and dependencies

@@ -21,38 +21,29 @@ Initialize or update the system charter document (SYS-CHARTER).
 
 When this command is invoked:
 
-1. **Verify spec/ directory exists:**
-   - Check if `./spec/` directory exists
-   - If not, inform user to run `install.sh` first and exit
+1. **Load charter index (initialize if needed):**
+   - Try to open `spec/charter/index.md`
+   - If file not found:
+     - Try to open `spec/charter/index-template.md`
+     - If template not found, inform user to run `install.sh` first and exit
+     - Copy `spec/charter/index-template.md` → `spec/charter/index.md`
+     - Set initial `next_feature_id: FEAT-0001`
+     - Set `last_updated` to today's date (YYYY-MM-DD)
+     - Remove any example rows from feature table
+     - Inform user: "Charter tier initialized."
 
-2. **Check if charter tier is initialized:**
-   - Check if `spec/charter/index.md` exists (working file, not template)
-   - If exists, skip to step 5 (tier already initialized)
-   - If not exists, proceed to step 3 (initialize tier)
-
-3. **Verify charter templates exist (if initializing):**
-   - Check for `spec/charter/index-template.md`
-   - Check for `spec/charter/system-charter-template.md`
-   - If any missing, inform user to run `install.sh` first and exit
-
-4. **Initialize charter tier (if needed):**
-   - Copy `spec/charter/index-template.md` → `spec/charter/index.md`
-   - Set initial `next_feature_id: FEAT-0001`
-   - Set `last_updated` to today's date (YYYY-MM-DD)
-   - Remove any example rows from feature table
-
-5. **Check if system charter already exists:**
-   - Check if `spec/charter/system-charter.md` exists
+2. **Check if system charter already exists:**
+   - Try to open `spec/charter/system-charter.md`
    - If exists, ask user if they want to update/overwrite it
    - If user declines, exit gracefully
 
-6. **Prompt for system details:**
+3. **Prompt for system details:**
    - System name (for charter)
    - Brief system description (1-2 sentences)
    - Vision statement (what is the long-term goal?)
    - Key business goals (optional, can be list)
 
-7. **Create/update system charter:**
+4. **Create/update system charter:**
    - Copy `spec/charter/system-charter-template.md` → `spec/charter/system-charter.md`
    - Replace {{system_name}} placeholder with user-provided value
    - Replace {{description}} placeholder
@@ -60,7 +51,7 @@ When this command is invoked:
    - Fill in vision and business goals from user prompts
    - Set `status: draft`
 
-8. **Report completion:**
+5. **Report completion:**
    - Display whether tier was initialized or already existed
    - Display created/updated system charter file path
    - Show system name configured
@@ -97,8 +88,5 @@ Next steps:
 ```
 
 **Important notes:**
-- Templates (`*-template.md`) remain unchanged for future use
 - Ensure all {{placeholder}} values are replaced in working copies
 - Set all dates to current date in YYYY-MM-DD format
-- If index already exists, only create/update the charter document
-- Ask before overwriting existing charter document
