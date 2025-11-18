@@ -184,7 +184,7 @@ These prompts include clarifying questions and confirmation steps to prevent acc
 2. Run install script: `bash .specdocs/install.sh`
    - Copies templates from `.specdocs/spec/` → `./spec/`
    - Copies commands from `.specdocs/.claude/commands/` → `./.claude/commands/`
-3. Initialize: `/spec-init` creates working files from templates
+3. Plan your system: `/spec-plan` guides cooperative planning and initializes tiers as needed
 
 ### Available Commands
 These are copied to `/.claude/commands/` by install.sh:
@@ -195,10 +195,8 @@ These are copied to `/.claude/commands/` by install.sh:
   - Works tier-by-tier with intelligent context loading
   - Supports editing existing overviews and adding specifics
   - Asks informed questions based on high-level context
-  - Replaces the old `/spec-charter` command
 
 **Creating & Editing Specifics:**
-- `/spec-init` - Initialize spec system (creates working files from templates - used for tasks/backlog)
 - `/spec-feature [FEAT-####]` - Create new or edit existing feature specification
 - `/spec-component [COMP-####]` - Create new or edit existing component specification
 - `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification (includes inline test strategy)
@@ -210,7 +208,8 @@ These are copied to `/.claude/commands/` by install.sh:
 ### How Commands Work
 
 **Template Source:**
-- After `/spec-init`, all commands read from `./spec/*-template.md` (working copies)
+- After installation, commands read from `./spec/*-template.md` (working copies)
+- `/spec-plan` creates working files from templates when initializing tiers
 - Users can customize templates per-project in `./spec/`
 - Original templates in `.specdocs/spec/` remain pristine
 

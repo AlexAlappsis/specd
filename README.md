@@ -45,47 +45,53 @@ This copies:
 - Templates from `.specdocs/spec/` → `./spec/`
 - Slash commands from `.specdocs/.claude/commands/` → `./.claude/commands/`
 
-### Step 3: Initialize Your Specs
+### Step 3: Plan Your System
 
-Run the init command to set up your specification system:
+Start by cooperatively planning your system overview:
 
 ```bash
-/spec-init
+/spec-plan
 ```
 
-This creates working files (index.md, system-charter.md, etc.) from templates.
+This guides you through creating the system charter, architecture overview, and implementation overview. The command will initialize each tier as needed by creating working files from templates.
 
 ---
 
 ## 🚀 Quick Start
 
-After installation, you're ready to create specs:
+After installation, use `/spec-plan` to create your system overview, then create specific items:
 
-### 1. Create Features
+### 1. Plan System Overview
+```bash
+/spec-plan
+```
+Cooperatively create system charter, architecture, and implementation overviews
+
+### 2. Create Features
 ```bash
 /spec-feature
 ```
 Define business capabilities (FEAT-####)
 
-### 2. Create Components
+### 3. Create Components
 ```bash
 /spec-component
 ```
 Define architecture components (COMP-####)
 
-### 3. Create Implementations
+### 4. Create Implementations
 ```bash
 /spec-impl
 ```
 Define contracts and data models (IMPL-####)
 
-### 4. Create Tasks
+### 5. Create Tasks
 ```bash
 /spec-task
 ```
 Create execution tasks (TASK-####)
 
-### 5. Validate
+### 6. Validate
 ```bash
 /spec-sync
 ```
@@ -97,10 +103,10 @@ Check cross-tier consistency
 
 ### Templates (in `spec/`)
 
-13 Markdown templates across four tiers:
+12 Markdown templates across four tiers:
 - **Charter tier**: System charter, feature templates
 - **Architecture tier**: Stack overview, component templates
-- **Implementation tier**: Overview, contract templates, test templates
+- **Implementation tier**: Overview, contract templates (with inline testing strategy)
 - **Tasks tier**: Backlog, task templates
 - **Supporting**: Glossary, manifest, prompts
 
@@ -109,7 +115,7 @@ All templates use YAML front matter with validation rules and usage instructions
 ### Slash Commands (in `.claude/commands/`)
 
 6 commands for spec management:
-- `/spec-init` - Initialize specification system
+- `/spec-plan` - Cooperative planning for Charter, Architecture, and Implementation overviews
 - `/spec-feature`, `/spec-component`, `/spec-impl`, `/spec-task` - Create specs with auto-linking
 - `/spec-sync` - Validate cross-tier consistency
 
@@ -124,11 +130,12 @@ All templates use YAML front matter with validation rules and usage instructions
 
 ## 🔧 How Slash Commands Work
 
-Commands read from `./spec/*-template.md` files (copied during `/spec-init`):
+Commands read from `./spec/*-template.md` files (copied during installation):
 
 - **Auto-ID assignment**: Commands read `next_*_id` from index files and auto-increment
 - **Cross-tier linking**: Commands automatically update backlinks (FEAT ↔ COMP ↔ IMPL)
-- **Template customization**: After init, you can customize templates in `./spec/` per-project
+- **Tier initialization**: `/spec-plan` creates working files from templates when first run
+- **Template customization**: You can customize templates in `./spec/` per-project
 - **Validation**: `/spec-sync` ensures all bidirectional links stay consistent
 
 All commands are in `.claude/commands/` and available throughout your project.
@@ -143,8 +150,10 @@ git submodule add https://github.com/AlexAlappsis/specd .specdocs
 git submodule update --init --recursive
 bash .specdocs/install.sh
 
-# 2. Initialize
-/spec-init
+# 2. Plan system overview
+/spec-plan
+# → Cooperatively creates system-charter.md, stack-overview.md, overview.md
+# → Initializes each tier as needed (creates working files from templates)
 
 # 3. Create a feature
 /spec-feature
@@ -157,7 +166,7 @@ bash .specdocs/install.sh
 
 # 5. Create implementation spec
 /spec-impl
-# → Creates IMPL-0001-auth-api.md
+# → Creates IMPL-0001-auth-api.md (includes inline test strategy in Section 7)
 # → Updates FEAT-0001 and COMP-0001 with backlinks
 
 # 6. Create execution task
@@ -171,7 +180,7 @@ bash .specdocs/install.sh
 
 # 8. Generate code (future skill)
 specdocs-generator TASK-0001
-# → Reads TASK-0001 → IMPL-0001 → generates code
+# → Reads TASK-0001 → IMPL-0001 (including test strategy) → generates code
 ```
 
 ---
@@ -200,14 +209,14 @@ your-project/
         FEAT-0001-*.md
     architecture/
       index.md
-      stack-overview.md
+      stack-overview.md         # Includes testing philosophy (Section 7)
       components/
         COMP-0001-*.md
     implementation/
       index.md
-      overview.md
+      overview.md               # Includes testing approach (Section 6)
       contracts/
-        IMPL-0001-*.md
+        IMPL-0001-*.md          # Includes inline test strategy (Section 7)
     tasks/
       index.md
       backlog.md
