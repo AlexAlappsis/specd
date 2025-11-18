@@ -4,7 +4,6 @@ title: Example Implementation Area
 status: active
 last_updated: 2025-11-10
 summary: Brief one-line description of what this implementation area does.
-repo: your-repo-name-or-path
 components: []
 features: []
 source_paths: []
@@ -13,13 +12,13 @@ notes: "Use this field to capture decision rationale, key assumptions, or design
 
 <!--
 VALIDATION RULES:
-- Required fields: id, title, status, last_updated, repo
+- Required fields: id, title, status, last_updated
 - id format: IMPL-NNNN (e.g., IMPL-0001)
 - Status values: draft | active
 - Traceability arrays:
   - components: COMP-#### IDs this implementation is part of
   - features: FEAT-#### IDs this implementation supports
-  - source_paths: Actual code paths in the repo (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
+  - source_paths: Code paths relative to component's repo_location (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
   - Example: components: ["COMP-0001"], features: ["FEAT-0002", "FEAT-0005"]
 
 CROSS-TIER CONSISTENCY:
@@ -36,25 +35,25 @@ TEMPLATE USAGE:
 - Replace {{id}} with the actual implementation ID (e.g., IMPL-0001)
 - Replace {{title}} with the actual implementation name
 - Replace {{status}} with the actual status
-- Replace {{repo}} with the actual repository name or path
 - Replace {{components}}, {{features}}, {{source_paths}} with actual arrays
 - Replace all {{variable}} placeholders before saving
+- source_paths are relative to the component's repo_location field
 -->
 
 # Implementation: {{title}}
 
 **ID:** `{{id}}`
 **Status:** `{{status}}`
-**Repo:** `{{repo}}`
 **Source paths:** `{{source_paths}}`
 
 ## 1. Purpose & Scope
 
-> _Describe what this implementation area is responsible for within this repo._
+> _Describe what this implementation area is responsible for._
 
-- What domain or functionality does it cover?  
-- Which features (`FEAT-####`) does it support?  
+- What domain or functionality does it cover?
+- Which features (`FEAT-####`) does it support?
 - Which components (`COMP-####`) is it part of (or primarily tied to)?
+- Where is the code located? (Check component's `repo_location` + this spec's `source_paths`)
 
 ## 2. Public Contracts
 

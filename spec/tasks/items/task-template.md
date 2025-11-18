@@ -5,7 +5,6 @@ status: todo
 last_updated: 2025-11-10
 summary: Brief one-line description of what this task accomplishes.
 priority: P2
-repo: your-repo-name-or-path
 features: []
 components: []
 implementations: []
@@ -17,7 +16,7 @@ notes: "Use this field to capture context, constraints, or important decisions a
 
 <!--
 VALIDATION RULES:
-- Required fields: id, title, status, last_updated, priority, repo, created_at
+- Required fields: id, title, status, last_updated, priority, created_at
 - id format: TASK-NNNN (e.g., TASK-0001)
 - Status values: todo | in-progress | blocked | done
 - Priority values: P0 (urgent) | P1 (high) | P2 (normal) | P3 (low)
@@ -34,11 +33,12 @@ CROSS-TIER CONSISTENCY:
 - Tasks reference other tiers but are not referenced back (one-way links)
 - All FEAT-####, COMP-####, and IMPL-#### IDs referenced must exist
 - All TASK-#### IDs in depends_on must exist
+- Code location: Check component's repo_location + implementation's source_paths
 
 TEMPLATE USAGE:
 - Replace {{id}} with the actual task ID (e.g., TASK-0001)
 - Replace {{title}} with the actual task name
-- Replace {{status}}, {{priority}}, {{repo}} with actual values
+- Replace {{status}}, {{priority}} with actual values
 - Replace {{created_at}} with actual date in YYYY-MM-DD format
 - Replace {{features}}, {{components}}, {{implementations}}, {{depends_on}} with actual arrays
 - Replace all {{variable}} placeholders before saving
@@ -49,7 +49,6 @@ TEMPLATE USAGE:
 **ID:** `{{id}}`
 **Status:** `{{status}}`
 **Priority:** `{{priority}}`
-**Repo:** `{{repo}}`
 **Created:** `{{created_at}}`
 **Completed:** `{{completed_at}}`
 

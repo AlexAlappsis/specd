@@ -66,6 +66,11 @@ notes: "Use this field to capture decision rationale, key assumptions, or design
 3. **Template Usage Notes**: Clear instructions on replacing {{placeholder}} values
 4. **Component Dependencies**: Components can depend on other components via `depends_on_components: []`
 5. **Living Documents**: No deprecated/cancelled states - delete specs when no longer needed
+6. **Code Location Strategy**:
+   - Components define `repo_location` (e.g., "services/user-api" or "frontend/web")
+   - Implementations define `source_paths` arrays relative to their component's `repo_location`
+   - Full path = component's `repo_location` + implementation's `source_paths`
+   - This supports single repos, monorepos, and multi-repo systems flexibly
 
 Templates always end in `-template.md` and should be copied (not modified) when instantiating new specs.
 

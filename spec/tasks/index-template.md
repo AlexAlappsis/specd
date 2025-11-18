@@ -1,30 +1,29 @@
 ---
 id: TASK-INDEX
-title: Tasks Index (Repo-Level)
+title: Tasks Index
 status: active
 last_updated: 2025-11-10
-summary: Entry point for task lists and work items (TASK-####) for this repository.
-repo: your-repo-name-or-path
+summary: Entry point for task lists and work items (TASK-####).
 next_task_id: TASK-0001
 notes: ""
 ---
 
 <!--
 VALIDATION RULES:
-- Required fields: id, title, status, last_updated, repo, next_task_id
+- Required fields: id, title, status, last_updated, next_task_id
 - Status values: draft | active
 - next_task_id: The next available TASK-#### ID to assign
 -->
 
-# Tasks Index (Repo-Level)
+# Tasks Index
 
-This directory defines **work items** for this repository.
+This directory defines **work items** for the system.
 
 > **Purpose:** Tasks translate implementation specs (IMPL-####) into actionable work items with priorities, dependencies, and execution order. Every implementation should have at least one task before code generation begins.
 
 It answers:
 
-- What task lists exist for this repo (backlog, current sprint, etc.).
+- What task lists exist (backlog, current sprint, etc.).
 - Where individual tasks (`TASK-####`) live.
 - How tasks relate to features (`FEAT-####`), components (`COMP-####`), and implementation areas (`IMPL-####`).
 
@@ -84,23 +83,24 @@ Tasks are the **execution planning layer** between specs and code:
 
 ### Working with Tasks
 
-When using tasks in this repo:
+When using tasks:
 
 1. Open the relevant task list (e.g., `backlog.md` or `current-sprint.md`) to find candidate tasks.
 2. For a specific `TASK-####`, open its file in `items/` to get full context (description, dependencies, links to specs).
 3. Read the referenced `IMPL-####` spec(s) for detailed contracts, data models, and invariants.
-4. After completing a task:
+4. Check the component's `repo_location` (from referenced COMP-####) to know where code lives.
+5. After completing a task:
    - Update its status and completion fields in the task file.
    - Update any affected specs in Charter, Architecture, or Implementation tiers.
    - Adjust task lists (move between backlog, sprint, etc.) as needed.
-5. When creating a new task, use `next_task_id` from the front matter, then increment it.
+6. When creating a new task, use `next_task_id` from the front matter, then increment it.
 
 ---
 
 > **Agent note:**
 > Tasks are MANDATORY for code generation. Always create at least one task per implementation.
 > Code generation tools read TASK-#### files, which reference IMPL-#### for detailed contracts.
-> This separation keeps specs (what to build) separate from execution planning (when/how to build).
-> This index is the entry point for all task-level documentation in this repo.
+> This separation keeps specs (what to build) separate from execution planning (when/how to build it).
+> This index is the entry point for all task-level documentation.
 > Always update task lists when adding or removing tasks.
 > When a task is complete, update its status to `done` but keep the file for historical reference.

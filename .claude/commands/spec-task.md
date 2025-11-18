@@ -22,15 +22,13 @@ When this command is invoked:
    - If file not found:
      - Try to open `spec/tasks/index-template.md`
      - If template not found, inform user to run `install.sh` first and exit
-     - Prompt user for repository name (needed for tier initialization)
      - Copy `spec/tasks/index-template.md` → `spec/tasks/index.md`
      - Copy `spec/tasks/backlog-template.md` → `spec/tasks/backlog.md` (if template exists)
-     - Replace {{repo}} placeholder with user-provided repository name in both files
      - Set initial `next_task_id: TASK-0001`
      - Set `last_updated` to today's date (YYYY-MM-DD)
      - Remove any example rows from task table
-     - Inform user: "Tasks tier initialized for repo: {repo}. Creating first task..."
-   - Extract `next_task_id` and `repo` from front matter
+     - Inform user: "Tasks tier initialized. Creating first task..."
+   - Extract `next_task_id` from front matter
    - Parse existing task table from `spec/tasks/backlog.md`
 
 2. **Read available specs for linking:**
@@ -65,7 +63,6 @@ When this command is invoked:
      - `{{status}}` → "todo"
      - `{{priority}}` → user-selected priority (P0-P3)
      - `{{last_updated}}` → today's date
-     - `{{repo}}` → from task index front matter
      - `{{features}}` → array of selected FEAT-#### IDs
      - `{{components}}` → array of selected COMP-#### IDs
      - `{{implementations}}` → array of selected IMPL-#### IDs

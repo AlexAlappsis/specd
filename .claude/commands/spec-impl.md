@@ -39,15 +39,13 @@ First, determine if this is CREATE or EDIT mode:
    - If file not found:
      - Try to open `spec/implementation/index-template.md`
      - If template not found, inform user to run `install.sh` first and exit
-     - Prompt user for repository name (needed for tier initialization)
      - Copy `spec/implementation/index-template.md` → `spec/implementation/index.md`
      - Copy `spec/implementation/overview-template.md` → `spec/implementation/overview.md` (if template exists)
-     - Replace {{repo}} placeholder with user-provided repository name in both files
      - Set initial `next_impl_id: IMPL-0001`
      - Set `last_updated` to today's date (YYYY-MM-DD)
      - Remove any example rows from implementation table
-     - Inform user: "Implementation tier initialized for repo: {repo}. Creating first implementation..."
-   - Extract `next_impl_id` and `repo` from front matter
+     - Inform user: "Implementation tier initialized. Creating first implementation..."
+   - Extract `next_impl_id` from front matter
    - Parse existing implementation table
 
 2. **Read available features and components:**
@@ -61,7 +59,7 @@ First, determine if this is CREATE or EDIT mode:
    - Features this implements (select from FEAT-#### list, can be multiple)
    - Components this belongs to (select from COMP-#### list, can be multiple, but one is primary)
    - Primary component (if multiple selected)
-   - Source code paths (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
+   - Source code paths relative to component's repo_location (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
    - **Does this implementation need test specifications?** (y/n)
      - If yes, ask for test details (defer creation until after IMPL is created)
 
@@ -78,10 +76,9 @@ First, determine if this is CREATE or EDIT mode:
      - `{{summary}}` → user-provided summary
      - `{{status}}` → "draft"
      - `{{last_updated}}` → today's date
-     - `{{repo}}` → from implementation index front matter
      - `{{features}}` → array of selected FEAT-#### IDs
      - `{{components}}` → array of selected COMP-#### IDs
-     - `{{source_paths}}` → user-provided source paths array
+     - `{{source_paths}}` → user-provided source paths array (relative to component's repo_location)
      - `{{notes}}` → ""
 
 6. **Update implementation index:**
@@ -119,7 +116,6 @@ First, determine if this is CREATE or EDIT mode:
      - `{{last_updated}}` → today's date
      - `{{summary}}` → user-provided summary
      - `{{impl_id}}` → this IMPL-#### ID
-     - `{{repo}}` → from implementation index
      - `{{features}}` → copy from IMPL spec
      - `{{components}}` → copy from IMPL spec
 
@@ -151,10 +147,9 @@ When editing an existing implementation:
    - Title: User API Endpoints
    - Status: draft
    - Summary: REST API endpoints for user CRUD operations and authentication
-   - Repository: main-api-repo
    - Features: ["FEAT-0002", "FEAT-0005"]
    - Components: ["COMP-0003"]
-   - Source paths: ["src/Api/Users", "src/Controllers/AuthController"]
+   - Source paths: ["src/Api/Users", "src/Controllers/AuthController"] (relative to COMP-0003's repo_location)
    - Test doc: tests/IMPL-0007-TESTS.md (exists)
 
    What would you like to update? (You can update multiple fields)
@@ -266,7 +261,7 @@ Completed! Run /spec-sync to validate all cross-tier links.
 - Validate all referenced FEAT-#### and COMP-#### IDs exist
 - If selecting multiple components, ask which is primary for the index table
 - Arrays must be valid YAML/JSON format
-- source_paths should be relative to repository root
+- source_paths should be relative to the component's repo_location field
 - No duplicates in backlink arrays
 - Test documentation is optional but recommended for systematic test planning
 - Test docs use IMPL-####-TESTS format (1:1 with implementation) and live in `spec/implementation/tests/`

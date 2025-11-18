@@ -1,30 +1,30 @@
 ---
 id: IMPL-INDEX
-title: Implementation Index (Repo-Level)
+title: Implementation Index
 status: active
 last_updated: 2025-11-10
-summary: Entry point for implementation specs (contracts, modules, and data models) for this repository.
-repo: your-repo-name-or-path
+summary: Entry point for implementation specs (contracts, modules, and data models).
 next_impl_id: IMPL-0001
 notes: ""
 ---
 
 <!--
 VALIDATION RULES:
-- Required fields: id, title, status, last_updated, repo, next_impl_id
+- Required fields: id, title, status, last_updated, next_impl_id
 - Status values: draft | active
 - next_impl_id: The next available IMPL-#### ID to assign
 -->
 
-# Implementation Index (Repo-Level)
+# Implementation Index
 
-This directory defines **implementation-level specs** for this repository.
+This directory defines **implementation-level specs** for the system.
 
 It answers:
 
-- What implementation areas (IMPL-####) exist in this repo.
+- What implementation areas (IMPL-####) exist.
 - Which features (`FEAT-####`) and components (`COMP-####`) they support.
 - Where to find the detailed contracts and data models.
+- Where the source code lives (via `source_paths` relative to component's `repo_location`).
 
 ## Documents
 
@@ -75,7 +75,7 @@ Each IMPL can have one test document (`IMPL-####-TESTS`) that covers all test ty
 ## ID Conventions
 
 - **Implementation index (this file):** `IMPL-INDEX`.  
-- **Implementation overview:** `IMPL-OVERVIEW` (inside `overview.md`).  
+- **Implementation overview:** `IMPL-OVERVIEW` (inside `overview.md`).
 - **Implementation items:** `IMPL-####` (e.g., `IMPL-0001`).
 
 ## Relationships to Other Tiers
@@ -84,22 +84,27 @@ Each IMPL can have one test document (`IMPL-####-TESTS`) that covers all test ty
   - Implementation items exist to realize specific features.
 - **Architecture – `COMP-####`:**
   - Each implementation item belongs primarily to one component, even if it interacts with others.
+  - The component's `repo_location` field defines where the code lives.
+  - Implementation `source_paths` are relative to the component's `repo_location`.
 - **Tasks – `TASK-####`:**
   - Concrete work items reference implementation IDs.
 
 ## Usage Notes (for Agents)
 
-When implementing or modifying code in this repo:
+When implementing or modifying code:
 
-1. Read `overview.md` to understand the repo's role and main implementation areas.
+1. Read `overview.md` to understand the main implementation areas.
 2. Use the table above to find the `IMPL-####` entry that matches the feature (`FEAT-####`) and component (`COMP-####`) you're working on.
 3. Open the corresponding `contracts/IMPL-####-*.md` document for detailed contracts, data models, and invariants.
-4. After implementing or changing behavior, update the relevant IMPL doc and, if applicable, add or adjust the corresponding tests doc in `tests/`.
-5. When creating a new implementation, use `next_impl_id` from the front matter, then increment it.
+4. Check the component's `repo_location` to know where the code lives.
+5. Use the implementation's `source_paths` (relative to component's `repo_location`) to locate specific files.
+6. After implementing or changing behavior, update the relevant IMPL doc and, if applicable, add or adjust the corresponding tests doc in `tests/`.
+7. When creating a new implementation, use `next_impl_id` from the front matter, then increment it.
 
 ---
 
 > **Agent note:**
-> This index is the entry point for all implementation-level documentation in this repo.
+> This index is the entry point for all implementation-level documentation.
 > Always update this table when adding or removing implementation specs.
 > Keep the table sorted by ID for easy scanning.
+> Source code locations are defined by: component's `repo_location` + implementation's `source_paths`.
