@@ -86,7 +86,7 @@ First, determine if this is CREATE or EDIT mode:
 
 6. **Update implementation index:**
    - Add new row to implementation table
-   - Use primary component in "Main Component" column
+   - Use primary component in "Primary Component" column
    - List features in "Primary Features" column
    - Keep sorted by ID
    - Increment `next_impl_id`

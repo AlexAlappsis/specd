@@ -40,13 +40,13 @@ Each feature has its own document with a unique ID (`FEAT-####`).
 | ID        | Name                        | Status     | File path                                       |
 |-----------|-----------------------------|------------|-------------------------------------------------|
 | FEAT-0001 | _example feature name_      | active     | `features/FEAT-0001-example-feature-name.md`    |
-| FEAT-0002 | _another example feature_   | approved   | `features/FEAT-0002-another-example-feature.md` |
-| FEAT-0005 | _third feature example_     | proposed   | `features/FEAT-0005-third-feature-example.md`   |
+| FEAT-0002 | _another example feature_   | draft      | `features/FEAT-0002-another-example-feature.md` |
+| FEAT-0005 | _third feature example_     | draft      | `features/FEAT-0005-third-feature-example.md`   |
 
 > **Convention:**
 > - Add a row to this table for each feature document.
 > - Keep the table sorted by feature ID.
-> - Status values: `proposed | approved | active`
+> - Status values: `draft | active`
 > - When a feature is no longer needed, delete its file and remove this row.
 > - Update `next_feature_id` in the front matter when adding new features.
 

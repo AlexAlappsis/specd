@@ -33,16 +33,11 @@ First, determine if this is CREATE or EDIT mode:
 
 ## CREATE Mode Workflow
 
-1. **Load charter index (initialize if needed):**
+1. **Load charter index:**
    - Try to open `spec/charter/index.md`
    - If file not found:
-     - Try to open `spec/charter/index-template.md`
-     - If template not found, inform user to run `install.sh` first and exit
-     - Copy template → `spec/charter/index.md`
-     - Set initial `next_feature_id: FEAT-0001`
-     - Set `last_updated` to today's date (YYYY-MM-DD)
-     - Remove any example rows from feature table
-     - Inform user: "Charter tier initialized. Creating first feature..."
+     - Inform user: "Charter tier not found. Please run /spec-plan first to set up your system charter and create the charter index before creating individual features."
+     - Exit without creating anything
    - Extract `next_feature_id` from front matter (e.g., `FEAT-0005`)
    - Parse existing feature table to understand current features
 
