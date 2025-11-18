@@ -1,10 +1,9 @@
 ---
 id: IMPL-OVERVIEW
-title: Implementation Overview (Repo-Level)
+title: Implementation Overview
 status: active
 last_updated: 2025-11-10
-summary: High-level description of this repository's role, structure, and main implementation areas.
-repo: your-repo-name-or-path
+summary: High-level description of implementation structure and main implementation areas.
 components: []
 features: []
 notes: ""
@@ -12,10 +11,10 @@ notes: ""
 
 <!--
 VALIDATION RULES:
-- Required fields: id, title, status, last_updated, repo
+- Required fields: id, title, status, last_updated
 - Status values: draft | active
 - Traceability arrays (components, features):
-  - Populate with the main COMP-#### and FEAT-#### IDs this repo implements
+  - Populate with the main COMP-#### and FEAT-#### IDs being implemented
   - Example: components: ["COMP-0001"], features: ["FEAT-0001", "FEAT-0003"]
 -->
 
@@ -65,25 +64,55 @@ VALIDATION RULES:
 - **Features (`FEAT-####`):**
   - Which high-level features rely primarily on this repo?
 
-## 6. Implementation Constraints & Guidelines
+## 6. Testing Approach
 
-> _Repo-specific guidelines for implementation._
+> _How testing is organized and executed for this implementation._
 
-- Performance constraints relevant to this repo.  
-- Security or privacy constraints.  
-- Coding standards that are important for this repo (only those that materially affect design).
+### 6.1 Test Organization
 
-## 7. Related Documents
+- Where test files live (e.g., `/tests`, co-located with source, separate test project)
+- Test project structure (if using separate test projects)
+- Naming conventions for test files
 
-- **Implementation index:** `index.md`  
-- **Architecture:** `../architecture/index.md` (in the system-level spec)  
-- **Charter:** `../charter/system-charter.md` (system-level charter)  
-- **Implementation items:** `contracts/IMPL-####-*.md`  
-- **Tests (optional):** `tests/IMPL-####-*-tests.md`
+### 6.2 Testing Frameworks & Tools
+
+- Unit testing framework (e.g., Jest, Vitest, xUnit, pytest)
+- Integration testing approach
+- Mocking/stubbing libraries (e.g., MSW, Moq, unittest.mock)
+- Test runners and CI/CD integration
+
+### 6.3 Test Data Strategy
+
+- Where test fixtures live
+- Database seeding and cleanup approach
+- Mock data generation strategies
+- Test environment configuration
+
+### 6.4 Deviations from Architecture
+
+- Any implementation-specific testing approaches that deviate from architecture/stack-overview.md
+- Justification for deviations
+- Component-specific testing requirements
+
+## 7. Implementation Constraints & Guidelines
+
+> _Implementation-specific guidelines._
+
+- Performance constraints relevant to this implementation.
+- Security or privacy constraints.
+- Coding standards that are important for this implementation (only those that materially affect design).
+
+## 8. Related Documents
+
+- **Implementation index:** `index.md`
+- **Architecture:** `../architecture/index.md` (system-level architecture)
+- **Charter:** `../charter/system-charter.md` (system-level charter)
+- **Implementation items:** `contracts/IMPL-####-*.md`
 
 ---
 
 > **Agent note:**
-> This document defines the role of this repo, its structure, and how implementation areas relate to features and architecture components.
+> This document defines implementation structure, testing approach, and how implementation areas relate to features and architecture components.
 > Before working on a specific domain area or API surface, open the corresponding `IMPL-####` document under `contracts/`.
-> If this repo is no longer needed, delete this and all related implementation specs.
+> Test strategy hierarchy: architecture/stack-overview.md → this document → individual IMPL-#### specs (Section 7).
+> If this implementation is no longer needed, delete this and all related implementation specs.

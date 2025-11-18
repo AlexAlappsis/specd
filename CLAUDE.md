@@ -24,8 +24,7 @@ All specification entities use unique machine-readable IDs:
 - `SYS-CHARTER` - System charter document
 - `FEAT-####` - Individual features (Charter tier)
 - `COMP-####` - Architecture components (Architecture tier)
-- `IMPL-####` - Implementation specifications (Implementation tier)
-- `IMPL-####-TESTS` - Test documentation for implementations (optional)
+- `IMPL-####` - Implementation specifications (Implementation tier, includes inline test strategy)
 - `TASK-####` - Work items (Tasks tier)
 - `GLOSSARY` - System glossary (optional)
 
@@ -87,7 +86,15 @@ Index templates include `next_*_id` fields for auto-assigning IDs:
 - `next_impl_id` in implementation/index-template.md
 - `next_task_id` in tasks/index-template.md
 
-Test documentation uses IMPL-####-TESTS format (no separate ID counter needed)
+## Testing Strategy
+
+Testing is documented inline within specification files rather than in separate test specs:
+
+- **System-level:** `spec/architecture/stack-overview.md` (Section 7) defines testing philosophy, frameworks, and coverage targets
+- **Implementation-level:** `spec/implementation/overview.md` (Section 6) defines test organization and framework usage
+- **Spec-level:** Each `IMPL-####` spec (Section 7) defines test strategy for that specific implementation
+
+This approach keeps test requirements co-located with the contracts they verify, providing maximum flexibility for different testing approaches.
 
 ## Workflow Guidance
 
@@ -194,8 +201,7 @@ These are copied to `/.claude/commands/` by install.sh:
 - `/spec-init` - Initialize spec system (creates working files from templates - used for tasks/backlog)
 - `/spec-feature [FEAT-####]` - Create new or edit existing feature specification
 - `/spec-component [COMP-####]` - Create new or edit existing component specification
-- `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification
-  - Optionally creates associated test specifications
+- `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification (includes inline test strategy)
 - `/spec-task` - Create new TASK-#### with traceability links
 
 **Validation:**
@@ -232,11 +238,11 @@ These will be implemented as Claude skills:
 **Complete planning workflow:**
 ```
 1. /spec-plan → Cooperatively fill in system charter (SYS-CHARTER)
-2. /spec-plan → Cooperatively plan architecture overview (ARCH-STACK)
-3. /spec-plan → Cooperatively plan implementation overview (IMPL-OVERVIEW)
+2. /spec-plan → Cooperatively plan architecture overview (ARCH-STACK) including testing strategy
+3. /spec-plan → Cooperatively plan implementation overview (IMPL-OVERVIEW) including test organization
 4. /spec-feature → Create individual features (FEAT-####)
 5. /spec-component → Create individual components (COMP-####)
-6. /spec-impl → Create implementations with optional test docs (IMPL-####, IMPL-####-TESTS)
+6. /spec-impl → Create implementations with inline test strategy (IMPL-####)
 7. /spec-task → Create execution tasks (TASK-####)
 8. /spec-sync → Validate consistency
 ```
@@ -245,25 +251,24 @@ These will be implemented as Claude skills:
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010, updates both specs
-3. /spec-impl → Creates IMPL-0042.md, links to FEAT-0010 and COMP-0015, updates all
-   - Optionally creates IMPL-0042-TESTS.md (test documentation)
+3. /spec-impl → Creates IMPL-0042.md (includes Section 7 for test strategy)
+   - Links to FEAT-0010 and COMP-0015, updates all
 4. /spec-task → Creates TASK-0100.md, references IMPL-0042, priority P2
-5. specdocs-generator TASK-0100 → Generates code (reads IMPL-0042 for contracts)
+5. specdocs-generator TASK-0100 → Generates code and tests (reads IMPL-0042 for contracts and test requirements)
 6. /spec-sync → Validates all links are bidirectional and consistent
 ```
 
-**Complex implementation (multi-phase tasks with tests):**
+**Complex implementation (multi-phase tasks):**
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010
-3. /spec-impl → Creates IMPL-0042.md (large/complex implementation)
-   - Creates IMPL-0042-TESTS.md (comprehensive test strategy doc)
+3. /spec-impl → Creates IMPL-0042.md (large/complex implementation with comprehensive test strategy in Section 7)
 4. /spec-task → Creates TASK-0100.md (Phase 1: Data models, priority P0, references IMPL-0042)
 5. /spec-task → Creates TASK-0101.md (Phase 2: Business logic, priority P1, depends on TASK-0100)
 6. /spec-task → Creates TASK-0102.md (Phase 3: API endpoints, priority P1, depends on TASK-0101)
-7. specdocs-generator TASK-0100 → Generates data models (reads IMPL-0042 for schemas)
-8. specdocs-generator TASK-0101 → Generates business logic (reads IMPL-0042 for invariants)
-9. specdocs-generator TASK-0102 → Generates API layer (reads IMPL-0042 for endpoints)
+7. specdocs-generator TASK-0100 → Generates data models and tests (reads IMPL-0042 for schemas and test requirements)
+8. specdocs-generator TASK-0101 → Generates business logic and tests (reads IMPL-0042 for invariants and test scenarios)
+9. specdocs-generator TASK-0102 → Generates API layer and tests (reads IMPL-0042 for endpoints and test cases)
 10. /spec-sync → Validates consistency
 ```
 

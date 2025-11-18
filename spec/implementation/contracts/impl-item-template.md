@@ -27,10 +27,6 @@ CROSS-TIER CONSISTENCY:
 - If this IMPL lists a COMP-#### in components[], that COMP must list this IMPL-#### in its implementations[]
 - If links are asymmetric, fix them or determine which side is correct
 
-TEST DOCUMENTATION:
-- Optionally create tests/IMPL-####-TESTS.md to document test strategy for this implementation
-- Test file uses same IMPL-#### ID with -TESTS suffix
-
 TEMPLATE USAGE:
 - Replace {{id}} with the actual implementation ID (e.g., IMPL-0001)
 - Replace {{title}} with the actual implementation name
@@ -118,13 +114,37 @@ TEMPLATE USAGE:
 - Typical and worst-case usage patterns.  
 - Constraints like timeouts, max sizes, or rate limits.
 
-## 7. Testing Notes (Optional)
+## 7. Testing Strategy
 
-> _High-level notes about how this implementation area should be tested._
+> _How this implementation area should be tested._
 
-- Types of tests expected (unit, integration, contract, etc.).  
-- Critical scenarios that should always be covered.  
-- Link to `tests/IMPL-0000-*-tests.md` if you use a separate tests doc.
+### 7.1 Test Scope
+
+- **Test types needed:** (e.g., unit, integration, contract, e2e, performance)
+- **Test file locations:** (paths relative to component's `repo_location`)
+- **Critical scenarios that MUST be covered:**
+  - Happy path: Normal expected behavior
+  - Error cases: How errors should be handled and validated
+  - Edge cases: Boundary conditions, unusual inputs, race conditions
+
+### 7.2 Test Data & Mocking
+
+- Required test fixtures or seed data
+- External services that need mocking/stubbing
+- Database or infrastructure requirements for tests
+- Cleanup and isolation requirements
+
+### 7.3 Coverage Requirements
+
+- Minimum coverage expectations (if any)
+- Critical paths that must have 100% coverage
+- Non-functional test requirements (performance benchmarks, security checks, load tests)
+
+### 7.4 Testing Notes
+
+- Important testing conventions or patterns
+- Known testing challenges or limitations
+- Links to testing documentation in the architecture overview (if applicable)
 
 ## 8. Open Questions & TODOs
 
@@ -140,21 +160,18 @@ TEMPLATE USAGE:
 - **Features:** `{{features}}` (FEAT-#### IDs this implementation supports)
 - **Components:** `{{components}}` (COMP-#### IDs this implementation belongs to)
 
-**Test documentation:**
-- Optional test spec: `tests/{{id}}-TESTS.md` (if test documentation is needed)
-
 > **Workflow:**
 > 1. When creating this implementation spec, populate `features` and `components` from existing specs.
 > 2. Go back and update the corresponding feature and component specs to reference this IMPL-#### ID.
-> 3. Optionally create `tests/{{id}}-TESTS.md` to document test strategy and coverage requirements.
-> 4. This creates full traceability: feature → component → implementation → (tests) → code.
+> 3. Define test strategy inline in Section 7 (above).
+> 4. This creates full traceability: feature → component → implementation (with tests) → code.
 
 ---
 
 > **Agent note:**
-> This document is the source of truth for contracts and data models in this implementation area.
+> This document is the source of truth for contracts, data models, and test strategy for this implementation area.
 > When you change behavior, add new APIs, or adjust data models:
 > - Update this document to match the actual implementation.
-> - If a tests doc exists at `tests/{{id}}-TESTS.md`, update it to reflect test strategy changes.
+> - Update Section 7 (Testing Strategy) to reflect any test changes.
 > - Ensure references to `FEAT-####` and `COMP-####` remain accurate.
-> If this implementation is no longer needed, delete this file, its test doc (if exists), and update the implementation index.
+> If this implementation is no longer needed, delete this file and update the implementation index.

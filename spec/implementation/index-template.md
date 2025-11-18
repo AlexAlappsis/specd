@@ -56,21 +56,15 @@ Each implementation item has its own document with a unique ID (`IMPL-####`). Im
 > - When an implementation is no longer needed, delete its file and remove this row.
 > - Update `next_impl_id` in the front matter when adding new implementations.
 
-### Tests (Optional)
+### Testing
 
-Tests can be documented per implementation item.
+Testing strategy is documented inline within each implementation spec:
 
-- **Folder:** `tests/`
-- **Typical file:** `tests/IMPL-0001-TESTS.md`
+- **Architecture-level:** `../architecture/stack-overview.md` (Section 7) defines system-wide testing philosophy
+- **Implementation-level:** `overview.md` (Section 6) defines testing approach and organization
+- **Spec-level:** Each `IMPL-####` spec (Section 7) defines test strategy for that implementation
 
-Use these docs to:
-
-- Capture test strategy and important scenarios (unit, integration, contract, e2e, performance)
-- Define critical test scenarios and coverage requirements
-- Map features (`FEAT-####`) and implementation items (`IMPL-####`) to test coverage
-- Track test data requirements and external dependencies
-
-Each IMPL can have one test document (`IMPL-####-TESTS`) that covers all test types for that implementation area.
+This approach keeps test requirements co-located with the contracts they verify.
 
 ## ID Conventions
 
@@ -95,11 +89,12 @@ When implementing or modifying code:
 
 1. Read `overview.md` to understand the main implementation areas.
 2. Use the table above to find the `IMPL-####` entry that matches the feature (`FEAT-####`) and component (`COMP-####`) you're working on.
-3. Open the corresponding `contracts/IMPL-####-*.md` document for detailed contracts, data models, and invariants.
+3. Open the corresponding `contracts/IMPL-####-*.md` document for detailed contracts, data models, invariants, and test strategy.
 4. Check the component's `repo_location` to know where the code lives.
 5. Use the implementation's `source_paths` (relative to component's `repo_location`) to locate specific files.
-6. After implementing or changing behavior, update the relevant IMPL doc and, if applicable, add or adjust the corresponding tests doc in `tests/`.
-7. When creating a new implementation, use `next_impl_id` from the front matter, then increment it.
+6. Review Section 7 (Testing Strategy) of the IMPL spec for test requirements.
+7. After implementing or changing behavior, update the relevant IMPL doc including test strategy as needed.
+8. When creating a new implementation, use `next_impl_id` from the front matter, then increment it.
 
 ---
 

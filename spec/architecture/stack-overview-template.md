@@ -84,16 +84,48 @@ VALIDATION RULES:
 - **Feature IDs (`FEAT-####`):**
   - List any key features whose implementation spans multiple components.
 
-## 7. Architectural Constraints & Guidelines
+## 7. Testing Strategy
+
+> _System-wide testing philosophy and approach._
+
+### 7.1 Testing Philosophy
+
+- Testing approach (TDD, BDD, test-after, etc.)
+- Quality gates and acceptance criteria
+- Test automation strategy
+
+### 7.2 Test Types & Coverage
+
+- **Unit tests:** Scope, frameworks, target coverage
+- **Integration tests:** What gets tested at integration level
+- **Contract tests:** API/interface contract validation
+- **E2E tests:** End-to-end user journey testing
+- **Performance tests:** Load, stress, benchmark requirements
+- **Security tests:** Penetration testing, vulnerability scanning
+
+### 7.3 Testing Infrastructure
+
+- Test frameworks and tools (e.g., Jest, Vitest, Pytest, JUnit)
+- CI/CD integration approach
+- Test environments and data strategies
+- Mock/stub strategies for external dependencies
+
+### 7.4 Coverage Targets
+
+- System-wide coverage goals (if applicable)
+- Critical path coverage requirements (e.g., 100% for auth flows)
+- Acceptable exceptions to coverage rules
+
+## 8. Architectural Constraints & Guidelines
 
 > _Rules that architecture and implementation should follow._
 
 - Allowed / preferred communication patterns (e.g., REST, messaging, events).
 - Performance constraints and targets.
 - Security requirements.
-- Any constraints derived from the Charter’s assumptions.
+- Any constraints derived from the Charter's assumptions.
 
-## 8. Related Documents
+## 9. Related Documents
 
 - **Architecture index:** `index.md`
 - **Components:** `components/COMP-####-*.md`

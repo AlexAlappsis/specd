@@ -60,8 +60,6 @@ First, determine if this is CREATE or EDIT mode:
    - Components this belongs to (select from COMP-#### list, can be multiple, but one is primary)
    - Primary component (if multiple selected)
    - Source code paths relative to component's repo_location (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
-   - **Does this implementation need test specifications?** (y/n)
-     - If yes, ask for test details (defer creation until after IMPL is created)
 
 4. **Generate implementation slug:**
    - Convert name to kebab-case
@@ -101,32 +99,13 @@ First, determine if this is CREATE or EDIT mode:
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-9. **Create test documentation (if user requested):**
-   - Prompt for:
-     - Test type (unit | integration | e2e | contract | performance | mixed)
-       - Use "mixed" if covering multiple test types in one document
-     - Brief summary of test strategy
-   - Copy `spec/implementation/tests/impl-tests-template.md`
-   - Save to `spec/implementation/tests/IMPL-####-TESTS.md`
-   - Replace all {{placeholder}} values:
-     - `{{id}}` → IMPL-####-TESTS (using same IMPL-#### ID)
-     - `{{title}}` → "Tests for [implementation name]"
-     - `{{test_type}}` → user-provided type
-     - `{{status}}` → "draft"
-     - `{{last_updated}}` → today's date
-     - `{{summary}}` → user-provided summary
-     - `{{impl_id}}` → this IMPL-#### ID
-     - `{{features}}` → copy from IMPL spec
-     - `{{components}}` → copy from IMPL spec
-
-10. **Report completion:**
+9. **Report completion:**
     - Display created file path
     - Show assigned IMPL-#### ID
     - List updated feature and component files (backlinks)
-    - If test doc created, show test file path
     - Suggest next steps:
       - "Edit the implementation file to define contracts, APIs, and data models"
-      - If test doc created: "Edit tests/IMPL-####-TESTS.md to define test scenarios and coverage requirements"
+      - "Fill in Section 7 (Testing Strategy) to define test requirements"
       - "Use /spec-task to create tasks for implementing this specification"
       - "Run /spec-sync to validate all cross-tier links"
 
@@ -150,7 +129,6 @@ When editing an existing implementation:
    - Features: ["FEAT-0002", "FEAT-0005"]
    - Components: ["COMP-0003"]
    - Source paths: ["src/Api/Users", "src/Controllers/AuthController"] (relative to COMP-0003's repo_location)
-   - Test doc: tests/IMPL-0007-TESTS.md (exists)
 
    What would you like to update? (You can update multiple fields)
    ```
@@ -160,10 +138,7 @@ When editing an existing implementation:
    - For array fields (features, components, source_paths):
      - Ask if they want to add or remove IDs/paths
      - Validate IDs exist before adding
-   - For content sections, ask if they want to replace or append
-   - Special handling for test documentation:
-     - If no test doc exists, offer to create tests/IMPL-####-TESTS.md
-     - If test doc exists, user can edit it separately
+   - For content sections (including Section 7 - Testing Strategy), ask if they want to replace or append
 
 4. **Update cross-tier links if needed:**
    - If features[] array changes:
@@ -203,10 +178,6 @@ Summary: REST API endpoints for user CRUD operations and authentication
 Features: FEAT-0002, FEAT-0005
 Components: COMP-0003
 Source paths: ["src/Api/Users", "src/Controllers/AuthController"]
-Does this implementation need test documentation? (y/n): y
-
-Test type (unit | integration | e2e | contract | performance | mixed): unit
-Summary: Unit tests for user API endpoints covering CRUD operations and validation
 
 Creating IMPL-0007-user-api-endpoints.md...
 ✓ Created spec/implementation/contracts/IMPL-0007-user-api-endpoints.md
@@ -214,9 +185,6 @@ Creating IMPL-0007-user-api-endpoints.md...
 ✓ Updated spec/charter/features/FEAT-0002-user-management.md (added IMPL-0007)
 ✓ Updated spec/charter/features/FEAT-0005-user-authentication.md (added IMPL-0007)
 ✓ Updated spec/architecture/components/COMP-0003-user-service.md (added IMPL-0007)
-
-Creating test documentation...
-✓ Created spec/implementation/tests/IMPL-0007-TESTS.md
 ✓ Incremented next_impl_id to IMPL-0008
 
 Next steps:
@@ -224,9 +192,7 @@ Next steps:
   - Public contracts (APIs, interfaces)
   - Data models and types
   - Business rules and invariants
-- Edit spec/implementation/tests/IMPL-0007-TESTS.md to define:
-  - Test scenarios and coverage requirements
-  - Critical test cases and edge conditions
+  - Testing strategy (Section 7)
 - Use /spec-task to create execution tasks
 - Run /spec-sync to validate links
 ```
@@ -242,7 +208,6 @@ Current values:
 - Status: draft
 - Features: ["FEAT-0002", "FEAT-0005"]
 - Components: ["COMP-0003"]
-- Test doc: tests/IMPL-0007-TESTS.md (exists)
 
 What would you like to update?
 
@@ -263,5 +228,5 @@ Completed! Run /spec-sync to validate all cross-tier links.
 - Arrays must be valid YAML/JSON format
 - source_paths should be relative to the component's repo_location field
 - No duplicates in backlink arrays
-- Test documentation is optional but recommended for systematic test planning
-- Test docs use IMPL-####-TESTS format (1:1 with implementation) and live in `spec/implementation/tests/`
+- Testing strategy is documented inline in Section 7 of each IMPL spec
+- Testing hierarchy: architecture/stack-overview.md → implementation/overview.md → IMPL-#### (Section 7)
