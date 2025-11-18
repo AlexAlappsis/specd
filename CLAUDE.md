@@ -25,6 +25,7 @@ All specification entities use unique machine-readable IDs:
 - `FEAT-####` - Individual features (Charter tier)
 - `COMP-####` - Architecture components (Architecture tier)
 - `IMPL-####` - Implementation specifications (Implementation tier)
+- `IMPL-####-TESTS` - Test documentation for implementations (optional)
 - `TASK-####` - Work items (Tasks tier)
 - `GLOSSARY` - System glossary (optional)
 
@@ -80,6 +81,8 @@ Index templates include `next_*_id` fields for auto-assigning IDs:
 - `next_component_id` in architecture/index-template.md
 - `next_impl_id` in implementation/index-template.md
 - `next_task_id` in tasks/index-template.md
+
+Test documentation uses IMPL-####-TESTS format (no separate ID counter needed)
 
 ## Workflow Guidance
 
@@ -174,11 +177,21 @@ These prompts include clarifying questions and confirmation steps to prevent acc
 ### Available Commands
 These are copied to `/.claude/commands/` by install.sh:
 
+**Planning & Overview:**
+- `/spec-plan` - Cooperative planning for Charter, Architecture, and Implementation overviews
+  - Works tier-by-tier with intelligent context loading
+  - Supports editing existing overviews and adding specifics
+  - Asks informed questions based on high-level context
+
+**Creating & Editing Specifics:**
 - `/spec-init` - Initialize spec system (creates working files from templates)
-- `/spec-feature` - Create new FEAT-#### with auto-ID assignment
-- `/spec-component` - Create new COMP-#### with cross-tier linking
-- `/spec-impl` - Create new IMPL-#### with bidirectional backlink updates
+- `/spec-feature [FEAT-####]` - Create new or edit existing feature specification
+- `/spec-component [COMP-####]` - Create new or edit existing component specification
+- `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification
+  - Optionally creates associated test specifications
 - `/spec-task` - Create new TASK-#### with traceability links
+
+**Validation:**
 - `/spec-sync` - Validate cross-tier consistency and fix broken links
 
 ### How Commands Work
@@ -209,21 +222,35 @@ These will be implemented as Claude skills:
 
 ### Example Workflows
 
+**Complete planning workflow:**
+```
+1. /spec-plan → Cooperatively fill in system charter (SYS-CHARTER)
+2. /spec-plan → Cooperatively plan architecture overview (ARCH-STACK)
+3. /spec-plan → Cooperatively plan implementation overview (IMPL-OVERVIEW)
+4. /spec-feature → Create individual features (FEAT-####)
+5. /spec-component → Create individual components (COMP-####)
+6. /spec-impl → Create implementations with optional test docs (IMPL-####, IMPL-####-TESTS)
+7. /spec-task → Create execution tasks (TASK-####)
+8. /spec-sync → Validate consistency
+```
+
 **Simple implementation (single task):**
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010, updates both specs
 3. /spec-impl → Creates IMPL-0042.md, links to FEAT-0010 and COMP-0015, updates all
+   - Optionally creates IMPL-0042-TESTS.md (test documentation)
 4. /spec-task → Creates TASK-0100.md, references IMPL-0042, priority P2
 5. specdocs-generator TASK-0100 → Generates code (reads IMPL-0042 for contracts)
 6. /spec-sync → Validates all links are bidirectional and consistent
 ```
 
-**Complex implementation (multi-phase tasks):**
+**Complex implementation (multi-phase tasks with tests):**
 ```
 1. /spec-feature → Creates FEAT-0010.md
 2. /spec-component → Creates COMP-0015.md, links to FEAT-0010
 3. /spec-impl → Creates IMPL-0042.md (large/complex implementation)
+   - Creates IMPL-0042-TESTS.md (comprehensive test strategy doc)
 4. /spec-task → Creates TASK-0100.md (Phase 1: Data models, priority P0, references IMPL-0042)
 5. /spec-task → Creates TASK-0101.md (Phase 2: Business logic, priority P1, depends on TASK-0100)
 6. /spec-task → Creates TASK-0102.md (Phase 3: API endpoints, priority P1, depends on TASK-0101)

@@ -28,6 +28,10 @@ CROSS-TIER CONSISTENCY:
 - If this IMPL lists a COMP-#### in components[], that COMP must list this IMPL-#### in its implementations[]
 - If links are asymmetric, fix them or determine which side is correct
 
+TEST DOCUMENTATION:
+- Optionally create tests/IMPL-####-TESTS.md to document test strategy for this implementation
+- Test file uses same IMPL-#### ID with -TESTS suffix
+
 TEMPLATE USAGE:
 - Replace {{id}} with the actual implementation ID (e.g., IMPL-0001)
 - Replace {{title}} with the actual implementation name
@@ -137,10 +141,14 @@ TEMPLATE USAGE:
 - **Features:** `{{features}}` (FEAT-#### IDs this implementation supports)
 - **Components:** `{{components}}` (COMP-#### IDs this implementation belongs to)
 
+**Test documentation:**
+- Optional test spec: `tests/{{id}}-TESTS.md` (if test documentation is needed)
+
 > **Workflow:**
 > 1. When creating this implementation spec, populate `features` and `components` from existing specs.
 > 2. Go back and update the corresponding feature and component specs to reference this IMPL-#### ID.
-> 3. This creates full traceability: feature → component → implementation → code.
+> 3. Optionally create `tests/{{id}}-TESTS.md` to document test strategy and coverage requirements.
+> 4. This creates full traceability: feature → component → implementation → (tests) → code.
 
 ---
 
@@ -148,6 +156,6 @@ TEMPLATE USAGE:
 > This document is the source of truth for contracts and data models in this implementation area.
 > When you change behavior, add new APIs, or adjust data models:
 > - Update this document to match the actual implementation.
-> - Adjust or create tests (and the tests doc, if used).
+> - If a tests doc exists at `tests/{{id}}-TESTS.md`, update it to reflect test strategy changes.
 > - Ensure references to `FEAT-####` and `COMP-####` remain accurate.
-> If this implementation is no longer needed, delete this file and update the implementation index.
+> If this implementation is no longer needed, delete this file, its test doc (if exists), and update the implementation index.

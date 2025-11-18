@@ -39,7 +39,7 @@ It serves as a quick reference for both humans and agents when locating template
 | `index-template.md` | Template for the Implementation index file (per repo). |
 | `overview-template.md` | Template for the repo-level overview of implementation structure and scope. |
 | `contracts/impl-item-template.md` | Template for individual implementation specs (`IMPL-####`) defining interfaces, data models, and invariants. |
-| `tests/impl-tests-template.md` | Optional template describing tests and scenarios for a specific implementation (`IMPL-####-TESTS`). |
+| `tests/impl-tests-template.md` | Optional template for test documentation (`IMPL-####-TESTS`) covering test strategy, scenarios, and coverage requirements. |
 
 ---
 

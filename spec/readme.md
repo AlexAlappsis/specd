@@ -12,9 +12,9 @@ Each tier has Markdown templates (ending in `-template.md`) and instantiated wor
 
 | Tier | Folder | Scope | Purpose |
 |------|---------|--------|----------|
-| **1. Charter** | `/spec/charter/` | System-level | Defines the system’s goals, vision, and features in human terms.  The “why” and “what.” |
-| **2. Architecture** | `/spec/architecture/` | System-level | Defines the technology stack, system structure, components, and how they interact.  The “how it’s organized.” |
-| **3. Implementation** | `/spec/implementation/` | Repo-level | Defines actual interfaces, contracts, data models, and implementation details for each repository.  The “how it’s built.” |
+| **1. Charter** | `/spec/charter/` | System-level | Defines the system's goals, vision, and features in human terms.  The "why" and "what." |
+| **2. Architecture** | `/spec/architecture/` | System-level | Defines the technology stack, system structure, components, and how they interact.  The "how it's organized." |
+| **3. Implementation** | `/spec/implementation/` | Repo-level | Defines actual interfaces, contracts, data models, and implementation details for each repository.  The "how it's built." Optionally includes test documentation (IMPL-####-TESTS). |
 | **4. Tasks** | `/spec/tasks/` | Repo-level | Execution planning: translates implementation specs into prioritized, ordered work items.  The "when and how to build it." |
 
 ---
@@ -41,7 +41,7 @@ Each tier has Markdown templates (ending in `-template.md`) and instantiated wor
     contracts/
       IMPL-0001-*.md
     tests/
-      IMPL-0001-*-tests.md
+      IMPL-0001-TESTS.md      # Optional test documentation
 
   tasks/                      # Tier 4 – task lists and individual work items (per repo)
     index.md
@@ -64,6 +64,7 @@ Every entity in the spec system has a unique **machine-readable ID**.
 | `FEAT-####` | Feature | `FEAT-0007` | A specific capability or behavior defined in the Charter tier. |
 | `COMP-####` | Component | `COMP-0003` | A subsystem, service, or app defined in Architecture. |
 | `IMPL-####` | Implementation | `IMPL-0005` | A defined implementation area or module within a repo. |
+| `IMPL-####-TESTS` | Test Documentation | `IMPL-0005-TESTS` | Optional test documentation for an implementation (1:1 relationship). |
 | `TASK-####` | Task | `TASK-0020` | A specific work item tracked in the Tasks tier. |
 
 IDs appear in file names, front matter, and tables across tiers, allowing easy traceability.
@@ -74,6 +75,7 @@ IDs appear in file names, front matter, and tables across tiers, allowing easy t
 
 - **Charter → Architecture:**  Each feature (`FEAT-####`) maps to one or more architecture components (`COMP-####`).
 - **Architecture → Implementation:**  Each component is implemented through one or more implementation specs (`IMPL-####`).
+- **Implementation → Tests:**  Each implementation can optionally have test documentation (`IMPL-####-TESTS`) defining test strategy and coverage requirements.
 - **Implementation → Tasks:**  Each implementation area requires at least one task (`TASK-####`) before code generation.
 
 This chain allows both humans and LLMs to trace any work item all the way back to its original product intent.

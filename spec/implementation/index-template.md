@@ -60,13 +60,17 @@ Each implementation item has its own document with a unique ID (`IMPL-####`). Im
 
 Tests can be documented per implementation item.
 
-- Folder: `tests/`
-- Typical file: `tests/IMPL-0001-*-tests.md`
+- **Folder:** `tests/`
+- **Typical file:** `tests/IMPL-0001-TESTS.md`
 
 Use these docs to:
 
-- Capture test strategy and important scenarios.  
-- Map features (`FEAT-####`) and implementation items (`IMPL-####`) to test coverage.
+- Capture test strategy and important scenarios (unit, integration, contract, e2e, performance)
+- Define critical test scenarios and coverage requirements
+- Map features (`FEAT-####`) and implementation items (`IMPL-####`) to test coverage
+- Track test data requirements and external dependencies
+
+Each IMPL can have one test document (`IMPL-####-TESTS`) that covers all test types for that implementation area.
 
 ## ID Conventions
 

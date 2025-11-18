@@ -1,15 +1,14 @@
-Create a new architecture component specification (COMP-####) and update cross-tier links.
+Create a new architecture component specification (COMP-####) or edit an existing one.
 
 **What this command does:**
-1. Auto-assigns next available COMP-#### ID
-2. Creates new component file from template
-3. Updates architecture index with new entry
-4. Updates referenced feature files with bidirectional links
-5. Increments next_component_id
+1. **Create mode:** Auto-assigns next COMP-#### ID and creates new component from template
+2. **Edit mode:** Loads existing component by ID and cooperatively updates it
+3. Updates architecture index and maintains cross-tier links
 
 **Usage:**
 ```
-/spec-component
+/spec-component              # Create new component
+/spec-component COMP-0003    # Edit existing component
 ```
 
 ---
@@ -17,6 +16,22 @@ Create a new architecture component specification (COMP-####) and update cross-t
 **Implementation instructions for Claude Code:**
 
 When this command is invoked:
+
+## Mode Detection
+
+First, determine if this is CREATE or EDIT mode:
+
+1. **Check for ID argument:**
+   - If user provides COMP-#### ID (e.g., `/spec-component COMP-0003`), use EDIT mode
+   - If no argument provided, use CREATE mode
+
+2. **In EDIT mode:**
+   - Validate ID format (COMP-NNNN)
+   - Search for file matching pattern `spec/architecture/components/COMP-####-*.md`
+   - If not found, inform user and ask if they want to create a new component instead
+   - If found, proceed with editing workflow
+
+## CREATE Mode Workflow
 
 1. **Load architecture index (initialize if needed):**
    - Try to open `spec/architecture/index.md`
@@ -88,7 +103,60 @@ When this command is invoked:
      - "Use /spec-impl to create implementation specs for this component"
      - "Run /spec-sync to validate all cross-tier links"
 
-**Example interaction:**
+## EDIT Mode Workflow
+
+When editing an existing component:
+
+1. **Load the component file:**
+   - Open `spec/architecture/components/COMP-####-*.md`
+   - Parse front matter and content
+   - Show current values to user
+
+2. **Cooperative editing:**
+   ```
+   Loaded COMP-0003: User Service
+
+   Current values:
+   - Title: User Service
+   - Type: service
+   - Status: draft
+   - Summary: Backend service handling user management and authentication
+   - Repository: services/user-service
+   - Features: ["FEAT-0002", "FEAT-0005"]
+   - Depends on: []
+   - Implementations: ["IMPL-0007"]
+
+   What would you like to update? (You can update multiple fields)
+   ```
+
+3. **Prompt for changes:**
+   - Ask what the user wants to change
+   - For array fields (features, depends_on_components, implementations):
+     - Ask if they want to add or remove IDs
+     - Validate IDs exist before adding
+   - For content sections, ask if they want to replace or append
+
+4. **Update cross-tier links if needed:**
+   - If features[] array changes:
+     - If adding FEAT-####: Add this COMP-#### to that feature's components[] array
+     - If removing FEAT-####: Remove this COMP-#### from that feature's components[] array
+   - If implementations[] array changes:
+     - If adding IMPL-####: Add this COMP-#### to that implementation's components[] array
+     - If removing IMPL-####: Remove this COMP-#### from that implementation's components[] array
+   - Always update `last_updated` in modified files
+
+5. **Update index if needed:**
+   - If title, type, or status changes, update the architecture index table row
+   - Update `last_updated` in index
+
+6. **Report changes:**
+   - Show what was updated
+   - List any cross-tier link updates
+   - Suggest running /spec-sync to validate consistency
+
+**Example interactions:**
+
+### CREATE mode:
 ```
 User: /spec-component
 
@@ -116,6 +184,33 @@ Creating COMP-0003-user-service.md...
 Next steps:
 - Use /spec-impl to create implementation specifications
 - Run /spec-sync to validate cross-tier links
+```
+
+### EDIT mode:
+```
+User: /spec-component COMP-0003
+
+Claude: Loaded COMP-0003: User Service
+
+Current values:
+- Title: User Service
+- Type: service
+- Status: draft
+- Features: ["FEAT-0002", "FEAT-0005"]
+- Implementations: []
+
+What would you like to update?
+
+User: Change status to active and add IMPL-0007
+
+Claude: Updating COMP-0003...
+✓ Updated status: draft → active
+✓ Added IMPL-0007 to implementations array
+✓ Updated spec/architecture/components/COMP-0003-user-service.md
+✓ Updated spec/implementation/contracts/IMPL-0007-user-api-endpoints.md (added COMP-0003 to components[])
+✓ Updated spec/architecture/index.md
+
+Completed! Run /spec-sync to validate all cross-tier links.
 ```
 
 **Important notes:**

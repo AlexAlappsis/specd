@@ -1,14 +1,14 @@
-Create a new feature specification (FEAT-####) in the Charter tier.
+Create a new feature specification (FEAT-####) or edit an existing one.
 
 **What this command does:**
-1. Auto-assigns next available FEAT-#### ID
-2. Creates new feature file from template
-3. Updates charter index with new entry
-4. Increments next_feature_id
+1. **Create mode:** Auto-assigns next FEAT-#### ID and creates new feature from template
+2. **Edit mode:** Loads existing feature by ID and cooperatively updates it
+3. Updates charter index and maintains cross-tier links
 
 **Usage:**
 ```
-/spec-feature
+/spec-feature              # Create new feature
+/spec-feature FEAT-0005    # Edit existing feature
 ```
 
 ---
@@ -16,6 +16,22 @@ Create a new feature specification (FEAT-####) in the Charter tier.
 **Implementation instructions for Claude Code:**
 
 When this command is invoked:
+
+## Mode Detection
+
+First, determine if this is CREATE or EDIT mode:
+
+1. **Check for ID argument:**
+   - If user provides FEAT-#### ID (e.g., `/spec-feature FEAT-0005`), use EDIT mode
+   - If no argument provided, use CREATE mode
+
+2. **In EDIT mode:**
+   - Validate ID format (FEAT-NNNN)
+   - Search for file matching pattern `spec/charter/features/FEAT-####-*.md`
+   - If not found, inform user and ask if they want to create a new feature instead
+   - If found, proceed with editing workflow
+
+## CREATE Mode Workflow
 
 1. **Load charter index (initialize if needed):**
    - Try to open `spec/charter/index.md`
@@ -74,7 +90,65 @@ When this command is invoked:
      - "Use /spec-component to create architecture components for this feature"
      - "Link related features by editing the related_features array"
 
-**Example interaction:**
+## EDIT Mode Workflow
+
+When editing an existing feature:
+
+1. **Load the feature file:**
+   - Open `spec/charter/features/FEAT-####-*.md`
+   - Parse front matter and content
+   - Show current values to user
+
+2. **Cooperative editing:**
+   ```
+   Loaded FEAT-0005: User Authentication
+
+   Current values:
+   - Title: User Authentication
+   - Status: draft
+   - Summary: Allow users to securely log in and manage their accounts
+   - Related features: ["FEAT-0001"]
+   - Components: ["COMP-0003", "COMP-0007"]
+   - Implementations: ["IMPL-0008"]
+
+   What would you like to update? (You can update multiple fields)
+   - title
+   - summary
+   - status (draft | active)
+   - description/content
+   - related_features (add/remove FEAT-#### links)
+   - Any other field
+   ```
+
+3. **Prompt for changes:**
+   - Ask what the user wants to change
+   - For array fields (related_features, components, implementations):
+     - Ask if they want to add or remove IDs
+     - Validate IDs exist before adding
+   - For content sections, ask if they want to replace or append
+
+4. **Update cross-tier links if needed:**
+   - If components[] array changes:
+     - If adding COMP-####: Add this FEAT-#### to that component's features[] array
+     - If removing COMP-####: Remove this FEAT-#### from that component's features[] array
+   - If implementations[] array changes:
+     - If adding IMPL-####: Add this FEAT-#### to that implementation's features[] array
+     - If removing IMPL-####: Remove this FEAT-#### from that implementation's features[] array
+   - Always update `last_updated` in modified files
+
+5. **Update index if needed:**
+   - If title changes, update the charter index table row
+   - If status changes, update the charter index table row
+   - Update `last_updated` in index
+
+6. **Report changes:**
+   - Show what was updated
+   - List any cross-tier link updates
+   - Suggest running /spec-sync to validate consistency
+
+**Example interactions:**
+
+### CREATE mode:
 ```
 User: /spec-feature
 
@@ -93,6 +167,32 @@ Creating FEAT-0005-user-authentication.md...
 Next steps:
 - Review and edit the feature file
 - Use /spec-component to define components implementing this feature
+```
+
+### EDIT mode:
+```
+User: /spec-feature FEAT-0005
+
+Claude: Loaded FEAT-0005: User Authentication
+
+Current values:
+- Title: User Authentication
+- Status: draft
+- Summary: Allow users to securely log in and manage their accounts
+- Components: ["COMP-0003"]
+
+What would you like to update?
+
+User: Change status to active and add COMP-0007 to components
+
+Claude: Updating FEAT-0005...
+✓ Updated status: draft → active
+✓ Added COMP-0007 to components array
+✓ Updated spec/charter/features/FEAT-0005-user-authentication.md
+✓ Updated spec/architecture/components/COMP-0007-auth-gateway.md (added FEAT-0005 to features[])
+✓ Updated spec/charter/index.md
+
+Completed! Run /spec-sync to validate all cross-tier links.
 ```
 
 **Important notes:**
