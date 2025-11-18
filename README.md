@@ -21,6 +21,22 @@ For detailed documentation on the specification system itself, see [spec/readme.
 
 ---
 
+## 🤔 Why specd?
+
+Most documentation falls out of sync with code because:
+- It lives separately from execution (specs → code is a manual translation)
+- There's no forcing function to keep it current
+- LLMs can't easily navigate relationships between design docs
+
+specd addresses this by:
+- **Task-based execution**: Code generation must flow through TASK-#### → IMPL-#### → code
+- **Bidirectional traceability**: Every spec knows what references it (FEAT ↔ COMP ↔ IMPL ↔ TASK)
+- **LLM-native structure**: YAML front matter, semantic IDs, and strict linking make this machine-readable from day one
+
+The goal: specs that are cheap to maintain because they're required for execution.
+
+---
+
 ## 📦 Installation & Setup
 
 ### Step 1: Add as Git Submodule
@@ -228,22 +244,26 @@ your-project/
 
 ## 🤝 Using This Repository
 
-specd is a template repository designed to be added to your projects as a git submodule.
+specd is a template repository designed to be added to your projects as a git submodule. It reflects one opinionated interpretation of specification-driven development optimized for LLM-assisted workflows.
+
+**Installation:**
+- Add as submodule: `git submodule add <url> .specdocs`
+- Run `bash .specdocs/install.sh` to copy templates and commands
+- Use `/spec-plan` to start planning your system
 
 **Customization:**
-- Fork this repo and customize templates for your organization
-- Modify slash commands to fit your workflow
-- Add custom validation rules or additional tiers
+- Templates are copied to `./spec/` during installation and can be modified per-project
+- For significant structural changes, fork this repository
 
 **Updates:**
-- Pull latest templates: `git submodule update --remote .specdocs`
-- Template changes only affect new specs (existing specs are independent)
+- Pull latest: `git submodule update --remote .specdocs`
+- Template changes only affect new specs created after update
 
 ---
 
 ## 📄 License & Attribution
 
-This spec framework is inspired by the [GitHub spec-kit project](https://github.com/github/spec-kit) but simplified and restructured for flexibility and LLM-assisted workflows.
+This project is inspired by the concept of specification-driven development from GitHub's [spec-kit project](https://github.com/github/spec-kit). This is an independent implementation - no code from spec-kit is used, just the general idea of structured, tiered documentation.
 
 MIT License
 

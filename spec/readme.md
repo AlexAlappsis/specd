@@ -1,4 +1,4 @@
-# Specification System README (Template)
+# Specification System README
 
 This document explains how the specification system in this project is structured and how to use it.
 
