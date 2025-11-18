@@ -179,12 +179,14 @@ These are copied to `/.claude/commands/` by install.sh:
 
 **Planning & Overview:**
 - `/spec-plan` - Cooperative planning for Charter, Architecture, and Implementation overviews
+  - Initializes tiers if needed (creates working files from templates)
   - Works tier-by-tier with intelligent context loading
   - Supports editing existing overviews and adding specifics
   - Asks informed questions based on high-level context
+  - Replaces the old `/spec-charter` command
 
 **Creating & Editing Specifics:**
-- `/spec-init` - Initialize spec system (creates working files from templates)
+- `/spec-init` - Initialize spec system (creates working files from templates - used for tasks/backlog)
 - `/spec-feature [FEAT-####]` - Create new or edit existing feature specification
 - `/spec-component [COMP-####]` - Create new or edit existing component specification
 - `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification

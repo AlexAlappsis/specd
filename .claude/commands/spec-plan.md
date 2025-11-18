@@ -1,11 +1,16 @@
 Cooperatively plan and refine system specifications across all tiers (Charter, Architecture, Implementation).
 
 **What this command does:**
-1. Loads overview documents and indexes for all tiers
-2. Determines which tiers need planning or updates
-3. Works cooperatively with user to fill in sections tier-by-tier
-4. Supports editing existing overviews and adding specifics
-5. Maintains separation between tier planning (Charter → Architecture → Implementation)
+1. Initializes tiers if needed (creates working files from templates)
+2. Loads overview documents and indexes for all tiers
+3. Determines which tiers need planning or updates
+4. Works cooperatively with user to fill in sections tier-by-tier
+5. Supports editing existing overviews and adding specifics
+6. Maintains separation between tier planning (Charter → Architecture → Implementation)
+
+**Prerequisites:**
+- Run `install.sh` script first to copy templates and commands to project root
+- The `spec/` directory with templates must exist
 
 **Usage:**
 ```
@@ -36,26 +41,34 @@ Load context **by tier**, stopping when you find incomplete work:
 1. **Load Charter tier:**
    - Try to open `spec/charter/system-charter.md`
    - If not found, try `spec/charter/system-charter-template.md`
-   - Load `spec/charter/index.md` (or `spec/charter/index-template.md`)
+   - **If template not found:** Inform user to run `install.sh` first and exit with error message:
+     ```
+     Error: Templates not found. Please run the install script first:
+
+     bash .specdocs/install.sh
+
+     This will copy templates to your project's spec/ directory.
+     ```
+   - Try to open `spec/charter/index.md`
+   - If not found, try `spec/charter/index-template.md`
+   - **If template not found:** Same error message as above
    - Parse index to see which features exist (count only, don't load individual files)
 
-2. **If Charter complete, load Architecture tier:**
+2. **If Charter exists, load Architecture tier:**
    - Try to open `spec/architecture/stack-overview.md`
    - If not found, try `spec/architecture/stack-overview-template.md`
-   - Load `spec/architecture/index.md` (or `spec/architecture/index-template.md`)
+   - Try to open `spec/architecture/index.md`
+   - If not found, try `spec/architecture/index-template.md`
    - Parse index to see which components exist (count only)
 
-3. **If Architecture complete, load Implementation tier:**
+3. **If Architecture exists, load Implementation tier:**
    - Try to open `spec/implementation/overview.md`
    - If not found, try `spec/implementation/overview-template.md`
-   - Load `spec/implementation/index.md` (or `spec/implementation/index-template.md`)
+   - Try to open `spec/implementation/index.md`
+   - If not found, try `spec/implementation/index-template.md`
    - Parse index to see which implementations exist (count only)
 
-4. **Always load Tests index (for context):**
-   - Try to open `spec/tests/index.md` (or `spec/tests/index-template.md`)
-   - Parse to see which test specs exist (count only)
-
-**DO NOT load individual FEAT-####, COMP-####, IMPL-####, or TEST-#### files unless specifically needed for editing.**
+**DO NOT load individual FEAT-####, COMP-####, IMPL-####, or IMPL-####-TESTS files unless specifically needed for editing.**
 
 ### Phase 2: Determine Current State
 
@@ -82,12 +95,27 @@ Based on current state, engage the user:
 
 #### Scenario A: Charter Incomplete or Missing
 
-```
-I see your charter is [incomplete/not started]. Let's work on defining your system charter.
+If charter doesn't exist at all, **initialize the charter tier first**:
 
-[If incomplete: Show which sections have placeholders or are missing]
+```
+Charter tier not found. Initializing...
+
+[Initialize charter tier:]
+1. Copy spec/charter/index-template.md → spec/charter/index.md
+2. Set next_feature_id: FEAT-0001
+3. Set last_updated to today's date
+4. Remove example rows from feature table
+
+✓ Charter tier initialized
+```
+
+Then proceed with cooperative planning:
+
+```
+Let's create your system charter. I'll work with you to fill in the details.
 
 I'd like to start with some high-level questions to understand your vision:
+- What is the system name?
 - What problem does this system solve?
 - Who are the primary users?
 - What are the 2-3 most important capabilities it must provide?
@@ -98,7 +126,15 @@ I'd like to start with some high-level questions to understand your vision:
 
 [After completing a section, show it to the user and ask for confirmation/refinement]
 
-[When charter sections are complete, ask:]
+[When charter sections are complete:]
+1. Copy spec/charter/system-charter-template.md → spec/charter/system-charter.md
+2. Replace all {{placeholder}} values with user-provided content
+3. Set status: draft
+4. Set last_updated to today's date
+5. Save the file
+
+✓ Created spec/charter/system-charter.md
+
 Does the charter capture everything we need for now? Should we add any custom sections specific to your project?
 
 [When charter is confirmed complete:]
@@ -109,10 +145,26 @@ Great! Your charter is complete. Ready to move on to architecture planning, or d
 
 ```
 Your charter looks good! [Show summary: X features defined, key capabilities]
+```
 
-Your architecture is [incomplete/not started]. Let's plan your system architecture.
+If architecture tier doesn't exist at all, **initialize it first**:
 
-[If incomplete: Show which sections have placeholders]
+```
+Architecture tier not found. Initializing...
+
+[Initialize architecture tier:]
+1. Copy spec/architecture/index-template.md → spec/architecture/index.md
+2. Set next_component_id: COMP-0001
+3. Set last_updated to today's date
+4. Remove example rows from component table
+
+✓ Architecture tier initialized
+```
+
+Then proceed with cooperative planning:
+
+```
+Let's plan your system architecture. I'll work with you to define the technical approach.
 
 Let me understand your architectural vision:
 - What's the overall architectural style? (monolith, microservices, modular, etc.)
@@ -123,6 +175,15 @@ Let me understand your architectural vision:
 [Reference charter features when discussing component responsibilities]
 [Suggest architectural patterns relevant to their domain]
 
+[When architecture sections are complete:]
+1. Copy spec/architecture/stack-overview-template.md → spec/architecture/stack-overview.md
+2. Replace all {{placeholder}} values with user-provided content
+3. Set status: draft
+4. Set last_updated to today's date
+5. Save the file
+
+✓ Created spec/architecture/stack-overview.md
+
 [When architecture is confirmed complete:]
 Architecture planning is done! Ready to move on to implementation planning, or do you want to add specific components (COMP-####) first?
 ```
@@ -131,14 +192,35 @@ Architecture planning is done! Ready to move on to implementation planning, or d
 
 ```
 Charter and architecture are set! [Show summary: X features, Y components defined]
+```
 
-Your implementation overview is [incomplete/not started]. Let's plan the implementation approach.
+**Note:** Implementation overview is repo-specific. Ask first:
 
-[Note: Implementation overview should be asked ONLY if this is a single-repo system or if user wants to plan a specific repo]
-
-First, let me understand your repository structure:
-- Is this a single repository or multiple repositories?
+```
+Is this a single repository or multiple repositories?
+- [If single] We'll create one implementation overview
 - [If multiple] Which repository do you want to plan implementation for?
+```
+
+If implementation tier doesn't exist for this repo, **initialize it first**:
+
+```
+Implementation tier not found for repo "{repo-name}". Initializing...
+
+[Initialize implementation tier:]
+1. Copy spec/implementation/index-template.md → spec/implementation/index.md
+2. Set next_impl_id: IMPL-0001
+3. Set repo: {repo-name}
+4. Set last_updated to today's date
+5. Remove example rows from implementation table
+
+✓ Implementation tier initialized for repo: {repo-name}
+```
+
+Then proceed with cooperative planning:
+
+```
+Let's plan the implementation approach for {repo-name}.
 
 For repository "{repo-name}":
 - What components (COMP-####) does this repo implement?
@@ -147,6 +229,15 @@ For repository "{repo-name}":
 
 [Work through implementation overview template]
 [Reference components and features from previous tiers]
+
+[When implementation sections are complete:]
+1. Copy spec/implementation/overview-template.md → spec/implementation/overview.md
+2. Replace all {{placeholder}} values including {{repo}}
+3. Set status: draft
+4. Set last_updated to today's date
+5. Save the file
+
+✓ Created spec/implementation/overview.md
 
 [When overview is confirmed complete:]
 Implementation overview complete! Ready to define specific implementation areas (IMPL-####)?
