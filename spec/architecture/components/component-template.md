@@ -105,10 +105,13 @@ TEMPLATE USAGE:
 
 > _Key domain concepts owned or heavily used by this component, at a conceptual level._
 
-- Main entities / aggregates this component deals with.
-- Any important invariants or consistency rules.
+**Note:** Describe domain concepts and invariants here at an architectural level. Concrete schemas, field-level details, and API contracts belong in Implementation specs (IMPL-####).
 
-(Concrete schemas and interfaces belong in the Implementation tier, but mention them here conceptually.)
+- **Main entities / aggregates** this component deals with.
+- **Important invariants or consistency rules** this component enforces.
+- **Key relationships** between domain concepts.
+
+**Example:** "User aggregate includes profile, authentication credentials, and preferences. Invariant: email must be unique across all users. User owns their preferences (one-to-many)."
 
 ## 5. Operational Concerns
 
