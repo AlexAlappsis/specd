@@ -66,7 +66,7 @@ First, determine if this is CREATE or EDIT mode:
    - Incorporate user feedback before finalizing Section 3.2
 
 4. **Handle open questions cooperatively:**
-   - Based on the discussion so far, draft 2-4 potential open questions
+   - Based on the discussion so far, draft 2-6 potential open questions
    - Present these draft questions to the user
    - Ask the user:
      - "Do you have answers to any of these questions?"
@@ -75,11 +75,19 @@ First, determine if this is CREATE or EDIT mode:
    - Only include questions in the final document that the user confirms should remain open
    - If the user answers a question during this discussion, incorporate the answer into the appropriate section instead of leaving it as an open question
 
-5. **Generate feature slug:**
+5. **Review auto-generated sections:**
+   - Based on the charter context and feature discussion, draft content for sections not explicitly discussed:
+     - Section 5 (Dependencies & Interactions) - related features, external integrations
+     - Section 6 (Non-Goals / Exclusions) - what's explicitly out of scope
+   - Present these sections to the user for confirmation
+   - Ask: "I've drafted the following sections based on our discussion. Are these accurate, or should anything be added/removed?"
+   - Incorporate user feedback before finalizing
+
+6. **Generate feature slug:**
    - Convert title to kebab-case (e.g., "User Authentication" → "user-authentication")
    - Create filename: `FEAT-####-{slug}.md`
 
-6. **Create feature file:**
+7. **Create feature file:**
    - Copy `spec/charter/features/feature-template.md`
    - Save to `spec/charter/features/FEAT-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -94,9 +102,11 @@ First, determine if this is CREATE or EDIT mode:
      - `{{implementations}}` → [] (empty array, will be filled when implementations are created)
    - Fill in description, user stories, and success metrics from user prompts
    - Fill in Section 3.2 (Edge Cases & Exceptions) with user-confirmed edge cases
+   - Fill in Section 5 (Dependencies & Interactions) with user-confirmed content
+   - Fill in Section 6 (Non-Goals / Exclusions) with user-confirmed content
    - Fill in Section 7 (Open Questions) with only the questions user confirmed should remain open
 
-7. **Update charter index:**
+8. **Update charter index:**
    - Open `spec/charter/index.md`
    - Add new row to feature table:
      ```
@@ -106,7 +116,7 @@ First, determine if this is CREATE or EDIT mode:
    - Increment `next_feature_id` in front matter (e.g., FEAT-0005 → FEAT-0006)
    - Update `last_updated` field to today
 
-8. **Report completion:**
+9. **Report completion:**
    - Display created file path
    - Show assigned FEAT-#### ID
    - Suggest next steps:
