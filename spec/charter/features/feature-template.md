@@ -57,7 +57,19 @@ TEMPLATE USAGE:
 - Main feature behaviors, in plain text.
 
 ### 3.2 Edge Cases & Exceptions
-- Unusual but realistic cases.
+
+> **Guidance:** Consider different categories of edge cases to ensure comprehensive coverage.
+
+**Common edge case categories:**
+- **Validation/Constraints:** Empty inputs, invalid formats, size limits exceeded
+- **Error Conditions:** Network failures, timeouts, missing dependencies, permission denied
+- **Boundary Values:** First/last item, zero/negative values, maximum limits
+- **Concurrent Operations:** Multiple users editing simultaneously, race conditions
+- **State Transitions:** Feature disabled mid-operation, data deleted while in use
+- **Data Integrity:** Partial updates, orphaned records, duplicate entries
+
+**Edge cases for this feature:**
+- _(List specific edge cases relevant to this feature)_
 
 ## 4. Data Concepts (Conceptual)
 

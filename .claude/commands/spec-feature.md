@@ -50,7 +50,22 @@ First, determine if this is CREATE or EDIT mode:
    - User stories or use cases (optional)
    - Success metrics (optional)
 
-3. **Handle open questions cooperatively:**
+3. **Review edge cases cooperatively:**
+   - Based on the feature description, draft potential edge cases across multiple categories:
+     - Validation/Constraints (empty inputs, invalid formats, size limits)
+     - Error Conditions (network failures, timeouts, missing dependencies)
+     - Boundary Values (first/last item, zero/negative values, maximum limits)
+     - Concurrent Operations (simultaneous edits, race conditions)
+     - State Transitions (feature disabled mid-operation, data deleted while in use)
+     - Data Integrity (partial updates, orphaned records, duplicates)
+   - Present the drafted edge cases to the user
+   - Ask the user:
+     - "Are these edge cases accurate and complete?"
+     - "Are there additional edge cases I should include?"
+     - "Should any of these be removed or modified?"
+   - Incorporate user feedback before finalizing Section 3.2
+
+4. **Handle open questions cooperatively:**
    - Based on the discussion so far, draft 2-4 potential open questions
    - Present these draft questions to the user
    - Ask the user:
@@ -60,11 +75,11 @@ First, determine if this is CREATE or EDIT mode:
    - Only include questions in the final document that the user confirms should remain open
    - If the user answers a question during this discussion, incorporate the answer into the appropriate section instead of leaving it as an open question
 
-4. **Generate feature slug:**
+5. **Generate feature slug:**
    - Convert title to kebab-case (e.g., "User Authentication" → "user-authentication")
    - Create filename: `FEAT-####-{slug}.md`
 
-5. **Create feature file:**
+6. **Create feature file:**
    - Copy `spec/charter/features/feature-template.md`
    - Save to `spec/charter/features/FEAT-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -78,9 +93,10 @@ First, determine if this is CREATE or EDIT mode:
      - `{{components}}` → [] (empty array, will be filled when components are created)
      - `{{implementations}}` → [] (empty array, will be filled when implementations are created)
    - Fill in description, user stories, and success metrics from user prompts
+   - Fill in Section 3.2 (Edge Cases & Exceptions) with user-confirmed edge cases
    - Fill in Section 7 (Open Questions) with only the questions user confirmed should remain open
 
-6. **Update charter index:**
+7. **Update charter index:**
    - Open `spec/charter/index.md`
    - Add new row to feature table:
      ```
@@ -90,7 +106,7 @@ First, determine if this is CREATE or EDIT mode:
    - Increment `next_feature_id` in front matter (e.g., FEAT-0005 → FEAT-0006)
    - Update `last_updated` field to today
 
-7. **Report completion:**
+8. **Report completion:**
    - Display created file path
    - Show assigned FEAT-#### ID
    - Suggest next steps:
