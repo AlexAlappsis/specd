@@ -1,5 +1,7 @@
 Create a new architecture component specification (COMP-####) or edit an existing one.
 
+> _New to the spec system? See [spec/readme.md](../spec/readme.md) for an overview of the four-tier structure and how components fit into the Architecture tier._
+
 **What this command does:**
 1. **Create mode:** Auto-assigns next COMP-#### ID and creates new component from template
 2. **Edit mode:** Loads existing component by ID and cooperatively updates it

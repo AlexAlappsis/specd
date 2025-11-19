@@ -1,5 +1,7 @@
 Create a new feature specification (FEAT-####) or edit an existing one.
 
+> _New to the spec system? See [spec/readme.md](../spec/readme.md) for an overview of the four-tier structure and how features fit into the Charter tier._
+
 **What this command does:**
 1. **Create mode:** Auto-assigns next FEAT-#### ID and creates new feature from template
 2. **Edit mode:** Loads existing feature by ID and cooperatively updates it

@@ -1,5 +1,7 @@
 Cooperatively plan and refine system specifications across all tiers (Charter, Architecture, Implementation).
 
+**Before starting:** Read [spec/readme.md](../spec/readme.md) to understand the four-tier specification system (Charter, Architecture, Implementation, Tasks), ID conventions, and how cross-tier traceability works.
+
 **What this command does:**
 1. Initializes tiers if needed (creates working files from templates)
 2. Loads overview documents and indexes for all tiers
