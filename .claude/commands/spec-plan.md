@@ -140,7 +140,7 @@ I'd like to start with some high-level questions to understand your vision:
 Does the charter capture everything we need for now? Should we add any custom sections specific to your project?
 
 [When charter is confirmed complete:]
-Great! Your charter is complete. Ready to move on to architecture planning, or do you want to add specific features (FEAT-####) first?
+Great! Your charter is complete. Next you can start adding features with the /spec-feature command.
 ```
 
 #### Scenario B: Charter Complete, Architecture Incomplete or Missing
@@ -187,7 +187,7 @@ Let me understand your architectural vision:
 ✓ Created spec/architecture/stack-overview.md
 
 [When architecture is confirmed complete:]
-Architecture planning is done! Ready to move on to implementation planning, or do you want to add specific components (COMP-####) first?
+Architecture planning is done! Next you can start adding components with the /spec-components command.
 ```
 
 #### Scenario C: Architecture Complete, Implementation Incomplete or Missing
@@ -242,7 +242,7 @@ For repository "{repo-name}":
 ✓ Created spec/implementation/overview.md
 
 [When overview is confirmed complete:]
-Implementation overview complete! Ready to define specific implementation areas (IMPL-####)?
+Implementation overview complete! Next you can start adding implementations with the /spec-impl command.
 ```
 
 #### Scenario D: All Overviews Complete
@@ -385,7 +385,7 @@ When user mentions a specific ID (e.g., "I need to update FEAT-0002"):
 **Workflow Guidance:**
 After completing an overview, suggest:
 - Adding specifics (features, components, implementations)
-- Moving to next tier
+- Moving to next tier if the specifics are complete
 - Running /spec-sync to validate consistency
 - Using /spec-feature, /spec-component, /spec-impl commands
 
