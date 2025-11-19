@@ -59,11 +59,28 @@ TEMPLATE USAGE:
 ### 3.2 Edge Cases & Exceptions
 - Unusual but realistic cases.
 
-## 4. Data & Inputs/Outputs (Conceptual)
+## 4. Data Concepts (Conceptual)
 
-- **Inputs:** …
-- **Outputs:** …
-- **Data notes:** …
+> **Charter-tier guidance:** Describe the key data concepts, not implementation details. Avoid JSON schemas, database tables, or API contracts—those belong in Implementation specs (IMPL-####).
+
+**Examples of appropriate conceptual descriptions:**
+- "User profile includes: name, email, preferences, login history"
+- "Search query contains: text input, filters (date range, category), sort preference"
+- "Analytics event captures: user action, timestamp, context metadata"
+
+**Key data concepts:**
+
+- **Inputs:** _(What information does the user/system provide?)_
+  - Example: search text, filter criteria, pagination preferences
+
+- **Outputs:** _(What information does the feature produce?)_
+  - Example: ranked results, facet counts, suggested queries
+
+- **Stored/tracked:** _(What does the system need to remember?)_
+  - Example: search history for personalization, user preferences
+
+- **Data constraints/notes:**
+  - Example: PII must be redacted from logs; queries expire after 30 days
 
 ## 5. Dependencies & Interactions
 
