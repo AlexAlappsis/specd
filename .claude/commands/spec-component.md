@@ -62,11 +62,29 @@ First, determine if this is CREATE or EDIT mode:
    - Features this component implements (select from available FEAT-#### list, can be multiple)
    - Dependencies on other components (optional, select from existing COMP-####)
 
-4. **Generate component slug:**
+4. **Handle open questions cooperatively:**
+   - Based on the discussion so far, draft 2-6 potential open questions for Section 8
+   - Present these draft questions to the user
+   - Ask the user:
+     - "Do you have answers to any of these questions?"
+     - "Should any be removed or rephrased?"
+     - "Do you have additional open questions to add?"
+   - Only include questions in the final document that the user confirms should remain open
+   - If the user answers a question during this discussion, incorporate the answer into the appropriate section instead of leaving it as an open question
+
+5. **Review auto-generated sections:**
+   - Based on the architecture context and component discussion, draft content for sections not explicitly discussed:
+     - Section 5 (Operational Concerns) - deployment, scaling, failure modes
+     - Section 6 (Security & Access) - auth/authz, data sensitivity, audit requirements
+   - Present these sections to the user for confirmation
+   - Ask: "I've drafted the following sections based on our discussion. Are these accurate, or should anything be added/removed?"
+   - Incorporate user feedback before finalizing
+
+6. **Generate component slug:**
    - Convert name to kebab-case
    - Create filename: `COMP-####-{slug}.md`
 
-5. **Create component file:**
+7. **Create component file:**
    - Copy `spec/architecture/components/component-template.md`
    - Save to `spec/architecture/components/COMP-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -81,14 +99,17 @@ First, determine if this is CREATE or EDIT mode:
      - `{{depends_on_components}}` → array of dependent COMP-#### IDs or []
      - `{{implementations}}` → [] (will be filled when IMPL specs are created)
      - `{{notes}}` → ""
+   - Fill in Section 5 (Operational Concerns) with user-confirmed content
+   - Fill in Section 6 (Security & Access) with user-confirmed content
+   - Fill in Section 8 (Open Questions & Future Work) with only the questions user confirmed should remain open
 
-6. **Update architecture index:**
+8. **Update architecture index:**
    - Add new row to component table
    - Keep sorted by ID
    - Increment `next_component_id`
    - Update `last_updated`
 
-7. **Update feature backlinks (CRITICAL):**
+9. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in the component's features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Find the `components:` array in front matter
@@ -97,7 +118,7 @@ First, determine if this is CREATE or EDIT mode:
      - Update `last_updated` field
    - This creates bidirectional links: FEAT ↔ COMP
 
-8. **Report completion:**
+10. **Report completion:**
    - Display created file path
    - Show assigned COMP-#### ID
    - List updated feature files (backlinks)

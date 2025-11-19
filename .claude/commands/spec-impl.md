@@ -63,11 +63,65 @@ First, determine if this is CREATE or EDIT mode:
    - Primary component (if multiple selected)
    - Source code paths relative to component's repo_location (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
 
-4. **Generate implementation slug:**
+4. **Review error handling & edge cases cooperatively:**
+   - Based on the implementation description, draft potential edge cases for Section 5 across multiple categories:
+     - Validation errors (invalid inputs, malformed data, constraint violations)
+     - Error conditions (network failures, timeouts, dependency unavailable, permission denied)
+     - Boundary values (empty collections, null/zero values, maximum limits)
+     - Concurrent operations (race conditions, conflicting updates, deadlocks)
+     - State transitions (invalid state changes, partial failures, rollback scenarios)
+     - Data integrity (duplicate entries, orphaned records, referential integrity)
+   - Present the drafted edge cases to the user
+   - Ask the user:
+     - "Are these error handling approaches and edge cases accurate and complete?"
+     - "Are there additional edge cases I should include?"
+     - "Should any of these be removed or modified?"
+   - Incorporate user feedback before finalizing Section 5
+
+5. **Review testing strategy cooperatively:**
+   - Check `spec/implementation/overview.md` for the project's general testing approach
+   - Based on the implementation details and project testing strategy, draft a testing strategy for Section 7:
+     - **If tests are needed:**
+       - Test types needed (unit, integration, contract, e2e, performance)
+       - Test file locations relative to component's repo_location
+       - Critical scenarios to cover (happy path, error cases, edge cases)
+       - Test data and mocking requirements
+       - Coverage requirements
+     - **If no tests are needed:**
+       - Explain why (e.g., "Testing handled at integration tier", "Simple pass-through layer", "Covered by component-level tests")
+       - Reference where testing occurs instead
+   - Present the draft testing strategy to the user
+   - Ask the user:
+     - "Does this testing strategy align with the project's approach?"
+     - "Are tests needed for this implementation, or is testing handled elsewhere?"
+     - "If tests are needed, does this cover all critical scenarios?"
+     - "Are there additional test requirements or constraints?"
+   - Incorporate user feedback before finalizing Section 7
+   - **Note:** "No tests needed" is a valid strategy when justified
+
+6. **Handle open questions cooperatively:**
+   - Based on the discussion so far, draft 2-6 potential open questions for Section 8
+   - Present these draft questions to the user
+   - Ask the user:
+     - "Do you have answers to any of these questions?"
+     - "Should any be removed or rephrased?"
+     - "Do you have additional open questions to add?"
+   - Only include questions in the final document that the user confirms should remain open
+   - If the user answers a question during this discussion, incorporate the answer into the appropriate section instead of leaving it as an open question
+
+7. **Review auto-generated sections:**
+   - Based on the implementation context, draft content for Section 6 (Performance & Constraints):
+     - Typical and worst-case usage patterns
+     - Constraints like timeouts, max sizes, or rate limits
+   - Present this section to the user for confirmation
+   - Ask: "I've drafted performance and constraints based on our discussion. Are these accurate, or should anything be added/removed?"
+   - Incorporate user feedback before finalizing
+
+8. **Generate implementation slug:**
    - Convert name to kebab-case
    - Create filename: `IMPL-####-{slug}.md`
 
-5. **Create implementation file:**
+9. **Create implementation file:**
    - Copy `spec/implementation/contracts/impl-item-template.md`
    - Save to `spec/implementation/contracts/IMPL-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -80,8 +134,12 @@ First, determine if this is CREATE or EDIT mode:
      - `{{components}}` → array of selected COMP-#### IDs
      - `{{source_paths}}` → user-provided source paths array (relative to component's repo_location)
      - `{{notes}}` → ""
+   - Fill in Section 5 (Error Handling & Edge Cases) with user-confirmed edge cases
+   - Fill in Section 6 (Performance & Constraints) with user-confirmed content
+   - Fill in Section 7 (Testing Strategy) with user-confirmed testing strategy
+   - Fill in Section 8 (Open Questions & TODOs) with only the questions user confirmed should remain open
 
-6. **Update implementation index:**
+10. **Update implementation index:**
    - Add new row to implementation table
    - Use primary component in "Primary Component" column
    - List features in "Primary Features" column
@@ -89,19 +147,19 @@ First, determine if this is CREATE or EDIT mode:
    - Increment `next_impl_id`
    - Update `last_updated`
 
-7. **Update feature backlinks (CRITICAL):**
+11. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in implementations features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-8. **Update component backlinks (CRITICAL):**
+12. **Update component backlinks (CRITICAL):**
    - For each COMP-#### in implementations components[] array:
      - Open `spec/architecture/components/COMP-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-9. **Report completion:**
+13. **Report completion:**
     - Display created file path
     - Show assigned IMPL-#### ID
     - List updated feature and component files (backlinks)

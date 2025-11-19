@@ -116,16 +116,19 @@ TEMPLATE USAGE:
 
 ## 7. Testing Strategy
 
-> _How this implementation area should be tested._
+> _How this implementation area should be tested. Consult `spec/implementation/overview.md` for the project's general testing approach._
+
+**Note:** "No tests needed" is a valid strategy when testing is handled elsewhere or not applicable. If no tests are needed, explain why and reference where testing occurs instead.
 
 ### 7.1 Test Scope
 
-- **Test types needed:** (e.g., unit, integration, contract, e2e, performance)
-- **Test file locations:** (paths relative to component's `repo_location`)
+- **Test types needed:** (e.g., unit, integration, contract, e2e, performance, OR "None - testing handled at [specify tier/location]")
+- **Test file locations:** (paths relative to component's `repo_location`, OR "N/A")
 - **Critical scenarios that MUST be covered:**
   - Happy path: Normal expected behavior
   - Error cases: How errors should be handled and validated
   - Edge cases: Boundary conditions, unusual inputs, race conditions
+  - OR: "Testing covered by [reference to where testing occurs]"
 
 ### 7.2 Test Data & Mocking
 
