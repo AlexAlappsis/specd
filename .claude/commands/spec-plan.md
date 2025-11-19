@@ -140,7 +140,9 @@ I'd like to start with some high-level questions to understand your vision:
 Does the charter capture everything we need for now? Should we add any custom sections specific to your project?
 
 [When charter is confirmed complete:]
-Great! Your charter is complete. Next you can start adding features with the /spec-feature command.
+We've completed the charter overview. Now let's define features for each capability area. Some suggested features: Market Data Management, Recipe & Production Analysis, or Scenario Testing.
+
+To create a feature, use: `/spec-feature`
 ```
 
 #### Scenario B: Charter Complete, Architecture Incomplete or Missing
@@ -187,7 +189,9 @@ Let me understand your architectural vision:
 ✓ Created spec/architecture/stack-overview.md
 
 [When architecture is confirmed complete:]
-Architecture planning is done! Next you can start adding components with the /spec-components command.
+We've completed the architecture stack overview. Now let's define components for the planned features. Some suggested components: Authentication, Database Layer, User interface screens.
+
+To create a component, use: `/spec-components`
 ```
 
 #### Scenario C: Architecture Complete, Implementation Incomplete or Missing
@@ -242,7 +246,9 @@ For repository "{repo-name}":
 ✓ Created spec/implementation/overview.md
 
 [When overview is confirmed complete:]
-Implementation overview complete! Next you can start adding implementations with the /spec-impl command.
+We've completed the implementation overview. Now let's adding implementations for of the components. Some suggested implementations: Entity Framework Context, Domain Services, API endpoints.
+
+To create an implementation, use: `/spec-impl`
 ```
 
 #### Scenario D: All Overviews Complete
@@ -439,3 +445,11 @@ Ready to move on to implementation planning, or would you like to add more compo
 ---
 
 **Remember:** This is a cooperative planning tool. Your job is to help the user think through their system design thoughtfully, not just fill in forms. Ask good questions, make smart suggestions, and create clear documentation.
+
+## Related Commands
+
+- **`/spec-feature`** - Create or edit individual feature specifications (FEAT-####)
+- **`/spec-component`** - Create architecture components (use after charter complete)
+- **`/spec-impl`** - Create implementation specs (use after architecture complete)
+
+Use these commands instead of creating spec files directly.
