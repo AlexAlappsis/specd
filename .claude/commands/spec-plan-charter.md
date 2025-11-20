@@ -1,6 +1,6 @@
 Plan or edit the Charter tier overview document cooperatively.
 
-**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the Charter tier's role in the four-tier specification system.
+**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for the Charter tier's role, ID conventions, and cross-tier traceability.
 
 **What this command does:**
 1. Creates or loads the charter overview document (system-charter.md)
@@ -17,47 +17,41 @@ Plan or edit the Charter tier overview document cooperatively.
 
 **Implementation instructions for Claude Code:**
 
-## Overview: Cooperative Planning Philosophy
+## Cooperative Planning Approach
 
-This command supports **cooperative planning** for the Charter tier. The approach is:
-
-1. **Get high-level context first** - Understand the user's overall vision before diving into details
-2. **Ask informed questions** - Use context to ask smart, specific questions (not just reading from a script)
-3. **Go section by section** - Work through charter template systematically but allow natural conversation flow
-4. **Suggest additions** - Proactively suggest relevant sections the template might not cover
-5. **Show and confirm** - Present drafted content frequently and ask for user confirmation/refinement
+1. **Get high-level context first** - Understand user's vision before diving into details
+2. **Ask informed questions** - Use context to ask smart, specific questions (not scripted prompts)
+3. **Go section by section** - Work through template systematically but allow natural flow
+4. **Suggest additions** - Proactively suggest relevant sections beyond template
+5. **Show and confirm** - Present drafted content frequently and ask for confirmation/refinement
 
 ## When Invoked
 
 ### Phase 1: Determine Mode
 
 1. **Try to load existing charter:**
-   - Try to open `spec/charter/system-charter.md`
-   - If found, use **EDIT MODE**
-   - If not found, use **CREATE MODE**
+   - Open `spec/charter/system-charter.md` → **EDIT MODE**
+   - Not found → **CREATE MODE**
 
 2. **Try to load charter index:**
-   - Try to open `spec/charter/index.md`
-   - If not found, will need to initialize in CREATE mode
+   - Open `spec/charter/index.md`
+   - Not found → will initialize in CREATE mode
 
 3. **If neither exists:**
-   - Check for templates (`spec/charter/system-charter-template.md` and `spec/charter/index-template.md`)
-   - If templates missing, inform user to run `install.sh` first
+   - Check for templates (`spec/charter/system-charter-template.md`, `spec/charter/index-template.md`)
+   - If missing → inform user to run `install.sh`
 
-### Phase 2A: CREATE MODE - New Charter
-
-If charter doesn't exist, create it cooperatively:
+### Phase 2A: CREATE MODE
 
 1. **Initialize charter tier if needed:**
-   - If `spec/charter/index.md` doesn't exist:
-     ```
-     Charter tier not initialized. Initializing...
+   ```
+   Charter tier not initialized. Initializing...
 
-     ✓ Created spec/charter/index.md
-     ✓ Set next_feature_id: FEAT-0001
-     ```
+   ✓ Created spec/charter/index.md
+   ✓ Set next_feature_id: FEAT-0001
+   ```
 
-2. **Get high-level context first:**
+2. **Get high-level context:**
    ```
    Let's create your system charter. I'll work with you to fill in the details.
 
@@ -68,77 +62,66 @@ If charter doesn't exist, create it cooperatively:
    - What are the 2-3 most important capabilities it must provide?
    ```
 
-3. **Work section by section through the charter template:**
+3. **Work section by section through charter template:**
 
-   Load `spec/charter/system-charter-template.md` to understand the structure.
+   Load `spec/charter/system-charter-template.md` for structure.
 
-   **Section 1: Metadata** (YAML front matter)
-   - Set `id: SYS-CHARTER`
-   - Set `status: draft`
-   - Set `last_updated` to today's date (YYYY-MM-DD)
+   **Section 1: Metadata (YAML)**
+   - `id: SYS-CHARTER`
+   - `status: draft`
+   - `last_updated: YYYY-MM-DD` (today)
 
    **Section 2: System Overview**
-   - Based on high-level context, draft the system overview
-   - Show to user and ask for confirmation/refinement
-   - Ask informed questions like:
-     - "You mentioned [problem] - are there any specific pain points this addresses?"
-     - "For [users], what's their typical workflow that this system will support?"
+   - Draft based on high-level context
+   - Show and ask for confirmation/refinement
+   - Ask informed follow-ups:
+     - "You mentioned [problem] - any specific pain points this addresses?"
+     - "For [users], what's their typical workflow this supports?"
 
    **Section 3: Feature Roadmap**
-   - Based on capabilities mentioned in high-level context, draft initial feature roadmap
+   - Draft initial roadmap from mentioned capabilities
    - Organize by priority or theme
-   - Show to user and ask: "Does this capture the main capabilities? Any additions or changes?"
+   - Ask: "Does this capture the main capabilities? Any additions or changes?"
 
    **Section 4: Success Criteria**
-   - Ask about metrics and goals:
-     - "How will you measure success for this system?"
-     - "Are there specific performance, adoption, or business metrics you're targeting?"
-   - Draft success criteria based on responses
+   - Ask about metrics:
+     - "How will you measure success?"
+     - "Specific performance, adoption, or business metrics?"
+   - Draft success criteria
 
    **Section 5: Constraints & Dependencies**
    - Ask about constraints:
-     - "Are there technology constraints? (existing systems, required integrations, compliance)"
-     - "Timeline or budget constraints we should document?"
-   - Draft constraints section
+     - "Technology constraints? (existing systems, integrations, compliance)"
+     - "Timeline or budget constraints?"
+   - Draft constraints
 
    **Section 6: Out of Scope**
-   - Based on what IS in scope, ask:
-     - "What are things this system will explicitly NOT do?"
-     - "Any common requests or features you want to exclude?"
-   - Draft out-of-scope section
+   - Ask: "What will this system explicitly NOT do?"
+   - Draft exclusions
 
 4. **Suggest custom sections:**
-   ```
-   The template covers the standard sections. Based on your [domain/approach],
-   are there other aspects we should document? For example:
-   - [Specific suggestion 1 based on context]
-   - [Specific suggestion 2 based on context]
-   ```
+   Based on domain/context, suggest relevant additions:
+   - E-commerce: "Payment processing, order fulfillment?"
+   - Compliance-heavy: "Regulatory requirements section?"
+   - High-scale: "Performance and scalability targets?"
 
-5. **Final review:**
-   - Show complete charter structure
-   - Ask for final confirmation before saving
+5. **Final review and save:**
+   - Show complete structure
+   - Ask for confirmation
+   - Copy template → `spec/charter/system-charter.md`
+   - Replace all {{placeholder}} values
+   - Set status, last_updated
+   - Save file
 
-6. **Save charter:**
-   ```
-   1. Copy spec/charter/system-charter-template.md → spec/charter/system-charter.md
-   2. Replace all {{placeholder}} values with user-provided content
-   3. Set status: draft
-   4. Set last_updated to today's date
-   5. Save the file
-
-   ✓ Created spec/charter/system-charter.md
-   ```
-
-7. **Suggest next steps:**
+6. **Suggest next steps:**
    ```
    Charter overview complete! ✓
 
    Next steps:
-   1. Define individual features for each capability area: /spec-feature
+   1. Define individual features: /spec-feature
    2. Check planning status: /spec-plan
 
-   Some suggested features based on your charter:
+   Suggested features based on your charter:
    - [Feature area 1 from Section 3]
    - [Feature area 2 from Section 3]
    - [Feature area 3 from Section 3]
@@ -146,9 +129,7 @@ If charter doesn't exist, create it cooperatively:
    Ready to create the first feature?
    ```
 
-### Phase 2B: EDIT MODE - Existing Charter
-
-If charter exists, help user edit it:
+### Phase 2B: EDIT MODE
 
 1. **Load and show current charter:**
    ```
@@ -160,7 +141,7 @@ If charter exists, help user edit it:
    - Last updated: [date]
 
    Sections:
-   [List main section headings and brief content summary]
+   [List main headings with brief summary]
 
    What would you like to update?
    - Specific section (e.g., "Feature Roadmap", "Success Criteria")
@@ -170,193 +151,140 @@ If charter exists, help user edit it:
    ```
 
 2. **Cooperative editing:**
-   - If user wants to update specific section:
-     - Show current content
-     - Ask what changes they want
-     - Work cooperatively to refine
-     - Update `last_updated` date
-
-   - If user wants to add section:
-     - Ask about section purpose and content
-     - Draft section
-     - Show and confirm
-     - Insert in appropriate location
-
-   - If user wants to review/refine entire charter:
-     - Go section by section
-     - For each section, show current content and ask if changes needed
-     - Apply changes cooperatively
+   - **Update section:** Show current → ask changes → refine → update `last_updated`
+   - **Add section:** Ask purpose/content → draft → confirm → insert
+   - **Review entire:** Go section by section → show → ask changes → apply
 
 3. **Save updates:**
    ```
    ✓ Updated spec/charter/system-charter.md
-   ✓ Updated last_updated to [today's date]
+   ✓ Updated last_updated to [today]
 
-   [If content significantly changed:]
-   Note: Your charter has been updated. Run /spec-plan to check if
-   any feature discrepancies were introduced or resolved.
+   [If significantly changed:]
+   Note: Charter updated. Run /spec-plan to check for feature discrepancies.
    ```
 
-## Important Notes
+## Context Management
 
-**Context Management:**
-- Load ONLY the charter overview and index
-- DO NOT load individual FEAT-#### files unless user specifically requests editing one
-- Keep focus on the overview document
+- Load ONLY charter overview and index
+- DO NOT load individual FEAT-#### files unless user specifically requests
+- Focus on overview document
 
-**Cooperative Approach:**
-- Ask informed questions based on context, not scripted prompts
-- Suggest relevant additions beyond the template based on domain/industry
-- Show work frequently and ask for confirmation
-- Allow natural conversation flow - don't be rigid about section order
+## Smart Suggestions by Domain
 
-**Smart Suggestions:**
-- Based on domain (e.g., e-commerce, SaaS, data pipeline), suggest relevant sections
-- Based on scale (e.g., "millions of users"), suggest performance/scalability criteria
-- Based on compliance mentions (e.g., HIPAA, GDPR), suggest security/privacy sections
+- **E-commerce/SaaS:** Payment, user management, subscription features
+- **Data pipeline:** Data sources, transformations, scheduling
+- **High-scale systems:** Performance criteria, caching, scalability
+- **Compliance (HIPAA/GDPR/FDA):** Security, privacy, audit sections
+- **Manufacturing:** Quality, traceability, regulatory requirements
 
-**After Completion:**
-- Always suggest creating individual features with /spec-feature
-- Suggest running /spec-plan to check overall status
-- Provide 2-3 concrete feature suggestions based on charter content
-
-## Example Interaction - CREATE MODE
+## Example - CREATE MODE
 
 ```
 User: /spec-plan-charter
 
-Claude: Let's create your system charter. I'll work with you to fill in the details.
+Claude: Let's create your system charter.
 
-Before we dive into specifics, help me understand the big picture:
+Before we dive in:
 - What is the system name?
-- What problem does this system solve?
+- What problem does it solve?
 - Who are the primary users?
-- What are the 2-3 most important capabilities it must provide?
+- What are the 2-3 most important capabilities?
 
-User: It's called "RecipeFlow". Food manufacturers need to analyze recipes,
-production costs, and run what-if scenarios. Users are product managers
-and operations teams. Main capabilities: recipe management, cost analysis,
-and scenario testing.
+User: RecipeFlow. Food manufacturers need to analyze recipes, costs,
+and run scenarios. Users: product managers and operations. Main capabilities:
+recipe management, cost analysis, scenario testing.
 
-Claude: Great context! So RecipeFlow helps food manufacturers optimize their
-recipes and production through analysis and modeling.
+Claude: Great! RecipeFlow for food manufacturing optimization.
 
-Let me draft Section 2 (System Overview) based on what you shared:
+Section 2 (System Overview) draft:
 
 ---
-## 2. System Overview
+RecipeFlow is a recipe and production analysis system for food manufacturers.
+Enables product managers and operations teams to manage recipes, analyze costs,
+and model what-if scenarios to optimize formulations and efficiency.
 
-RecipeFlow is a recipe and production analysis system designed for food
-manufacturing organizations. It enables product managers and operations
-teams to manage recipes, analyze production costs, and model what-if
-scenarios to optimize product formulations and manufacturing efficiency.
+**Problem:** Food manufacturers lack integrated tools to analyze recipe costs,
+model substitutions, and evaluate production scenarios.
 
-**Problem Statement:** Food manufacturers currently lack integrated tools
-to analyze recipe costs, model ingredient substitutions, and evaluate
-production scenarios in a unified system.
-
-**Target Users:**
+**Users:**
 - Product Managers: Recipe optimization and cost analysis
 - Operations Teams: Production planning and scenario modeling
 ---
 
-Does this capture it correctly? Any changes?
-
-[User confirms or refines]
-
-Claude: Excellent! Now let's talk about your feature roadmap...
-
-[Continues section by section...]
-
-[After all sections complete:]
-
-Here's your complete charter structure:
-- Section 2: System Overview ✓
-- Section 3: Feature Roadmap (3 capability areas) ✓
-- Section 4: Success Criteria (5 metrics) ✓
-- Section 5: Constraints (tech stack, timeline) ✓
-- Section 6: Out of Scope (retail sales, mobile apps) ✓
-
-Ready to save this?
+Does this capture it? Any changes?
 
 [User confirms]
 
+Claude: Excellent! Now Section 3 (Feature Roadmap)...
+
+[Continues sections...]
+
+[After completion:]
+
 ✓ Created spec/charter/system-charter.md
-✓ Charter tier initialized
 
-Charter overview complete! ✓
-
-Next steps:
-1. Define individual features: /spec-feature
-2. Check planning status: /spec-plan
-
-Suggested features based on your charter:
+Suggested features:
 - Recipe Management & Versioning
 - Production Cost Analysis
 - What-If Scenario Modeling
 
-Ready to create the first feature?
+Ready to create features with /spec-feature?
 ```
 
-## Example Interaction - EDIT MODE
+## Example - EDIT MODE
 
 ```
 User: /spec-plan-charter
 
 Claude: Loaded spec/charter/system-charter.md
 
-Current charter:
-- System: RecipeFlow
-- Status: draft
-- Last updated: 2025-11-15
+Current: RecipeFlow, draft, last updated 2025-11-15
 
 Sections:
-- System Overview: Food manufacturing recipe and cost analysis system
-- Feature Roadmap: 3 capability areas defined
-- Success Criteria: 5 metrics (adoption, performance, cost savings)
-- Constraints: Tech stack (Python, PostgreSQL), 6-month timeline
+- System Overview: Food manufacturing recipe/cost analysis
+- Feature Roadmap: 3 capability areas
+- Success Criteria: 5 metrics
+- Constraints: Python/PostgreSQL, 6-month timeline
 - Out of Scope: Retail sales, mobile apps
 
-What would you like to update?
+What to update?
 
-User: Add a section about compliance requirements - we need FDA 21 CFR Part 11
+User: Add FDA 21 CFR Part 11 compliance section
 
-Claude: Good catch - that's important for food manufacturing systems.
-Let me draft a Compliance & Regulatory section:
+Claude: Important for food manufacturing! Draft:
 
 ---
-## 7. Compliance & Regulatory Requirements
+## 7. Compliance & Regulatory
 
 **FDA 21 CFR Part 11:**
-The system must comply with FDA 21 CFR Part 11 requirements for electronic
-records and electronic signatures, including:
-- Audit trails for all recipe and formulation changes
-- User authentication and access controls
+- Audit trails for recipe changes
+- User auth and access controls
 - Data integrity and validation
-- Secure electronic signatures for recipe approvals
+- Electronic signatures for approvals
 
-**Additional Considerations:**
-- All recipe versions must be retained with complete audit history
-- Changes to approved recipes require re-validation workflow
+**Retention:**
+- All recipe versions with complete audit history
+- Re-validation workflow for approved recipe changes
 ---
 
-Does this capture your compliance requirements? Any other regulations to add?
+Capture your requirements? Other regulations?
 
-[User confirms or refines]
+[User confirms]
 
-✓ Added Section 7: Compliance & Regulatory Requirements
+✓ Added Section 7
 ✓ Updated spec/charter/system-charter.md
 ✓ Updated last_updated to 2025-11-19
 
-Note: This may affect your feature roadmap. Consider adding:
-- Audit Trail & Compliance Logging feature
-- Electronic Signature Workflow feature
+Consider adding features:
+- Audit Trail & Compliance Logging
+- Electronic Signature Workflow
 
-Run /spec-plan to check overall status.
+Run /spec-plan to check status.
 ```
 
 ## Related Commands
 
-- **`/spec-plan`** - Check overall planning status across all tiers
-- **`/spec-feature`** - Create individual feature specifications based on charter
-- **`/spec-plan-arch`** - Plan architecture overview (after charter complete)
+- `/spec-plan` - Check overall planning status
+- `/spec-feature` - Create individual features
+- `/spec-plan-arch` - Plan architecture (after charter complete)
