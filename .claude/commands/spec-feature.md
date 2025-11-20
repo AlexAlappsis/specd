@@ -1,6 +1,6 @@
 Create a new feature specification (FEAT-####) or edit an existing one.
 
-> _New to the spec system? See [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier structure and how features fit into the Charter tier._
+> _New to the spec system? If you haven't already in this conversation, see [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier structure and how features fit into the Charter tier._
 
 **What this command does:**
 1. **Create mode:** Auto-assigns next FEAT-#### ID and creates new feature from template

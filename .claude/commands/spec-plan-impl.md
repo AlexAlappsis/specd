@@ -1,6 +1,6 @@
 Plan or edit the Implementation tier overview document cooperatively.
 
-**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for the Implementation tier's role, repo-specific nature, and testing strategy.
+**Before starting:** If you haven't already in this conversation, read [spec/agent-guide.md](../spec/agent-guide.md) for the Implementation tier's role, repo-specific nature, and testing strategy.
 
 **What this command does:**
 1. Validates Charter and Architecture tiers are complete (prerequisites)

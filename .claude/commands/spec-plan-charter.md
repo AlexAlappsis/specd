@@ -1,6 +1,6 @@
 Plan or edit the Charter tier overview document cooperatively.
 
-**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for the Charter tier's role, ID conventions, and cross-tier traceability.
+**Before starting:** If you haven't already in this conversation, read [spec/agent-guide.md](../spec/agent-guide.md) for the Charter tier's role, ID conventions, and cross-tier traceability.
 
 **What this command does:**
 1. Creates or loads the charter overview document (system-charter.md)

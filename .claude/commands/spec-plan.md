@@ -1,6 +1,6 @@
 Show current planning status across all tiers and route to appropriate tier-specific planning commands.
 
-**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier specification system (Charter, Architecture, Implementation, Tasks), ID conventions, and cross-tier traceability.
+**Before starting:** If you haven't already in this conversation, read [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier specification system (Charter, Architecture, Implementation, Tasks), ID conventions, and cross-tier traceability.
 
 **What this command does:**
 1. Loads overview documents and indexes for all tiers

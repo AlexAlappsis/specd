@@ -1,6 +1,6 @@
 Plan or edit the Architecture tier overview document cooperatively.
 
-**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for the Architecture tier's role, component definitions, and testing strategy.
+**Before starting:** If you haven't already in this conversation, read [spec/agent-guide.md](../spec/agent-guide.md) for the Architecture tier's role, component definitions, and testing strategy.
 
 **What this command does:**
 1. Validates Charter tier is complete (prerequisite)

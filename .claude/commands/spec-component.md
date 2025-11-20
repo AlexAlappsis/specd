@@ -1,6 +1,6 @@
 Create a new architecture component specification (COMP-####) or edit an existing one.
 
-> _New to the spec system? See [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier structure and how components fit into the Architecture tier._
+> _New to the spec system? If you haven't already in this conversation, see [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier structure and how components fit into the Architecture tier._
 
 **What this command does:**
 1. **Create mode:** Auto-assigns next COMP-#### ID and creates new component from template
