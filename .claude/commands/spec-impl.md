@@ -60,7 +60,7 @@ First, determine if this is CREATE or EDIT mode:
    - For each related component, read the full component spec
    - Point out inconsistencies, but prefer component specifications over features for details.
 
-3. **Prompt user for implementation details:**
+4. **Prompt user for implementation details:**
    - Implementation name (e.g., "User API Endpoints", "Authentication Module")
    - Brief summary (one-line description)
    - Features this implements (select from FEAT-#### list, can be multiple)
@@ -68,7 +68,7 @@ First, determine if this is CREATE or EDIT mode:
    - Primary component (if multiple selected)
    - Source code paths relative to component's repo_location (e.g., ["src/Api/Users", "src/Domain/UserManagement"])
 
-4. **Review error handling & edge cases cooperatively:**
+5. **Review error handling & edge cases cooperatively:**
    - Based on the implementation description, draft potential edge cases for Section 5 across multiple categories:
      - Validation errors (invalid inputs, malformed data, constraint violations)
      - Error conditions (network failures, timeouts, dependency unavailable, permission denied)
@@ -83,7 +83,7 @@ First, determine if this is CREATE or EDIT mode:
      - "Should any of these be removed or modified?"
    - Incorporate user feedback before finalizing Section 5
 
-5. **Review testing strategy cooperatively:**
+6. **Review testing strategy cooperatively:**
    - Check `spec/implementation/overview.md` for the project's general testing approach
    - Based on the implementation details and project testing strategy, draft a testing strategy for Section 7:
      - **If tests are needed:**
@@ -104,7 +104,7 @@ First, determine if this is CREATE or EDIT mode:
    - Incorporate user feedback before finalizing Section 7
    - **Note:** "No tests needed" is a valid strategy when justified
 
-6. **Handle open questions cooperatively:**
+7. **Handle open questions cooperatively:**
    - Based on the discussion so far, draft 2-6 potential open questions for Section 8
    - Present these draft questions to the user
    - Ask the user:
@@ -114,7 +114,7 @@ First, determine if this is CREATE or EDIT mode:
    - Only include questions in the final document that the user confirms should remain open
    - If the user answers a question during this discussion, incorporate the answer into the appropriate section instead of leaving it as an open question
 
-7. **Review auto-generated sections:**
+8. **Review auto-generated sections:**
    - Based on the implementation context, draft content for Section 6 (Performance & Constraints):
      - Typical and worst-case usage patterns
      - Constraints like timeouts, max sizes, or rate limits
@@ -122,11 +122,11 @@ First, determine if this is CREATE or EDIT mode:
    - Ask: "I've drafted performance and constraints based on our discussion. Are these accurate, or should anything be added/removed?"
    - Incorporate user feedback before finalizing
 
-8. **Generate implementation slug:**
+9. **Generate implementation slug:**
    - Convert name to kebab-case
    - Create filename: `IMPL-####-{slug}.md`
 
-9. **Create implementation file:**
+10. **Create implementation file:**
    - Copy `spec/implementation/contracts/impl-item-template.md`
    - Save to `spec/implementation/contracts/IMPL-####-{slug}.md`
    - Replace all {{placeholder}} values:
@@ -144,7 +144,7 @@ First, determine if this is CREATE or EDIT mode:
    - Fill in Section 7 (Testing Strategy) with user-confirmed testing strategy
    - Fill in Section 8 (Open Questions & TODOs) with only the questions user confirmed should remain open
 
-10. **Update implementation index:**
+11. **Update implementation index:**
    - Add new row to implementation table
    - Use primary component in "Primary Component" column
    - List features in "Primary Features" column
@@ -152,19 +152,19 @@ First, determine if this is CREATE or EDIT mode:
    - Increment `next_impl_id`
    - Update `last_updated`
 
-11. **Update feature backlinks (CRITICAL):**
+12. **Update feature backlinks (CRITICAL):**
    - For each FEAT-#### in implementations features[] array:
      - Open `spec/charter/features/FEAT-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-12. **Update component backlinks (CRITICAL):**
+13. **Update component backlinks (CRITICAL):**
    - For each COMP-#### in implementations components[] array:
      - Open `spec/architecture/components/COMP-####-*.md`
      - Add this IMPL-#### to implementations[] array in front matter
      - Update `last_updated`
 
-13. **Report completion:**
+14. **Report completion:**
     - Display created file path
     - Show assigned IMPL-#### ID
     - List updated feature and component files (backlinks)
