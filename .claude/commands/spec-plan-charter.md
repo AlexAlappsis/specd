@@ -44,12 +44,22 @@ Plan or edit the Charter tier overview document cooperatively.
 ### Phase 2A: CREATE MODE
 
 1. **Initialize charter tier if needed:**
+
+   If `spec/charter/index.md` doesn't exist, create it from template:
+   - Copy `spec/charter/index-template.md` → `spec/charter/index.md`
+   - Set `next_feature_id: FEAT-0001` in front matter
+   - Set `last_updated` to today
+   - **Remove example rows from feature table** (leave table empty)
+   - **Keep the permanent example rows below the table** (in blockquote)
+
    ```
    Charter tier not initialized. Initializing...
 
-   ✓ Created spec/charter/index.md
+   ✓ Created spec/charter/index.md (empty table, ready for features)
    ✓ Set next_feature_id: FEAT-0001
    ```
+
+   **Important:** The index table should be empty after initialization. Features are added to the table only when individual FEAT-#### files are created using `/spec-feature`.
 
 2. **Get high-level context:**
    ```

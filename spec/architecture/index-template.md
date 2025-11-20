@@ -48,12 +48,19 @@ Each component has its own document with a unique ID (`COMP-####`). Components t
 | COMP-0007 | _background worker_         | worker      | draft  | `repo-name`                | `components/COMP-0007-background-worker.md`            |
 
 > **Convention:**
-> - Add a row to this table for each component document.
-> - Keep the table sorted by component ID.
+> - Add a row to this table for each component document created with `/spec-component`
+> - Keep the table sorted by component ID
 > - Type examples: `web-app`, `service`, `worker`, `library`, `database`, `external-system`
 > - Status values: `draft | active`
-> - When a component is no longer needed, delete its file and remove this row.
-> - Update `next_component_id` in the front matter when adding new components.
+> - When a component is no longer needed, delete its file and remove this row
+> - Update `next_component_id` in the front matter when adding new components
+
+> **Example rows** (for reference - remove example rows when initializing):
+> ```
+> | COMP-0001 | User Authentication Service | service     | active | backend-api      | components/COMP-0001-user-auth-service.md    |
+> | COMP-0002 | React Web Application       | web-app     | active | frontend-web     | components/COMP-0002-react-web-app.md        |
+> | COMP-0003 | PostgreSQL Database         | database    | active | infrastructure   | components/COMP-0003-postgres-db.md          |
+> ```
 
 ## ID Conventions
 

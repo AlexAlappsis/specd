@@ -49,12 +49,19 @@ Each implementation item has its own document with a unique ID (`IMPL-####`). Im
 | IMPL-0008 | _third implementation area_       | draft  | `COMP-0007`       | `FEAT-0001`             | `contracts/IMPL-0008-third-impl.md`                         |
 
 > **Convention:**
-> - Add a row for each `IMPL-####` document.
-> - Keep the table sorted by implementation ID.
+> - Add a row for each `IMPL-####` document created with `/spec-impl`
+> - Keep the table sorted by implementation ID
 > - Status values: `draft | active`
-> - If an implementation item spans multiple components, list the primary one here and detail the rest in the IMPL doc.
-> - When an implementation is no longer needed, delete its file and remove this row.
-> - Update `next_impl_id` in the front matter when adding new implementations.
+> - If an implementation spans multiple components, list the primary one here
+> - When an implementation is no longer needed, delete its file and remove this row
+> - Update `next_impl_id` in the front matter when adding new implementations
+
+> **Example rows** (for reference - remove example rows when initializing):
+> ```
+> | IMPL-0001 | User Authentication Service   | active | COMP-0001 | FEAT-0001           | contracts/IMPL-0001-user-auth-service.md  |
+> | IMPL-0002 | Recipe Database Models        | active | COMP-0003 | FEAT-0002           | contracts/IMPL-0002-recipe-db-models.md   |
+> | IMPL-0003 | Cost Calculation Engine       | draft  | COMP-0004 | FEAT-0003, FEAT-0004| contracts/IMPL-0003-cost-calc-engine.md   |
+> ```
 
 ### Testing
 

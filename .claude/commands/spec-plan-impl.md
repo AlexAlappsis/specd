@@ -68,13 +68,24 @@ Plan or edit the Implementation tier overview document cooperatively.
 ### Phase 4A: CREATE MODE
 
 1. **Initialize if needed:**
+
+   If `spec/implementation/index.md` doesn't exist for this repo, create it from template:
+   - Copy `spec/implementation/index-template.md` → `spec/implementation/index.md`
+   - Set `repo: {repo-name}` in front matter
+   - Set `next_impl_id: IMPL-0001` in front matter
+   - Set `last_updated` to today
+   - **Remove example rows from implementation table** (leave table empty)
+   - **Keep the permanent example rows below the table** (in blockquote)
+
    ```
    Implementation tier not initialized for repo "{repo-name}". Initializing...
 
-   ✓ Created spec/implementation/index.md
+   ✓ Created spec/implementation/index.md (empty table, ready for implementations)
    ✓ Set repo: {repo-name}
    ✓ Set next_impl_id: IMPL-0001
    ```
+
+   **Important:** The index table should be empty after initialization. Implementations are added to the table only when individual IMPL-#### files are created using `/spec-impl`.
 
 2. **Get high-level context:**
    ```

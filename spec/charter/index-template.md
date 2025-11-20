@@ -44,11 +44,18 @@ Each feature has its own document with a unique ID (`FEAT-####`).
 | FEAT-0005 | _third feature example_     | draft      | `features/FEAT-0005-third-feature-example.md`   |
 
 > **Convention:**
-> - Add a row to this table for each feature document.
-> - Keep the table sorted by feature ID.
+> - Add a row to this table for each feature document created with `/spec-feature`
+> - Keep the table sorted by feature ID
 > - Status values: `draft | active`
-> - When a feature is no longer needed, delete its file and remove this row.
-> - Update `next_feature_id` in the front matter when adding new features.
+> - When a feature is no longer needed, delete its file and remove this row
+> - Update `next_feature_id` in the front matter when adding new features
+
+> **Example rows** (for reference - remove example rows when initializing):
+> ```
+> | FEAT-0001 | User Authentication         | active | features/FEAT-0001-user-authentication.md       |
+> | FEAT-0002 | Recipe Management           | active | features/FEAT-0002-recipe-management.md         |
+> | FEAT-0003 | Cost Analysis Dashboard     | draft  | features/FEAT-0003-cost-analysis-dashboard.md   |
+> ```
 
 ## ID Conventions
 

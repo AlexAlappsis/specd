@@ -52,12 +52,22 @@ Plan or edit the Architecture tier overview document cooperatively.
 ### Phase 3A: CREATE MODE
 
 1. **Initialize if needed:**
+
+   If `spec/architecture/index.md` doesn't exist, create it from template:
+   - Copy `spec/architecture/index-template.md` → `spec/architecture/index.md`
+   - Set `next_component_id: COMP-0001` in front matter
+   - Set `last_updated` to today
+   - **Remove example rows from component table** (leave table empty)
+   - **Keep the permanent example rows below the table** (in blockquote)
+
    ```
    Architecture tier not initialized. Initializing...
 
-   ✓ Created spec/architecture/index.md
+   ✓ Created spec/architecture/index.md (empty table, ready for components)
    ✓ Set next_component_id: COMP-0001
    ```
+
+   **Important:** The index table should be empty after initialization. Components are added to the table only when individual COMP-#### files are created using `/spec-component`.
 
 2. **Get high-level context:**
    ```
