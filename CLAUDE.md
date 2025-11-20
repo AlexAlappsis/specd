@@ -196,6 +196,9 @@ These are copied to `/.claude/commands/` by install.sh:
   - Works tier-by-tier with intelligent context loading
   - Supports editing existing overviews and adding specifics
   - Asks informed questions based on high-level context
+- `/spec-plan-charter` - Plan or edit Charter tier overview cooperatively
+- `/spec-plan-arch` - Plan or edit Architecture tier overview cooperatively
+- `/spec-plan-impl` - Plan or edit Implementation tier overview cooperatively
 
 **Creating & Editing Specifics:**
 - `/spec-feature [FEAT-####]` - Create new or edit existing feature specification
@@ -203,7 +206,11 @@ These are copied to `/.claude/commands/` by install.sh:
 - `/spec-impl [IMPL-####]` - Create new or edit existing implementation specification (includes inline test strategy)
 - `/spec-task` - Create new TASK-#### with traceability links
 
-**Validation:**
+**Supporting Tools:**
+- `/spec-glossary [term]` - Manage domain-specific terminology
+  - No args: List all terms
+  - One arg: Show specific term definition
+  - `add [term]`: Add or update term definition
 - `/spec-sync` - Validate cross-tier consistency and fix broken links
 
 ### How Commands Work

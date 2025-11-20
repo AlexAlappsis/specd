@@ -37,7 +37,12 @@ Plan or edit the Charter tier overview document cooperatively.
    - Open `spec/charter/index.md`
    - Not found → will initialize in CREATE mode
 
-3. **If neither exists:**
+3. **Load glossary if exists:**
+   - Try to open `spec/glossary.md`
+   - If found, use term definitions for consistency in questions and drafts
+   - If not found, continue (glossary is optional)
+
+4. **If neither exists:**
    - Check for templates (`spec/charter/system-charter-template.md`, `spec/charter/index-template.md`)
    - If missing → inform user to run `install.sh`
 
@@ -127,9 +132,14 @@ Plan or edit the Charter tier overview document cooperatively.
    ```
    Charter overview complete! ✓
 
+   [If domain-specific terms detected and glossary doesn't exist:]
+   I noticed domain-specific terms in your charter ([list 2-3 key terms]).
+   Consider creating a glossary for consistency: /spec-glossary add [term]
+
    Next steps:
-   1. Define individual features: /spec-feature
-   2. Check planning status: /spec-plan
+   1. Define glossary terms (optional): /spec-glossary
+   2. Define individual features: /spec-feature
+   3. Check planning status: /spec-plan
 
    Suggested features based on your charter:
    - [Feature area 1 from Section 3]

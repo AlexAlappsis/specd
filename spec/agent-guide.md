@@ -198,14 +198,20 @@ Templates end in `-template.md`:
 
 When working with this system, use these slash commands (if available):
 
+**Planning & Overview:**
 - `/spec-plan` - Show planning status across all tiers, route to next step
 - `/spec-plan-charter` - Plan/edit charter overview cooperatively
 - `/spec-plan-arch` - Plan/edit architecture overview cooperatively
 - `/spec-plan-impl` - Plan/edit implementation overview cooperatively
+
+**Creating & Editing Specifics:**
 - `/spec-feature` - Create/edit individual feature (FEAT-####)
 - `/spec-component` - Create/edit component (COMP-####)
 - `/spec-impl` - Create/edit implementation (IMPL-####) with inline test strategy
 - `/spec-task` - Create task (TASK-####)
+
+**Supporting Tools:**
+- `/spec-glossary` - Manage domain terminology (list, show, add/update terms)
 - `/spec-sync` - Validate cross-tier consistency
 
 ## Key Differences from Traditional Documentation

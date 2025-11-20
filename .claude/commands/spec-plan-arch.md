@@ -40,6 +40,11 @@ Plan or edit the Architecture tier overview document cooperatively.
 2. **Load charter for context:**
    - Parse charter for system goals and features
 
+3. **Load glossary if exists:**
+   - Try to open `spec/glossary.md`
+   - If found, use term definitions for consistency in questions and drafts
+   - If not found, continue (glossary is optional)
+
 ### Phase 2: Determine Mode
 
 1. **Try to load existing:** Open `spec/architecture/stack-overview.md`
@@ -146,9 +151,14 @@ Plan or edit the Architecture tier overview document cooperatively.
    ```
    Architecture overview complete! ✓
 
+   [If technical terms detected and glossary doesn't exist:]
+   I noticed technical terms in your architecture ([list 2-3 key terms]).
+   Consider adding them to the glossary: /spec-glossary add [term]
+
    Next steps:
-   1. Define individual components: /spec-component
-   2. Check planning status: /spec-plan
+   1. Define glossary terms (optional): /spec-glossary
+   2. Define individual components: /spec-component
+   3. Check planning status: /spec-plan
 
    Suggested components:
    - [Component 1 from Section 3]

@@ -130,17 +130,31 @@ All templates use YAML front matter with validation rules and usage instructions
 
 ### Slash Commands (in `.claude/commands/`)
 
-6 commands for spec management:
-- `/spec-plan` - Cooperative planning for Charter, Architecture, and Implementation overviews
-- `/spec-feature`, `/spec-component`, `/spec-impl`, `/spec-task` - Create specs with auto-linking
+10 commands for spec management:
+
+**Planning & Overview:**
+- `/spec-plan` - Show planning status and route to tier-specific planning
+- `/spec-plan-charter` - Plan or edit Charter tier overview cooperatively
+- `/spec-plan-arch` - Plan or edit Architecture tier overview cooperatively
+- `/spec-plan-impl` - Plan or edit Implementation tier overview cooperatively
+
+**Creating & Editing Specifics:**
+- `/spec-feature` - Create/edit feature specifications (FEAT-####)
+- `/spec-component` - Create/edit components (COMP-####)
+- `/spec-impl` - Create/edit implementations (IMPL-####) with inline test strategy
+- `/spec-task` - Create/edit tasks (TASK-####)
+
+**Supporting Tools:**
+- `/spec-glossary` - Manage domain-specific terminology (list, show, add/update)
 - `/spec-sync` - Validate cross-tier consistency
 
 ### Documentation
 
-- [spec/readme.md](spec/readme.md) - Complete specification system guide
+- [spec/readme.md](spec/readme.md) - Complete specification system guide (human-focused)
+- [spec/agent-guide.md](spec/agent-guide.md) - Quick reference for LLM agents
 - [spec/spec-manifest.md](spec/spec-manifest.md) - Template reference
 - [spec/prompts/readme.md](spec/prompts/readme.md) - LLM prompt guide
-- [CLAUDE.md](CLAUDE.md) - Guide for LLM agents
+- [CLAUDE.md](CLAUDE.md) - Complete guide for LLM agents
 
 ---
 

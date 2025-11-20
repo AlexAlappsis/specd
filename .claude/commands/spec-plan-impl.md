@@ -44,6 +44,11 @@ Plan or edit the Implementation tier overview document cooperatively.
    - Parse charter for system goals
    - Parse architecture for components and tech stack
 
+3. **Load glossary if exists:**
+   - Try to open `spec/glossary.md`
+   - If found, use term definitions for consistency in questions and drafts
+   - If not found, continue (glossary is optional)
+
 ### Phase 2: Determine Repository Context
 
 **Note:** Implementation overview is repo-specific. Multi-repo projects need separate overviews.
@@ -155,9 +160,14 @@ Plan or edit the Implementation tier overview document cooperatively.
    ```
    Implementation overview complete for {repo-name}! ✓
 
+   [If technical/domain terms detected and glossary doesn't exist:]
+   I noticed technical terms in your implementation ([list 2-3 key terms]).
+   Consider adding them to the glossary: /spec-glossary add [term]
+
    Next steps:
-   1. Define individual implementations: /spec-impl
-   2. Check planning status: /spec-plan
+   1. Define glossary terms (optional): /spec-glossary
+   2. Define individual implementations: /spec-impl
+   3. Check planning status: /spec-plan
 
    Suggested implementations:
    - [Area 1 from Section 3/4]
