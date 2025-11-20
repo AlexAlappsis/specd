@@ -55,6 +55,11 @@ First, determine if this is CREATE or EDIT mode:
    - Try to open `spec/architecture/index.md` for COMP-#### list (optional)
    - If neither found, inform user they can create features/components later with /spec-feature and /spec-component
 
+3. **Read related features and components for context:**
+   - For each related feature, read the full feature spec
+   - For each related component, read the full component spec
+   - Point out inconsistencies, but prefer component specifications over features for details.
+
 3. **Prompt user for implementation details:**
    - Implementation name (e.g., "User API Endpoints", "Authentication Module")
    - Brief summary (one-line description)
