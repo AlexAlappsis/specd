@@ -34,7 +34,8 @@ Cross-tier linking example: `FEAT-0002 ↔ COMP-0004 ↔ IMPL-0012 ↔ TASK-0045
 
 ## Key Files
 
-- [spec/readme.md](spec/readme.md) - Comprehensive guide to the 4-tier system
+- [spec/readme.md](spec/readme.md) - Human-friendly guide to the 4-tier system
+- [spec/agent-guide.md](spec/agent-guide.md) - Quick reference for LLM agents working with the spec system
 - [spec/spec-manifest.md](spec/spec-manifest.md) - Complete manifest of all templates
 - [spec/index.md](spec/index.md) - Quick-reference navigational index
 - [spec/prompts/readme.md](spec/prompts/readme.md) - Guide to LLM prompt templates
@@ -100,7 +101,7 @@ This approach keeps test requirements co-located with the contracts they verify,
 
 When working with this repository:
 
-1. **Understanding the system**: Start with [spec/readme.md](spec/readme.md)
+1. **Understanding the system**: Start with [spec/agent-guide.md](spec/agent-guide.md) for quick reference (or [spec/readme.md](spec/readme.md) for comprehensive guide)
 2. **Finding templates**: Use [spec/spec-manifest.md](spec/spec-manifest.md)
 3. **Creating new specs**:
    - Copy relevant template from the appropriate tier

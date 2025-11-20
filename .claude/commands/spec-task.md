@@ -1,6 +1,6 @@
 Create a new task (TASK-####) for execution planning. Tasks are mandatory before code generation.
 
-> _New to the spec system? See [spec/readme.md](../spec/readme.md) for an overview of the four-tier structure and how tasks fit into the execution planning workflow._
+> _New to the spec system? See [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the four-tier structure and how tasks fit into the execution planning workflow._
 
 **What this command does:**
 1. Auto-assigns next available TASK-#### ID

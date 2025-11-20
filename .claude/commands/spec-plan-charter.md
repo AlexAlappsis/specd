@@ -1,6 +1,6 @@
 Plan or edit the Charter tier overview document cooperatively.
 
-**Before starting:** Read [spec/readme.md](../spec/readme.md) to understand the Charter tier's role in the four-tier specification system.
+**Before starting:** Read [spec/agent-guide.md](../spec/agent-guide.md) for a quick reference to the Charter tier's role in the four-tier specification system.
 
 **What this command does:**
 1. Creates or loads the charter overview document (system-charter.md)
