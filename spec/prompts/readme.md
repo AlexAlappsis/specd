@@ -64,7 +64,7 @@ This mode enables reproducible, auditable spec maintenance.
 | Folder          | Scope                   | Example Files                                                                                                                                                            | Description                                                                                                         |
 | --------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | `/creation/`    | Spec creation           | `charter-creation-prompt.md`, `architecture-creation-prompt.md`, `implementation-creation-prompt.md`, `task-creation-prompt.md`                                          | Guides agents through creating new spec files based on templates, with clarifying questions and confirmation steps. |
-| `/maintenance/` | Spec maintenance & sync | `charter-maintenance-prompt.md`, `architecture-maintenance-prompt.md`, `implementation-maintenance-prompt.md`, `task-maintenance-prompt.md`, `cross-tier-sync-prompt.md` | Guides updates after code or design changes, ensuring cross-tier consistency.                                       |
+| `/maintenance/` | Spec maintenance & sync | `charter-maintenance-prompt.md`, `architecture-maintenance-prompt.md`, `implementation-maintenance-prompt.md`, `task-maintenance-prompt.md`, `cross-tier-sync-prompt.md`, `align-to-templates.md` | Guides updates after code or design changes, ensuring cross-tier consistency. Includes template migration support.                                       |
 
 ---
 
@@ -97,6 +97,13 @@ This mode enables reproducible, auditable spec maintenance.
 
 - Use `/spec/prompts/maintenance/cross-tier-sync-prompt.md`.
 - Traverse `FEAT`, `COMP`, `IMPL`, and `TASK` IDs for consistency.
+
+**Migrating to Updated Templates:**
+
+- Use `/spec/prompts/maintenance/align-to-templates.md`.
+- Align existing specs to current template structure after template updates.
+- Handles overviews, indexes, and individual spec files.
+- Optionally suggests glossary creation from discovered terms.
 
 ---
 
