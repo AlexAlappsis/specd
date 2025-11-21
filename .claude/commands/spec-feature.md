@@ -121,6 +121,7 @@ First, determine if this is CREATE or EDIT mode:
    - Show assigned FEAT-#### ID
    - Suggest next steps:
      - "Edit the feature file to add more details"
+     - "Add the next feature following the same processes"
      - "Use /spec-component to create architecture components for this feature"
      - "Link related features by editing the related_features array"
 
@@ -200,6 +201,7 @@ Creating FEAT-0005-user-authentication.md...
 
 Next steps:
 - Review and edit the feature file
+- Add the next feature following the same processes we just followed
 - Use /spec-component to define components implementing this feature
 ```
 

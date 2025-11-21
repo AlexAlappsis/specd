@@ -172,6 +172,7 @@ First, determine if this is CREATE or EDIT mode:
       - "Edit the implementation file to define contracts, APIs, and data models"
       - "Fill in Section 7 (Testing Strategy) to define test requirements"
       - "Use /spec-task to create tasks for implementing this specification"
+      - "Add the next implementation following the same processes"
       - "Run /spec-sync to validate all cross-tier links"
 
 ## EDIT Mode Workflow
@@ -258,6 +259,7 @@ Next steps:
   - Data models and types
   - Business rules and invariants
   - Testing strategy (Section 7)
+- Add the next implementation follow the same process
 - Use /spec-task to create execution tasks
 - Run /spec-sync to validate links
 ```

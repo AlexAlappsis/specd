@@ -132,6 +132,7 @@ First, determine if this is CREATE or EDIT mode:
    - List updated feature files (backlinks)
    - Suggest next steps:
      - "Use /spec-impl to create implementation specs for this component"
+     - "Add the next component following the same processes"
      - "Run /spec-sync to validate all cross-tier links"
 
 ## EDIT Mode Workflow
@@ -214,6 +215,7 @@ Creating COMP-0003-user-service.md...
 
 Next steps:
 - Use /spec-impl to create implementation specifications
+- Add the next component following the same processes we just used.
 - Run /spec-sync to validate cross-tier links
 ```
 
