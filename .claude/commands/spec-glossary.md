@@ -1,16 +1,14 @@
-Manage the system glossary for domain-specific terminology.
-
-**Before starting:** If you haven't already in this conversation, see [spec/agent-guide.md](../spec/agent-guide.md) for the glossary's optional role in maintaining consistent terminology.
+View or edit the system glossary (`spec/glossary.md`).
 
 **What this command does:**
-1. Lists all glossary terms
-2. Shows specific term definitions
-3. Adds or updates term definitions
-4. Creates glossary from template if needed
+1. Loads `spec/glossary.md` (or initializes it from `spec/glossary-template.md`).
+2. Summarizes current terms.
+3. Helps you add or refine definitions.
+4. Encourages reuse of existing terms to keep vocabulary consistent.
 
 **Usage:**
-```
-/spec-glossary              # List all terms
+```text
+/spec-glossary              # Show glossary and suggest edits
 /spec-glossary Recipe       # Show definition of "Recipe"
 /spec-glossary add Recipe   # Add/update "Recipe" definition
 ```
