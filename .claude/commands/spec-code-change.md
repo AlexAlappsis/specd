@@ -1,157 +1,342 @@
-Make small, scoped code changes grounded in the living spec and existing code.
+Make incremental code changes grounded in the living spec and existing code patterns.
 
-This command is for **spec → code** work: you describe a feature or change, give a scope (`path` or `module`), and the agent updates a small set of files while respecting the living specification and invariants.
+Use this for **modifying existing code**: adding features, fixing bugs, refactoring, etc.
 
 **What this command does:**
 
 1. Loads the living spec:
    - `spec/living-architecture.md` (narrative overview)
    - `spec/invariants.json` (hard constraints)
-   - Optionally `spec/glossary.md` for terminology
-2. Interprets your requested change in the context of:
-   - The living architecture
-   - The invariants
-   - The existing code under the given scope
-3. Scans the code in the scoped area to:
-   - Understand current behavior
-   - Identify a small set of files that should be edited
-4. Plans and applies small, incremental edits:
-   - Modifies at most **5 files** per invocation
-   - Keeps changes local to the given `path` or `module`
-5. Summarizes what changed so you can review in git.
+   - `spec/glossary.md` (terminology)
+2. Determines working path from explicit parameter, IDE selection, or user input
+3. Analyzes existing code in the working area
+4. Works cooperatively through three phases:
+   - **ANALYZE**: Understand current state, propose plan
+   - **CONFIRM**: Ask clarifying questions, get approval
+   - **EXECUTE**: Apply changes, report results
 
-**Scope & safety rules:**
+**Scope & safety:**
 
-- To **modify** code, you must specify either:
-  - `path=` (directory or file)  
-  - `module=` (a module name mentioned in `living-architecture.md`)
-- If **neither** is provided:
-  - The command runs in **analysis mode** only (no file writes).
-- The command will:
-  - Prefer to **reuse existing patterns** and abstractions found in the scoped code
-  - Respect invariants from `spec/invariants.json`
-  - Avoid cross-layer violations (e.g., controllers calling DB directly) unless the spec/invariants explicitly allow it
-- At most **5 files** are modified per run:
-  - If more files look relevant, the command:
-    - Prioritizes the top ~5 most important files
-    - Mentions the remaining files in the summary so you can address them in follow-up runs
+- Modifies a **coherent set of files** to complete the requested change
+- Can touch multiple layers (domain → data → API) if needed for completeness
+- Preserves existing patterns and style
+- Respects invariants and architectural boundaries
+- Will NOT refactor unrelated code or add unasked features
 
 **Usage:**
 
 ```text
-/spec-code-change feature="Add task tagging" path=src/tasks
+/spec-code-change feature="Add tags property to Task entity" path=src/domain
 
-/spec-code-change feature="Align error responses with error format invariant" module=api
+/spec-code-change feature="Fix validation error in login flow"
+# (uses IDE selection or asks for path)
 
-/spec-code-change feature="Implement basic login flow" path=src/auth
+/spec-code-change feature="Update task status enum"
+# (with src/domain/Task.cs selected in IDE)
 ```
 
 ---
 
 ## Implementation instructions for Claude Code
 
-When this command is invoked, follow these steps:
+### Phase 0: Determine Working Path
 
-### 1. Load spec context
+Resolve the working path in priority order:
 
-1. Try to open `spec/living-architecture.md`.
-   - If missing, explain that the living spec does not exist yet and suggest running `/spec-overview` first.
-2. Try to open `spec/invariants.json`.
-   - If missing, continue but note that invariants are not available and you may only rely on the architecture narrative + code.
-3. Optionally (non-fatal if missing):
-   - Load `spec/glossary.md` for preferred terminology.
+#### 1. Explicit path= parameter (highest priority)
 
-You should use:
+If user provided `path=some/directory`:
+- Use that path directly
+- Skip to Phase 1
 
-- `living-architecture.md` to understand modules, flows, and boundaries
-- `invariants.json` to understand **hard rules** you must not violate
+#### 2. IDE selection context (automatic fallback)
 
-### 2. Determine scope
+If no `path=` was provided, check for `<ide_selection>` tags in conversation context.
 
-- Parse arguments for:
-  - `path=` (e.g., `path=src/tasks`)
-  - `module=` (e.g., `module=api`)
+**If a file is selected:**
+- Extract the directory containing that file
+- Use that directory as the working path
+- Inform user: `Working in [directory] (from selected file [filename])`
 
-**If neither `path` nor `module` is provided:**
+**If a folder is selected:**
+- Use that folder directly as the working path
+- Inform user: `Working in [directory] (from selected folder)`
 
-- Enter **analysis-only** mode:
-  - Do **not** write any files.
-  - Instead:
-    - Summarize how you would approach the requested change.
-    - Suggest a concrete command invocation with `path` or `module` so the user can re-run it with scope.
+**Smart filtering - ignore selections of:**
+- Documentation files (*.md in root, docs/, etc.)
+- Config files (package.json, *.csproj, appsettings.json, .env, etc.)
+- Build artifacts (bin/, dist/, build/, node_modules/, obj/)
+- Git/IDE files (.git/, .vscode/, .idea/)
 
-**If `path` is provided:**
+If these are selected, treat as "no selection" and fall through to asking.
 
-- Treat that path as the root for:
-  - File discovery
-  - Allowed write operations
-- You may read other files in the project for context (e.g., shared types), but you may only **modify files under the given `path`**.
+#### 3. Ask the user (final fallback)
 
-**If `module` is provided:**
+If neither explicit path nor valid IDE selection exists:
 
-- Use `spec/living-architecture.md` to map the module name to one or more directories or files.
-  - For example, if the architecture doc describes a “Tasks” module and says it lives under `src/tasks`, treat that as the scoped path.
-- If you cannot reliably map the module to a path:
-  - Explain the ambiguity and suggest a specific `path=` for the user to use next time.
-  - Do not write files in this case.
+Ask: `What area of the codebase should I work in? (provide a directory path like 'src/tasks' or 'src/api')`
 
-### 3. Analyze existing code
+Wait for user response before proceeding.
 
-Within the scoped path:
+---
 
-1. Find key files:
+### Phase 1: ANALYZE (automatic, read-only)
+
+#### 1.1 Load spec context
+
+1. Try to open `spec/living-architecture.md`
+   - If missing: explain that spec doesn't exist, suggest `/spec-overview`, then stop
+2. Try to open `spec/invariants.json`
+   - If missing: continue but note invariants unavailable
+3. Try to open `spec/glossary.md`
+   - If missing: continue without terminology guidance
+
+#### 1.2 Understand the request
+
+Parse `feature="..."` from command arguments or infer from user's natural language description.
+
+#### 1.3 Analyze existing code
+
+Within the working path and related areas:
+
+1. **Find key files**:
    - Entry points (routes/controllers/handlers)
    - Domain models/entities
    - Services/use-cases
-   - Relevant tests (if any)
-2. Read enough of these files to:
-   - Understand current patterns and boundaries
-   - Detect existing error formats, naming conventions, etc.
-3. Cross-check against:
-   - Invariants (e.g., layering rules, ID formats, error shape)
-   - Architecture narrative (expected responsibilities of the module)
+   - Data access (repositories/contexts)
+   - Relevant tests
 
-### 4. Plan a small, scoped change
+2. **Understand current behavior**:
+   - How does the code currently work?
+   - What patterns are in use?
+   - What naming conventions exist?
+   - How are similar features implemented?
 
-Before editing any files:
+3. **Cross-check against spec**:
+   - Does current code match `living-architecture.md`?
+   - Are invariants being followed?
+   - Are there discrepancies to note?
 
-1. Create a short plan that includes:
-   - The **intent** of the change (based on `feature="..."` or user description)
-   - A list of candidate files to edit, ordered by importance
-   - A sentence or two describing what will change in each file
-2. Respect the max file limit:
-   - If more than 5 files appear relevant:
-     - Focus on the top 3–5 files that provide the most value for an initial step.
-     - Note the additional files that might be addressed in later runs.
+#### 1.4 Design the change
 
-Communicate the design briefly and confirm before generation.  Ask clarifying questions for missing or ambiguous details.
+Based on:
+- The feature request
+- Current code patterns
+- The living spec (modules, flows, boundaries)
+- The invariants (hard rules)
 
-### 5. Apply changes (max 5 files)
+Identify:
+- **What needs to be modified**:
+  - Which files need changes
+  - What will change in each file
+  - Why these changes are needed
+- **Cross-layer dependencies**:
+  - Related files outside working path (DTOs, migrations, controllers, etc.)
+  - Configuration updates
+  - Database migrations
 
-1. Modify at most **5 files** under the allowed `path`.
-2. For each file:
-   - Preserve existing style and patterns.
-   - Integrate with current abstractions rather than inventing new architectures unless necessary.
-   - Respect invariants; if an invariant conflicts with the requested feature:
-     - Choose the invariant.
-     - Note the conflict in your final summary.
-3. Whenever possible:
-   - Prefer adding or adjusting small functions over large rewrites.
-   - Avoid renaming or moving many symbols at once unless the user explicitly asked for a refactor.
+**Coherence scope principle**: Include all files needed to make the change work end-to-end, but don't expand beyond what was requested.
 
-### 6. Summarize what you did
+#### 1.5 Prepare the plan
 
-After applying changes:
+Create a structured plan showing:
 
-1. Produce a concise summary that includes:
-   - Which files were modified (paths)
-   - A short bullet list of changes per file
-   - Any **notable invariants** you adhered to or conflicts you detected
-   - Any additional files that might need follow-up work
-2. Do **not** stage, commit, or run git commands yourself; assume the user will review diffs and commit.
+1. **Files to modify**:
+   - `src/domain/Task.cs` - Add `Tags` property (string array)
+   - `src/data/Migrations/004_AddTaskTags.cs` - New migration for tags column
+   - `src/data/AppDbContext.cs` - Configure tags as JSON column
+   - `src/api/dtos/TaskDto.cs` - Add tags to DTO
+   - `src/api/TasksController.cs` - Expose tags in GET/POST endpoints
 
-### 7. Best practices
+2. **CLI commands** (if any):
+   ```bash
+   dotnet ef migrations add AddTaskTags
+   ```
 
-- If you are unsure about a non-trivial architectural change, keep your edits minimal and mention the uncertainty.
-- Do not attempt large, sweeping refactors with this command. Instead, suggest follow-up work the user can trigger with additional scoped invocations.
-- Use terminology from `spec/glossary.md` when introducing or updating concepts in code (e.g., “Task” vs “Job”).
+3. **Key decisions**:
+   - Tags stored as JSON array in database (existing pattern for arrays)
+   - Tags optional (nullable property)
+   - Following invariant: controllers don't access DB directly
+
+4. **Potential issues**:
+   - None identified
+
+---
+
+### Phase 2: CONFIRM (requires user input)
+
+#### 2.1 Present the plan
+
+Show the plan from Phase 1 in a clear, scannable format.
+
+#### 2.2 Ask clarifying questions (only when necessary)
+
+Ask questions ONLY when:
+
+1. **Multiple valid approaches exist**:
+   - "Tags could be a simple string array or a separate Tags table with many-to-many. Which do you prefer?"
+   - "Should existing tasks get empty tags array or null?"
+
+2. **The spec/code is contradictory**:
+   - "Invariants say use UUIDs, but existing code uses auto-increment IDs. Follow invariant (breaking change) or existing pattern?"
+
+3. **The request is genuinely ambiguous**:
+   - "'Fix validation' - should this be client-side, server-side, or both?"
+   - "'Update status enum' - add new values or rename existing ones?"
+
+**DO NOT ask when**:
+- The answer is in `spec/living-architecture.md` or `spec/invariants.json`
+- The answer is clear from existing code patterns
+- It's a standard convention (e.g., new properties are optional, use existing serialization)
+- There's an obvious sensible default
+
+Keep questions to **3 or fewer**. If you need more than 3 answers, the request is too ambiguous - ask user to clarify the feature instead.
+
+#### 2.3 Get approval
+
+After any clarifying questions are answered, ask for final approval:
+
+```
+This will modify [X] files and run [Y] commands.
+
+Proceed? (yes/no)
+```
+
+If user says no or requests changes, loop back with adjustments.
+
+---
+
+### Phase 3: EXECUTE (automatic after approval)
+
+#### 3.1 Run CLI commands
+
+Execute any CLI commands from the plan:
+- Database migrations
+- Package installation
+- Code generation tools
+
+Report each command and its result.
+
+#### 3.2 Modify files
+
+For each file in the plan:
+
+1. **Make surgical changes**:
+   - Add new properties/methods
+   - Update existing logic minimally
+   - Preserve surrounding code
+   - Don't refactor unrelated code
+
+2. **Follow existing patterns**:
+   - Match naming conventions
+   - Use same error handling approach
+   - Apply consistent formatting and style
+   - Reuse existing abstractions
+
+3. **Respect invariants**:
+   - Follow layering rules
+   - Use required ID/date formats
+   - Maintain architectural boundaries
+   - If invariant conflicts with existing code, note it in summary
+
+4. **Use glossary terms**:
+   - Use terminology from `spec/glossary.md`
+   - Name new concepts consistently
+
+5. **Cross-layer changes allowed**:
+   - If working path is `src/domain` but change requires updating DTOs, migrations, and controllers, do it
+   - The goal is a **complete, working change**
+
+#### 3.3 Report results
+
+After all changes:
+
+Produce a summary with:
+
+1. **What was modified**:
+   ```
+   Modified:
+   - src/domain/Task.cs (added Tags property)
+   - src/data/AppDbContext.cs (configured Tags as JSON column)
+   - src/data/Migrations/004_AddTaskTags.cs (new migration)
+   - src/api/dtos/TaskDto.cs (added Tags to DTO)
+   - src/api/TasksController.cs (exposed tags in endpoints)
+   ```
+
+2. **Commands run**:
+   ```
+   Ran:
+   - dotnet ef migrations add AddTaskTags
+   ```
+
+3. **Next steps** (optional):
+   ```
+   Next steps:
+   - Run migration: dotnet ef database update
+   - Consider adding tag validation (max length, allowed characters)
+   - Update tests to include tags
+   ```
+
+4. **Invariants followed** (if notable):
+   ```
+   Adhered to:
+   - Invariant #1: Controllers don't access DB directly (used EF context)
+   - Invariant #3: All arrays stored as JSON columns
+   ```
+
+5. **Issues detected** (if any):
+   ```
+   Noted:
+   - Invariant #2 specifies UUIDs, but existing code uses int IDs (followed existing pattern)
+   ```
+
+Do NOT run git commands. Let user review and commit.
+
+---
+
+### Best Practices
+
+1. **Prefer coherence over artificial limits**:
+   - Don't stop at 5 files if the change needs 7 files to work
+   - DO stop if you're modifying unrelated code
+
+2. **Make complete changes**:
+   - Domain → Data → API → Config in one pass
+   - Change should be complete and functional
+
+3. **Preserve existing style**:
+   - Match formatting, naming, patterns
+   - Don't refactor unless explicitly asked
+   - Respect existing abstractions
+
+4. **Minimal surgical edits**:
+   - Add what's needed, don't rewrite
+   - Preserve surrounding code exactly
+   - Don't "improve" unrelated code
+
+5. **Follow the code, not assumptions**:
+   - Use patterns already present in codebase
+   - Don't impose external "best practices" unless in spec
+   - When spec and code conflict, ask user
+
+6. **Use glossary terminology**:
+   - Use terms from `spec/glossary.md` when naming things
+   - Helps maintain consistency across codebase
+
+7. **Handle conflicts gracefully**:
+   - If invariant conflicts with code, note it (don't silently pick one)
+   - If existing code has multiple patterns for same thing, ask which to follow
+
+---
+
+## Path Parameter Definition
+
+**Purpose**: Specifies the primary area of the codebase where changes should be made.
+
+**Behavior**:
+1. **Analysis starts here**: Agent examines code under this path to understand current state
+2. **Changes centered here**: Primary modifications happen in this area
+3. **Natural dependencies allowed**: Agent can modify files outside this path if directly needed (DTOs, migrations, controllers, config, etc.)
+4. **Scope control**: Agent will NOT refactor unrelated code, add unasked features, or modify distant areas
+
+**Think of it as**: "Make this change, starting from this area, but don't wander off into unrelated work"
