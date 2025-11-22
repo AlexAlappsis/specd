@@ -124,7 +124,7 @@ Before editing any files:
      - Focus on the top 3–5 files that provide the most value for an initial step.
      - Note the additional files that might be addressed in later runs.
 
-You may communicate this plan to the user in natural language, but **do not pause for confirmation**—assume they want you to proceed within the scoped constraints.
+Communicate the design briefly and confirm before generation.  Ask clarifying questions for missing or ambiguous details.
 
 ### 5. Apply changes (max 5 files)
 
