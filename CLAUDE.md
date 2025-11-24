@@ -20,7 +20,7 @@ This contains project-specific rules like:
 
 Projects using specd have these files in `spec/`:
 
-- **`living-architecture.md`** - 1-3 page system narrative
+- **`overview.md`** - 1-3 page system narrative
 - **`invariants.json`** - Hard rules (layering, formats, constraints)
 - **`glossary.md`** - Domain vocabulary
 - **`change-log.md`** - Spec evolution history
@@ -33,7 +33,7 @@ Projects using specd have these files in `spec/`:
 When users invoke these, you'll see the expanded command prompt with full instructions.
 
 ### Specification Management
-- `/spec-overview` - Create/refine living architecture
+- `/spec-overview` - Create/refine overview
 - `/spec-invariants` - Manage invariants
 - `/spec-glossary` - Manage vocabulary
 - `/spec-sync-spec path=...` - Sync spec from code
@@ -105,7 +105,7 @@ Inform user: `Working in [path] (from selected file X)`
 
 ### Before generating/modifying code:
 1. ✅ Load `spec/agent-contract.md`
-2. ✅ Load `spec/living-architecture.md`
+2. ✅ Load `spec/overview.md`
 3. ✅ Load `spec/invariants.json`
 4. ✅ Load `spec/glossary.md`
 5. ✅ Scan existing code for patterns

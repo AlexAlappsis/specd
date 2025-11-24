@@ -10,7 +10,7 @@ specd provides templates and slash commands to maintain a small, narrative spec 
 
 specd is a **template repository** that provides:
 
-- **Markdown templates** for living architecture documentation
+- **Markdown templates** for overview documentation
 - **JSON invariants** for machine-readable constraints
 - **Slash commands** for creating and maintaining specs cooperatively
 - **Bidirectional sync** between spec and code
@@ -28,7 +28,7 @@ Most documentation falls out of sync because:
 - It's too heavy to maintain
 
 specd solves this by:
-- **Staying small**: Just 4 core files (living architecture, invariants, glossary, change log)
+- **Staying small**: Just 4 core files (overview, invariants, glossary, change log)
 - **Being narrative**: No rigid tiers or IDs—write how you think
 - **Bidirectional sync**: Commands to go spec → code AND code → spec
 - **LLM-native**: Agents can read specs, respect invariants, generate code
@@ -61,7 +61,7 @@ This copies:
 - Templates from `.specd/spec/` → `./spec/`
 - Slash commands from `.specd/.claude/commands/` → `./.claude/commands/`
 
-### Step 3: Create Your Living Architecture
+### Step 3: Create Your Overview
 
 Start by describing your system:
 
@@ -69,7 +69,7 @@ Start by describing your system:
 /spec-overview
 ```
 
-This cooperatively creates `spec/living-architecture.md` - a 1-3 page narrative describing your system's purpose, architecture, and key decisions.
+This cooperatively creates `spec/overview.md` - a 1-3 page narrative describing your system's purpose, architecture, and key decisions.
 
 ---
 
@@ -81,7 +81,7 @@ After installation, build your spec iteratively:
 ```bash
 /spec-overview
 ```
-Create or refine the living architecture narrative
+Create or refine the overview narrative
 
 ### 2. Capture Hard Constraints
 ```bash
@@ -120,7 +120,7 @@ Update spec to reflect what code actually does
 ### Core Spec Files (in `spec/`)
 
 **4 essential files**:
-- **`living-architecture.md`** - Narrative system overview (1-3 pages)
+- **`overview.md`** - Narrative system overview (1-3 pages)
   - Purpose & scope
   - Architecture overview
   - Key flows
@@ -152,7 +152,7 @@ Update spec to reflect what code actually does
 **6 commands** for spec and code workflows:
 
 **Specification Management:**
-- `/spec-overview` - Create or refine living architecture cooperatively
+- `/spec-overview` - Create or refine overview cooperatively
 - `/spec-invariants` - List, add, or edit system invariants
 - `/spec-glossary` - Manage domain vocabulary
 - `/spec-sync-spec path=...` - Sync spec from code (code → spec)
@@ -230,7 +230,7 @@ The agent touches **all files needed for the feature to work**, but won't add un
 git submodule add https://github.com/your-org/specd .specd
 bash .specd/install.sh
 
-# 2. Create living architecture
+# 2. Create overview
 /spec-overview
 # Cooperatively write 1-3 page system overview
 
@@ -253,7 +253,7 @@ bash .specd/install.sh
 
 # 7. Sync spec with reality (code → spec)
 /spec-sync-spec path=src/tasks
-# Agent updates living-architecture.md, glossary.md, change-log.md
+# Agent updates overview.md, glossary.md, change-log.md
 ```
 
 ---
@@ -268,7 +268,7 @@ your-project/
     install.sh                  # Installation script
 
   spec/                         # Your working spec (created during install)
-    living-architecture.md      # System narrative
+    overview.md      # System narrative
     invariants.json             # Hard rules
     glossary.md                 # Domain vocabulary
     change-log.md               # Spec evolution
@@ -290,7 +290,7 @@ your-project/
 ## Design Principles
 
 ### 1. Stay Small
-The living architecture should be 1-3 pages, not a book. Capture decisions, not documentation.
+The overview should be 1-3 pages, not a book. Capture decisions, not documentation.
 
 ### 2. Stay Narrative
 Write how you think. No rigid IDs, tiers, or templates. Just clear prose.
@@ -314,7 +314,7 @@ Commands analyze, propose, confirm, then execute. You stay in control.
 
 ### /spec-overview
 
-Create or refine `living-architecture.md` cooperatively.
+Create or refine `overview.md` cooperatively.
 
 **Usage**:
 ```bash
@@ -435,7 +435,7 @@ Update spec to match code reality (code → spec sync).
 
 **What it does**:
 - Scans code in specified area
-- Updates relevant sections of `living-architecture.md`
+- Updates relevant sections of `overview.md`
 - Adds/refines terms in `glossary.md`
 - Appends entry to `change-log.md`
 - Detects invariant violations (reports, doesn't auto-fix)
@@ -479,5 +479,5 @@ MIT License
 
 - **[spec/readme.md](spec/readme.md)** - How the specification system works
 - **[spec/agent-contract.md](spec/agent-contract.md)** - Rules for LLM agents
-- **[spec/living-architecture-template.md](spec/living-architecture-template.md)** - Template structure
+- **[spec/overview-template.md](spec/overview-template.md)** - Template structure
 - **[.claude/commands/](. claude/commands/)** - All slash command definitions
