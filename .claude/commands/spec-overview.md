@@ -31,7 +31,7 @@ Plan or edit the living architecture specification (`spec/living-architecture.md
             ```
             Error: Templates not found. Please run the install script first:
 
-            bash .specdocs/install.sh
+            bash .specd/install.sh
 
             This will copy templates to your project's spec/ directory.
             ```

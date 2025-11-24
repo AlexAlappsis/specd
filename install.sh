@@ -1,7 +1,7 @@
 #!/bin/bash
 # specd Installation Script
 #
-# This script copies templates and slash commands from .specdocs to your project root.
+# This script copies templates and slash commands from .specd to your project root.
 # Run this once after adding specd as a git submodule.
 
 set -e
@@ -10,12 +10,12 @@ echo "specd Installation"
 echo "=================="
 echo ""
 
-# Check if .specdocs exists
-if [ ! -d ".specdocs" ]; then
-    echo "❌ Error: .specdocs directory not found."
+# Check if .specd exists
+if [ ! -d ".specd" ]; then
+    echo "❌ Error: .specd directory not found."
     echo ""
     echo "Please add specd as a git submodule first:"
-    echo "  git submodule add https://github.com/AlexAlappsis/specd .specdocs"
+    echo "  git submodule add https://github.com/AlexAlappsis/specd .specd"
     echo "  git submodule update --init --recursive"
     exit 1
 fi
@@ -47,7 +47,7 @@ fi
 echo ""
 echo "📋 Copying templates..."
 # Copy spec templates to project root
-cp -r .specdocs/spec ./spec
+cp -r .specd/spec ./spec
 echo "✓ Copied spec/ templates"
 
 echo ""
@@ -55,7 +55,7 @@ echo "🔧 Copying slash commands..."
 # Create .claude directory if it doesn't exist
 mkdir -p .claude
 # Copy commands to project root
-cp -r .specdocs/.claude/commands ./.claude/
+cp -r .specd/.claude/commands ./.claude/
 echo "✓ Copied .claude/commands/"
 
 echo ""
