@@ -62,7 +62,13 @@ Plan or edit the living architecture specification (`spec/living-architecture.md
 4.  **Update change log:**
     - If this is the first initialization of the living architecture, initialize the change-log template and save to spec/change-log.md.
     - If this is a meaningful architectural change, suggest appending an entry to spec/change-log.md.
+
+5. **Suggest invariants and glossary updates**
+    - If new constraints or hard rules were introduced in the narrative briefly identify them.
+    - If new terms were coined or identified, briefly identify them.
+    - Suggest adding or updating entries in either spec/invariants.md or spec/glossary.md. Create them from templates if they don't exist.
+    - Remind user they can update them manually via /spec-invariants and /spec-glossary.        
         
-4.  **Suggest next steps:**    
-    - If new constraints or hard rules were introduced in the narrative, suggest adding or updating entries in spec/invariants.json via /spec-invariants.        
-    - If new terms were coined or identified, suggest updating /spec-glossary.
+6.  **Suggest next steps:**    
+    - If there are open questions from planning, suggest areas of research to explore..
+    - Suggest 2-3 concrete implementation options using /spec-code-new or /spec-code-change.
