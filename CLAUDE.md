@@ -25,6 +25,7 @@ Projects using specd have these files in `spec/`:
 - **`glossary.md`** - Domain vocabulary
 - **`change-log.md`** - Spec evolution history
 - **`agent-contract.md`** - Your behavioral rules (READ FIRST)
+- **`notes/`** - Optional module-specific decision logs
 
 ---
 
@@ -36,6 +37,8 @@ When users invoke these, you'll see the expanded command prompt with full instru
 - `/spec-overview` - Create/refine overview
 - `/spec-invariants` - Manage invariants
 - `/spec-glossary` - Manage vocabulary
+- `/spec-notes module="..." type="..." content="..."` - Add module notes
+- `/spec-upkeep` - Review conversation for spec updates
 - `/spec-sync-spec path=...` - Sync spec from code
 
 ### Code Generation
@@ -108,7 +111,8 @@ Inform user: `Working in [path] (from selected file X)`
 2. ✅ Load `spec/overview.md`
 3. ✅ Load `spec/invariants.json`
 4. ✅ Load `spec/glossary.md`
-5. ✅ Scan existing code for patterns
+5. ✅ If overview links to module notes, load them
+6. ✅ Scan existing code for patterns
 
 ### When generating code:
 - Follow invariants
@@ -122,6 +126,7 @@ Inform user: `Working in [path] (from selected file X)`
 - Show CLI commands run
 - Note invariants followed
 - Report conflicts (don't hide them)
+- Suggest notes updates for significant decisions
 
 ---
 
